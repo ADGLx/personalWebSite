@@ -21,25 +21,29 @@
         <div class="m-2"> <!--For the Margin-->
           
           <!--Add Class and Reminder buttons-->
-          <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%;">Add Class</button>
+          <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Class</button>
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%; float: right;">Add Reminder</button>
 
-          <div class="table-responsive h"> 
+          <div class="table-responsive"> 
             <table class="table table-dark table-bordered" style="text-align: center;">
                 <thead>
                   <tr>
-                    <th colspan="8" style="text-align: center;">Weekly Schedule</th>
+                    <th colspan="8">
+                      <button type="button" class="btn btn-success" style="float: inline-start;"><</button>
+                       Weekly Schedule 
+                       <button type="button" class="btn btn-success" style="float: inline-end;">></button>
+                      </th>
                   </tr>
                 </thead>
-                <tbody class ="align-middle">
+                <tbody class ="align-middle h">
                   <tr>
-                    <th class="day">Monday</th>
-                    <th class="day">Tuesday</th>
-                    <th class="day">Wednesday</th>
-                    <th class="day">Thursday</th>
-                    <th class="day">Friday</th>
-                    <th class="day">Saturday</th>
-                    <th class="day">Sunday</th>
+                    <th class="day">Monday <br> 15-11-2021 </th>
+                    <th class="day">Tuesday <br> 16-11-2021</th>
+                    <th class="day">Wednesday <br> 17-11-2021</th>
+                    <th class="day">Thursday <br> 18-11-2021</th>
+                    <th class="day">Friday <br> 19-11-2021</th>
+                    <th class="day">Saturday <br> 20-11-2021</th>
+                    <th class="day">Sunday <br> 21-11-2021</th>
                     <td class="time">...</td>
                   </tr>
                   <tr class="tableRowFormat">
@@ -50,7 +54,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <th >Morning</th>
+                    <th >Morning <br>(7am-12pm)</th>
                   </tr>
                   <tr class="tableRowFormat">
                     <td></td>
@@ -60,7 +64,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <th>Noon</th>
+                    <th>Afternoon <br>(12pm-4pm)</th>
                   </tr>
                   <tr class="tableRowFormat">
                     <td></td>
@@ -70,7 +74,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <th>Afternoon</th>
+                    <th>Evening<br>(4pm-8pm)</th>
                   </tr>
                   <tr class="tableRowFormat">
                     <td></td>
@@ -80,7 +84,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <th>Night</th>
+                    <th>Night<br>(8pm-12am)</th>
                   </tr>
 
                 </tbody>
@@ -114,15 +118,86 @@
 
         </div>
     
-   
     </div>
 
      <!--Footer-->
   <div class ="footer">
    <!--<p> By Alvaro Gonzalez</p> --> 
 </div>
+
+ <!-- Modal For Opening Class -->
+<div class="container">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add a Class</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+          <form>
+            <!--Name-->
+            <div>
+              <label for="classname">Class name: </label>
+              <input type="text" id="classname" name="fname" style="width: 75%; float: inline-end;">
+            </div>
+            <br>
+            <!--Class Times-->
+            <div>
+              <table style="width: 100%;"">
+                <tr>
+                  <!--Gotta add one to the row span to make it work-->
+                    <td rowspan="3">  <label for="classtimes"> Class times: </label> <br><button type="button" class="btn btn-dark btn-sm"> Add</button></td>
+                    <td><input type="time" id="timestart1" name="timestart1" style="width: 35%;"> to <input type="time" id="timestart1" name="timestart1" style="width: 35%;"> </td>
+                </tr>
+                <!--Add this as a new thing for the time-->
+                <tr>
+                  <td><input type="time" id="timestart1" name="timestart1" style="width: 35%;"> to <input type="time" id="timestart1" name="timestart1" style="width: 35%;"> <button type="button" class="btn btn-dark btn-sm"> x</button> </td>
+                </tr>
+                 <!--Add this as a new thing for the time-->
+                 <tr>
+                  <td><input type="time" id="timestart1" name="timestart1" style="width: 35%;"> to <input type="time" id="timestart1" name="timestart1" style="width: 35%;"> <button type="button" class="btn btn-dark btn-sm"> x</button> </td>
+                </tr>
+              </table>
+            </div>
+            <br>
+            <!--Type-->
+            <div>
+              <label  for="inlineFormCustomSelectPref">Type:</label>
+              <select id="inlineFormCustomSelectPref" style="width: 75%; text-align: center; float: inline-end;">
+                <option value="1">Tutorial</option>
+                <option value="2">Lecture</option>
+                <option value="3">Lab</option>
+              </select>
+            </div>
+            <br>
+            <!--Location-->
+            <div>
+              <label for="classname">Location: </label>
+              <input type="text" id="classname" name="fname" style="width: 75%; float: inline-end;">
+            </div>
+            <br>
+           <!--Description-->
+           <div>
+            <label for="classname">Description: </label>
+            <input type="textbox" id="classname" name="fname" style="width: 75%; height: 50px; float: inline-end;">
+          </div>
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     <!--Boostrap JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 
 </body>
 </html>
