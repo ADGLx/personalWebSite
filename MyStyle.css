@@ -59,3 +59,12 @@ body {
       color: var(--color3);
   }
 
+  .footer{
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: var(--color2);
+      color: var(--color3);
+      text-align: right;
+  }
