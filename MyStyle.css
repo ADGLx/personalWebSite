@@ -7,7 +7,7 @@
 
 
 body {
-    background-color: var(--color2);
+    background-color: var(--color4) !important;
 }
 
 .header{
@@ -68,3 +68,30 @@ body {
       color: var(--color3);
       text-align: right;
   }
+
+  /*Keeps the days equal width */
+  th.day{
+      width: 14%;
+  }
+ /*Keeps the time smaller width */
+  th.time{
+      width: 2%;
+  }
+  .tableRowFormat {
+    height: 150px ;
+  }
+  .h td:hover,.h th:hover{
+      background-color: var(--color2) !important;
+     
+  }
+
+  /*Button override for boostrap*/
+  .buttonOverride:hover 
+  {
+    background-color: var(--color2) !important;
+  }
+
+
+
+
+
