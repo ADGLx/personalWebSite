@@ -16,6 +16,7 @@
   <div class="header"> Login Page </div>  
 
   <!--Loging Page-->
+  <form action="includes/login.php" method="POST"> 
   <div class="container-fuild">
       <div class ="top-buffer d-grid gap-3">
         <div class="mx-auto">
@@ -24,26 +25,40 @@
                 <div class="card-body">
                  
                   <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="User-Example">
-                    <label for="floatingInput">Username</label>
+                    <input type="text" class="form-control" name="username" placeholder="User-Example">
+                    <label>Username</label>
                   </div>
                   <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                    <label>Password</label>
                   </div>
                   <br></br>
-                  <div class="text-center"><a href="#" class="btn btn-success ">Submit</a></div>
+                  <div class="text-center"><button class="btn btn-success" type="submit" name="submit">Submit</button></div>
                   
+                  <?php
+                  if(isset($_GET["error"]))//Check for errors
+                  {
+                    if($_GET["error"]== "wronguser")
+                    {
+                      echo "<p>Wrong username! </p>";
+                    } else if($_GET["error"]== "wrongpass")
+                    {
+                      echo "<p>Wrong password! </p>";
+                    } else if($_GET["error"]== "emptyinput")
+                    {
+                      echo "<p>Fill in all the info! </p>";
+                    }
+                  }
+                  ?>
                 </div>
               </div>
           </div>
         </div>
-
-       
-  
   </div>
-  
-  <!--Footer-->
+
+  </form>
+
+  <!--Footer--> 
   <div class ="footer">
       <p> By Alvaro Gonzalez</p>
   </div>

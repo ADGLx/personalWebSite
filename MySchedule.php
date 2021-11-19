@@ -1,3 +1,7 @@
+<?php
+  include_once 'includes/ConectSQL.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
