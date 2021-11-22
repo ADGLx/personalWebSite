@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +17,9 @@
 </head>
 <body>
     <!--Header -->
-  <div class="header"> Login Page </div>  
+  <div class="header">
+     <h5>Login Page</h5>
+    </div>  
 
   <!--Loging Page-->
   <form action="includes/login.php" method="POST"> 
@@ -47,6 +53,9 @@
                     } else if($_GET["error"]== "emptyinput")
                     {
                       echo "<p>Fill in all the info! </p>";
+                    } else if($_GET["error"]== "notLogged")
+                    {
+                      echo "<p>Please log in to access the page! </p>";
                     }
                   }
                   ?>
