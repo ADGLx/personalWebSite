@@ -17,10 +17,11 @@
     
     mysqli_free_result($result);
 
+    //This basically adds the HTML to the page
     function addRowToReminderTable($title, $date, $time, $description)
     {
         echo " 
             <tr>
-                <td>$title</td> <td> $date</td><td>$time</td><td>$description</td>
+                <td>$title</td> <td> $date</td><td>$time</td><td>$description</td><td></td>
             </tr>";
     }

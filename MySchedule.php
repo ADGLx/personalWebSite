@@ -137,10 +137,24 @@
                 <th>Date</th>
                 <th>Time</th>
                 <th>Description</th>
+                <th>Options</th>
               </tr>
             </thead>
             <tbody>
+            <tr>
+              <td> a </td>
+              <td> a </td>
+              <td> a </td>
+              <td> a </td>
+              <td>
+                <form action="includes/deleteReminder.php" method="POST">
+              <button type="button" class="btn btn-success btn-sm">Edit</button>
+              <button type="button delete" class="btn btn-danger btn-sm" name="delete">Delete</button>
+                </form>
+                  </td>
+            </tr>
             <?php include ("includes/getReminder.php"); ?>
+           
             </tbody>
           </table>
 
