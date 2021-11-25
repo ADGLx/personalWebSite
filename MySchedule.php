@@ -16,10 +16,10 @@
 
     <title>ADGL- MySchedule</title>
 </head>
-<body>
+<body onload="showCalendar()">
     <!--Login Verification-->
     <?php include("includes/accountVal.php"); ?>
-
+   
     <!--Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
@@ -67,21 +67,21 @@
                 <thead>
                   <tr>
                     <th colspan="8">
-                      <button type="button" class="btn btn-success" style="float: inline-start;"><</button>
+                      <button type="button" class="btn btn-success" style="float: inline-start;"onclick="goBackwardOneWeek()" ><</button>
                        Weekly Schedule 
-                       <button type="button" class="btn btn-success" style="float: inline-end;">></button>
+                       <button type="button" class="btn btn-success" style="float: inline-end;" onclick="goFowardOneWeek()"> ></button>
                       </th>
                   </tr>
                 </thead>
                 <tbody class ="align-middle h">
                   <tr>
-                    <th class="day">Monday <br> 15-11-2021 </th>
-                    <th class="day">Tuesday <br> 16-11-2021</th>
-                    <th class="day">Wednesday <br> 17-11-2021</th>
-                    <th class="day">Thursday <br> 18-11-2021</th>
-                    <th class="day">Friday <br> 19-11-2021</th>
-                    <th class="day">Saturday <br> 20-11-2021</th>
-                    <th class="day">Sunday <br> 21-11-2021</th>
+                    <th class="day" id="d0">Monday <br> 15-11-2021 </th>
+                    <th class="day" id="d1">Tuesday <br> 16-11-2021</th>
+                    <th class="day" id="d2">Wednesday <br> 17-11-2021</th>
+                    <th class="day" id="d3">Thursday <br> 18-11-2021</th>
+                    <th class="day" id="d4">Friday <br> 19-11-2021</th>
+                    <th class="day" id="d5">Saturday <br> 20-11-2021</th>
+                    <th class="day" id="d6">Sunday <br> 21-11-2021</th>
                     <td class="time">...</td>
                   </tr>
                   <tr class="tableRowFormat">
@@ -133,27 +133,18 @@
           <table class="table table-dark">
             <thead>
               <tr>
-                <th colspan="2">Reminders</th>
+                <th>Reminder List</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Description</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Reminder 1, Date: 01/10/2021, Time: 9:00pm</td>
-                <td>Reminder 1, Date: 01/10/2021, Time: 9:00pm</td>
-              </tr>
-
-              <tr>
-                <td>Reminder 1, Date: 01/10/2021, Time: 9:00pm</td>
-                <td>Reminder 1, Date: 01/10/2021, Time: 9:00pm</td>
-              </tr>
-
-              <tr>
-                <td>Reminder 1, Date: 01/10/2021, Time: 9:00pm</td>
-                <td>Reminder 1, Date: 01/10/2021, Time: 9:00pm</td>
-              </tr>
+            <?php include ("includes/getReminder.php"); ?>
             </tbody>
           </table>
 
+         
         </div>
     
     </div>
@@ -237,23 +228,23 @@
 </div>
 
 <!-- Modal For Opening reminder -->
+<form action="includes/submitReminder.php" method="POST">
 <div class="container">
   <div class="modal fade" id="ReminderModel" tabindex="-1" aria-labelledby="ReminderModel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
+      <div class="modal-content">    
+      <div class="modal-header">
           <h5 class="modal-title" id="ReminderModel">Add a Reminder &nbsp;</h5> 
+          
           <!--Color-->
-          <input type="color" id="head" name="head" value="#e66465" style="width: 60%; flex-grow:1;">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <input type="color" id="head" name="rmdColor" value="#e66465" >
+         
         </div>
         <div class="modal-body">
-          
-          <form>
             <!--Name-->
             <div>
               <label for="classname">Title: </label>
-              <input type="text" id="classname" name="fname" style="width: 75%; float: inline-end;">
+              <input type="text" id="classname" name="rmdTitle" style="width: 75%; float: inline-end;">
             </div>
             <br>
             <!--Class Times-->
@@ -262,7 +253,7 @@
                 <tr>
                   <!--Gotta add one to the row span to make it work-->
                     <td>  <label for="classtimes">Time: </label> </td>
-                    <td><input type="time" id="timestart1" name="timestart1" style="width: 100%;"></td>
+                    <td><input type="time" id="timestart1" name="rmdTime" style="width: 100%;"></td>
                 </tr>
 
               </table>
@@ -271,46 +262,50 @@
             <!--Date-->
             <div>
               <label>Date: </label>
-              <input type="date" id="datereminder" style="width: 80%; float: inline-end;"> 
+              <input type="date" id="datereminder" name="rmdDate" style="width: 80%; float: inline-end;"> 
             </div>
            
             <br>
             <!--Type-->
             <div>
               <label  for="inlineFormCustomSelectPref">Priority</label>
-              <select id="inlineFormCustomSelectPref" style="width: 75%; text-align: center; float: inline-end;">
-                <option value="1">High</option>
-                <option value="2">Medium</option>
-                <option value="3">Low</option>
+              <select id="inlineFormCustomSelectPref" name="rmdPriority" style="width: 75%; text-align: center; float: inline-end;">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
               </select>
             </div>
             <br>
             <!--Location-->
             <div>
               <label>Notify by email: </label>
-              <input type="checkbox" id="classname" name="fname" style="float: inline-end;">
+              <input type="checkbox" id="classname" name="rmdNotify" value="1" style="float: inline-end;">
             </div>
             <br>
            <!--Description-->
            <div>
             <label for="classname">Description: </label>
-            <input type="textbox" id="classname" name="fname" style="width: 75%; height: 50px; float: inline-end;">
+            <input type="textbox" id="classname" name="rmdDescription" style="width: 75%; height: 50px; float: inline-end;">
           </div>
 
-          </form>
-
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button submit" class="btn btn-primary" data-bs-dismiss="modal" name="submit">Save changes</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+</form>
     <!--Boostrap JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+    <!--My Own JS-->
+    <script src="calendarFunctions.js"></script>
 
 </body>
 </html>
+<!--Closes the connection to SQL at the end-->
+<?php include("includes/disconnectSQL.php"); ?>
