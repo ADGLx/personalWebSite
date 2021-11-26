@@ -75,17 +75,27 @@
 
     function PrintTableWithData($data)
     {
-      $targetYear = date("Y");
-      $date = new DateTime(date("y")."-".date("m")."-".date("d"));
+      $targetYear = date("Y"); //Gets this year
+      $date = new DateTime(date("y")."-".date("m")."-".date("d")); //Gets todays date
+
+      //These are things
       $weekN = $date->format("W"); //week number
 
       if($weekN <10)
-      $weekN = "0".$weekN;
+      $weekN = "0".$weekN; //Adds the 0 for strtotime
 
-      $mondayDate = date("d m Y",strtotime('monday this week')); //This is ancient apparently
-      $i = date("Y")."W".$weekN;
-      $test = date('d.m.y',strtotime(date("Y")."W".$weekN));
+      //This gets the monday of that week
+      $mondayDate = strtotime(date("Y")."W".$weekN); //This just gets the date
+      //$mondayDate = date('d.m.y',strtotime(date("Y")."W".$weekN));
 
+      $entireWeekData = array();
+      for($i = 0; $i < 7; $i++)
+      {
+        date("d.m.y",array_push($entireWeekData,mktime(0, 0, 0, date("m", $mondayDate)  , date("d",$mondayDate)+1, date("Y",$mondayDate))));
+      }
+      
+      //$tomorrow  = mktime(0, 0, 0, date("m", $mondayDate)  , date("d",$mondayDate)+1, date("Y",$mondayDate));
+      $test = $entireWeekData[0];
       //Print table header too:
       echo "
       <p>$test</p>
