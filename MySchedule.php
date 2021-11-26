@@ -14,6 +14,21 @@
     <!--Boostrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+    <!--Jquery import-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <!--Jquery ajax stuff Work on it later-->
+    <script>
+          $(document).ready(function(){
+            $("button").click(function(){
+              $.ajax({url: "Dinamic/test.txt", success: function(result){
+                $("#div1").html(result);
+              }});
+            });
+          });
+      </script>
+
+
     <title>ADGL- MySchedule</title>
 </head>
 <body onload="showCalendar()">
@@ -59,7 +74,7 @@
         <div class="m-2"> <!--For the Margin-->
           
           <!--Add Class and Reminder buttons-->
-          <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Class</button>
+          <button type="button" class="btn btn-dark buttonOverride disabled" style="width: 49.9%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Class</button>
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%; float: right;" data-bs-toggle="modal" data-bs-target="#ReminderModel">Add Reminder</button>
 
           <div class="table-responsive"> 
@@ -85,9 +100,11 @@
                     <td class="time">...</td>
                   </tr>
                   <tr class="tableRowFormat">
+                    <td>
+                    <button class="btn btn-success" type="button" style="width:100%; background-color:;">Place Holder (9:00am)</button>
+                    </td>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    <td> <button class="btn btn-success" type="button" style="width:100%; background-color:;">Create dynamic calendar (10:10am)</button> </td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -141,20 +158,7 @@
               </tr>
             </thead>
             <tbody>
-            <tr>
-              <td> a </td>
-              <td> a </td>
-              <td> a </td>
-              <td> a </td>
-              <td>
-                <form action="includes/deleteReminder.php" method="POST">
-              <button type="button" class="btn btn-success btn-sm">Edit</button>
-              <button type="button delete" class="btn btn-danger btn-sm" name="delete">Delete</button>
-                </form>
-                  </td>
-            </tr>
             <?php include ("includes/getReminder.php"); ?>
-           
             </tbody>
           </table>
 
