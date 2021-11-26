@@ -89,58 +89,9 @@
                   </tr>
                 </thead>
                 <tbody class ="align-middle h">
-                  <tr>
-                    <th class="day" id="d0">Monday <br> 15-11-2021 </th>
-                    <th class="day" id="d1">Tuesday <br> 16-11-2021</th>
-                    <th class="day" id="d2">Wednesday <br> 17-11-2021</th>
-                    <th class="day" id="d3">Thursday <br> 18-11-2021</th>
-                    <th class="day" id="d4">Friday <br> 19-11-2021</th>
-                    <th class="day" id="d5">Saturday <br> 20-11-2021</th>
-                    <th class="day" id="d6">Sunday <br> 21-11-2021</th>
-                    <td class="time">...</td>
-                  </tr>
-                  <tr class="tableRowFormat">
-                    <td>
-                    <button class="btn btn-success" type="button" style="width:100%; background-color:;">Place Holder (9:00am)</button>
-                    </td>
-                    <td></td>
-                    <td> <button class="btn btn-success" type="button" style="width:100%; background-color:;">Create dynamic calendar (10:10am)</button> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <th >Morning <br>(7am-12pm)</th>
-                  </tr>
-                  <tr class="tableRowFormat">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <th>Afternoon <br>(12pm-4pm)</th>
-                  </tr>
-                  <tr class="tableRowFormat">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <th>Evening<br>(4pm-8pm)</th>
-                  </tr>
-                  <tr class="tableRowFormat">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <th>Night<br>(8pm-12am)</th>
-                  </tr>
+
+                  <?php include("includes/getWeeksReminders.php"); ?>
+
 
                 </tbody>
               </table>

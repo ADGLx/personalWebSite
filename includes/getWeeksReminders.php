@@ -10,10 +10,10 @@
     if($result = mysqli_query($conn, $sql))
     {
         //Grabs the result in an array and print them all 
-    while ($row = mysqli_fetch_assoc($result)) 
+    if ($row = mysqli_fetch_assoc($result)) 
     {
        // addRowToReminderTable($row["title"],$row["date"],$row["time"], $row["description"], $row["id"]);
-        
+        PrintTableWithData($result);
     }
 
     
@@ -75,9 +75,98 @@
 
     function PrintTableWithData($data)
     {
+      $targetYear = date("Y");
+      $date = new DateTime(date("y")."-".date("m")."-".date("d"));
+      $weekN = $date->format("W"); //week number
+
+      if($weekN <10)
+      $weekN = "0".$weekN;
+
+      $mondayDate = date("d m Y",strtotime('monday this week')); //This is ancient apparently
+      $i = date("Y")."W".$weekN;
+      $test = date('d.m.y',strtotime(date("Y")."W".$weekN));
+
+      //Print table header too:
+      echo "
+      <p>$test</p>
+      <tr>
+                    <th class='day' id='d0'>Monday <br> $mondayDate </th>
+                    <th class='day' id='d1'>Tuesday <br> 16-11-2021</th>
+                    <th class='day' id='d2'>Wednesday <br> 17-11-2021</th>
+                    <th class='day' id='d3'>Thursday <br> 18-11-2021</th>
+                    <th class='day' id='d4'>Friday <br> 19-11-2021</th>
+                    <th class='day' id='d5'>Saturday <br> 20-11-2021</th>
+                    <th class='day' id='d6'>Sunday <br> 21-11-2021</th>
+                    <td class='time'>...</td>
+                  </tr>
+      ";
         //Gotta match the data with the day and stuff
         //Has to print 4 rows and 5 columns
-       
+       //First check the morning reminders
+       $morning = array();
+       $afternoon = array();
+       $evening = array();
+       $night = array();
+
+       foreach($data as $value)
+       {
+         //If it is in the morning I have to 
+         if($value["time"] < 12)
+         {
+           array_push($morning, $value);
+         } else if($value["time"] < 16)
+         {
+          array_push($afternoon, $value);
+         } else if($value["time"] < 20)
+         {
+          array_push($evening, $value);
+         } else {
+          array_push($night, $value);
+         }
+       }
+
+       //Create array of arrays for the week
+       $weekReminders = array ($morning, $afternoon, $evening, $night);
+
+       //Start building the table here
+
+       $rmd = "";
+       $end = "";
+       for($x=0;$x<4;$x++)
+       {
+        //do all che checks here
+                //Add here the last row
+                if($x==0)
+                {
+                  //if($week[0]["date"])
+
+                  $end=" <th>Morning <br>(7am-12pm)</th>";
+                } 
+                else if($x==1)
+                {
+                  $end= " <th>Afternoon <br>(12pm-4pm)</th>";
+                }  
+                else if($x==2)
+                {
+                  $end= "<th>Evening<br>(4pm-8pm)</th>";
+                }
+                else 
+                {
+                  $end= "<th>Night<br>(8pm-12am)</th>";
+                }
+
+
+        echo "<tr class='tableRowFormat'>";
+        for($y=0;$y<7;$y++)
+        {
+          echo "<td>".$rmd."</td>";
+        }
+
+        echo $end;
+
+        echo "</tr>";
+
+       }
     }
 
    
