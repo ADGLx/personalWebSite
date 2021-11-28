@@ -82,9 +82,11 @@
                 <thead>
                   <tr>
                     <th colspan="8">
-                      <button type="button" class="btn btn-success" style="float: inline-start;"onclick="goBackwardOneWeek()" ><</button>
+                        <form actions="includes/getWeeksReminders.php" method="POST">
+                      <button type="submit" class="btn btn-success" style="float: inline-start;" name ="weeknmb" value="-7" ><</button>
                        Weekly Schedule 
-                       <button type="button" class="btn btn-success" style="float: inline-end;" onclick="goFowardOneWeek()"> ></button>
+                       <button type="submit" class="btn btn-success" style="float: inline-end;" name ="weeknmb" value="7"> ></button>
+                        </form>
                       </th>
                   </tr>
                 </thead>

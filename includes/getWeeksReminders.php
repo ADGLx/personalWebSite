@@ -2,10 +2,18 @@
     //This is supposed to get and print the currents week reminders in the schedule
     $tempUser = $_SESSION["userid"];
 
+    $weekNumber =0;
+    if(isset($_POST["weeknmb"]) !=null)
+    $weekNumber = $_POST["weeknmb"];
+
+    if($weekNumber != 0)
+    header("location: ../MySchedule.php?error=".$weekNumber);
+
+
     //This for now only does this week
     $sql = "SELECT * FROM `reminders` WHERE 
-            date >= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - 2 DAY
-            AND date <= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - 8 DAY";
+            date >= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - 1 DAY
+            AND date <= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - 7 DAY";
 
     if($result = mysqli_query($conn, $sql))
     {
@@ -75,65 +83,75 @@
 
     function PrintTableWithData($data)
     {
-      $targetYear = date("Y"); //Gets this year
-      $date = new DateTime(date("y")."-".date("m")."-".date("d")); //Gets todays date
+      $targetDate = date('w');//Getting the current week for now might need to add 7 or remove
 
-      //These are things
-      $weekN = $date->format("W"); //week number
-
-      if($weekN <10)
-      $weekN = "0".$weekN; //Adds the 0 for strtotime
-
-      //This gets the monday of that week
-      $mondayDate = strtotime(date("Y")."W".$weekN); //This just gets the date
-      //$mondayDate = date('d.m.y',strtotime(date("Y")."W".$weekN));
-
+      $sundayDate =  strtotime('-'.$targetDate.' days'); //This just gets the date
+ 
       $entireWeekData = array();
+      $entireWeekDataForComp = array();
       for($i = 0; $i < 7; $i++)
       {
-        array_push($entireWeekData, date("d.m.y",mktime(0, 0, 0, date("m", $mondayDate)  , date("d",$mondayDate)+1, date("Y",$mondayDate))));
+        array_push($entireWeekData, date("d-m-y",mktime(0, 0, 0, date("m",  $sundayDate)  , date("d", $sundayDate)+$i, date("Y", $sundayDate))));
+        array_push($entireWeekDataForComp, date("Y-m-d",mktime(0, 0, 0, date("m",  $sundayDate)  , date("d", $sundayDate)+$i, date("Y", $sundayDate))));
       }
       
       //Print table header too:
       echo "
       <tr>
-                    <th class='day' id='d0'>Monday <br> $entireWeekData[0] </th>
-                    <th class='day' id='d1'>Tuesday <br> $entireWeekData[1]</th>
-                    <th class='day' id='d2'>Wednesday <br> $entireWeekData[2]</th>
-                    <th class='day' id='d3'>Thursday <br> $entireWeekData[3]</th>
-                    <th class='day' id='d4'>Friday <br> $entireWeekData[4]</th>
-                    <th class='day' id='d5'>Saturday <br> $entireWeekData[5]</th>
-                    <th class='day' id='d6'>Sunday <br> $entireWeekData[6]</th>
+                    <th class='day' id='d0'>Sunday <br> $entireWeekData[0] </th>
+                    <th class='day' id='d1'>Monday <br> $entireWeekData[1]</th>
+                    <th class='day' id='d2'>Tuesday <br> $entireWeekData[2]</th>
+                    <th class='day' id='d3'>Wednesday <br> $entireWeekData[3]</th>
+                    <th class='day' id='d4'>Thursday <br> $entireWeekData[4]</th>
+                    <th class='day' id='d5'>Friday <br> $entireWeekData[5]</th>
+                    <th class='day' id='d6'>Saturday <br> $entireWeekData[6]</th>
                     <td class='time'>...</td>
                   </tr>
       ";
-        //Gotta match the data with the day and stuff
-        //Has to print 4 rows and 5 columns
-       //First check the morning reminders
-       $morning = array();
-       $afternoon = array();
-       $evening = array();
-       $night = array();
 
-       foreach($data as $value)
-       {
-         //If it is in the morning I have to 
-         if($value["time"] < 12)
-         {
-           array_push($morning, $value);
-         } else if($value["time"] < 16)
-         {
-          array_push($afternoon, $value);
-         } else if($value["time"] < 20)
-         {
-          array_push($evening, $value);
-         } else {
-          array_push($night, $value);
-         }
-       }
+      if(empty($data)) //it is empty just show the other thing
+      {
+        PrintFullEmptyTable(); //Idk if this is the right way tho, test later
+      } else //If it isnt update
+      {
 
-       //Create array of arrays for the week
-       $weekReminders = array ($morning, $afternoon, $evening, $night);
+      
+
+       //Create array of arrays for the week with seven days and then the reminders for each
+       $allReminders = array(
+        //Monday (0)   (1)     (2)     (3)
+        array(array(),array(),array(),array()),
+        //Tuesday 
+        array(array(),array(),array(),array()), 
+        //Wednesday 
+        array(array(),array(),array(),array()),
+        //Thursday 
+        array(array(),array(),array(),array()),
+        //Friday 
+        array(array(),array(),array(),array()),
+        //Saturday 
+        array(array(),array(),array(),array()),
+        //Sunday
+        array(array(),array(),array(),array())
+       );
+
+       //Loop throught the week and add all reminders to its specific day
+      foreach($data as $value)
+      {
+       // $allReminders[getDayOfTheWeek($value, $entireWeekData)][getTimeSlot($value)] = $value;
+        //I will use array push
+        for($x=0;$x<7;$x++)
+        {
+          if($value["date"] == $entireWeekDataForComp[$x])
+          array_push($allReminders[$x][getTimeSlot($value)], $value);
+        }
+        
+
+        //array_push($allReminders[6][3], $value);
+      
+      }
+
+  
 
        //Start building the table here
 
@@ -146,6 +164,7 @@
                 if($x==0)
                 {
                   $end=" <th>Morning <br>(7am-12pm)</th>";
+
                 } 
                 else if($x==1)
                 {
@@ -164,13 +183,61 @@
         echo "<tr class='tableRowFormat'>";
         for($y=0;$y<7;$y++)
         {
-          echo "<td>".""."</td>";
+          echo"<td>";
+          foreach($allReminders[$y][$x] as $val)
+           {
+               echo $val["title"];
+              if($val["date"] == $entireWeekData[$y])
+              {
+               
+                echo"".$val."";
+              }
+
+              
+           }
+          
+          echo "</td>";
         }
 
         echo $end;
 
         echo "</tr>";
 
+       }
+       
+      }
+    }
+
+    //This gets the day of the week of the reminder
+    function getDayOfTheWeek ($value, $thisWeekData)
+    {
+      for($x =0; $x<7; $x++)
+      {
+        if($thisWeekData[$x] == $value["date"])
+        {
+          return $x;
+        }
+          
+      }
+
+      return null;
+    }
+
+    //This gets the time slot of the reminder
+    function getTimeSlot($value)
+    {
+       //If it is in the morning I have to 
+       if($value["time"] < 12)
+       {
+         return 0; //Morning
+       } else if($value["time"] < 16)
+       {
+        return 1; //Afternoon
+       } else if($value["time"] < 20)
+       {
+        return 2; //Evening
+       } else {
+        return 3; //Night
        }
     }
 
