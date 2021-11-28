@@ -91,22 +91,19 @@
       $entireWeekData = array();
       for($i = 0; $i < 7; $i++)
       {
-        date("d.m.y",array_push($entireWeekData,mktime(0, 0, 0, date("m", $mondayDate)  , date("d",$mondayDate)+1, date("Y",$mondayDate))));
+        array_push($entireWeekData, date("d.m.y",mktime(0, 0, 0, date("m", $mondayDate)  , date("d",$mondayDate)+1, date("Y",$mondayDate))));
       }
       
-      //$tomorrow  = mktime(0, 0, 0, date("m", $mondayDate)  , date("d",$mondayDate)+1, date("Y",$mondayDate));
-      $test = $entireWeekData[0];
       //Print table header too:
       echo "
-      <p>$test</p>
       <tr>
-                    <th class='day' id='d0'>Monday <br> $mondayDate </th>
-                    <th class='day' id='d1'>Tuesday <br> 16-11-2021</th>
-                    <th class='day' id='d2'>Wednesday <br> 17-11-2021</th>
-                    <th class='day' id='d3'>Thursday <br> 18-11-2021</th>
-                    <th class='day' id='d4'>Friday <br> 19-11-2021</th>
-                    <th class='day' id='d5'>Saturday <br> 20-11-2021</th>
-                    <th class='day' id='d6'>Sunday <br> 21-11-2021</th>
+                    <th class='day' id='d0'>Monday <br> $entireWeekData[0] </th>
+                    <th class='day' id='d1'>Tuesday <br> $entireWeekData[1]</th>
+                    <th class='day' id='d2'>Wednesday <br> $entireWeekData[2]</th>
+                    <th class='day' id='d3'>Thursday <br> $entireWeekData[3]</th>
+                    <th class='day' id='d4'>Friday <br> $entireWeekData[4]</th>
+                    <th class='day' id='d5'>Saturday <br> $entireWeekData[5]</th>
+                    <th class='day' id='d6'>Sunday <br> $entireWeekData[6]</th>
                     <td class='time'>...</td>
                   </tr>
       ";
@@ -140,7 +137,7 @@
 
        //Start building the table here
 
-       $rmd = "";
+       $rmds;
        $end = "";
        for($x=0;$x<4;$x++)
        {
@@ -148,8 +145,6 @@
                 //Add here the last row
                 if($x==0)
                 {
-                  //if($week[0]["date"])
-
                   $end=" <th>Morning <br>(7am-12pm)</th>";
                 } 
                 else if($x==1)
@@ -169,7 +164,7 @@
         echo "<tr class='tableRowFormat'>";
         for($y=0;$y<7;$y++)
         {
-          echo "<td>".$rmd."</td>";
+          echo "<td>".""."</td>";
         }
 
         echo $end;
