@@ -31,7 +31,7 @@
 
     <title>ADGL- MySchedule</title>
 </head>
-<body onload="showCalendar()">
+<body onload="change()">
     <!--Login Verification-->
     <?php include("includes/accountVal.php"); ?>
    
@@ -82,11 +82,11 @@
                 <thead>
                   <tr>
                     <th colspan="8">
-                        <form actions="includes/getWeeksReminders.php" method="POST">
-                      <button type="submit" class="btn btn-success" style="float: inline-start;" name ="weeknmb" value="-7" ><</button>
-                       Weekly Schedule 
-                       <button type="submit" class="btn btn-success" style="float: inline-end;" name ="weeknmb" value="7"> ></button>
-                        </form>
+                      <form actions="includes/getWeeksReminders.php" method="POST">
+                      <button type="submit" class="btn btn-success" style="float: inline-start;" id="minusWeek" name ="weeknmb" value=0 ><</button>
+                      Weekly Schedule 
+                       <button type="submit" class="btn btn-success" style="float: inline-end;" id="plusWeek" name ="weeknmb" value=0> ></button>
+                       </form>
                       </th>
                   </tr>
                 </thead>
@@ -275,7 +275,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <!--My Own JS-->
-   <!-- <script src="calendarFunctions.js"></script> -->
+   <script src="changeWeek.js"></script> 
 
 </body>
 </html>

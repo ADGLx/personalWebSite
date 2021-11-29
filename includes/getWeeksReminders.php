@@ -4,16 +4,19 @@
 
     $weekNumber =0;
     if(isset($_POST["weeknmb"]) !=null)
-    $weekNumber = $_POST["weeknmb"];
+    {
+      $weekNumber = $_POST["weeknmb"];
+    }
+    
 
     if($weekNumber != 0)
-    header("location: ../MySchedule.php?error=".$weekNumber);
+    echo $weekNumber;
 
 
     //This for now only does this week
     $sql = "SELECT * FROM `reminders` WHERE 
-            date >= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - 1 DAY
-            AND date <= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - 7 DAY";
+            date >= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (1 + $weekNumber) DAY
+            AND date <= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (7 + $weekNumber) DAY";
 
     if($result = mysqli_query($conn, $sql))
     {
@@ -21,7 +24,7 @@
     if ($row = mysqli_fetch_assoc($result)) 
     {
        // addRowToReminderTable($row["title"],$row["date"],$row["time"], $row["description"], $row["id"]);
-        PrintTableWithData($result);
+        PrintTableWithData($result, $weekNumber);
     }
 
     
@@ -81,9 +84,9 @@
         ";
     }
 
-    function PrintTableWithData($data)
+    function PrintTableWithData($data , $weekNumber)
     {
-      $targetDate = date('w');//Getting the current week for now might need to add 7 or remove
+      $targetDate = date('w') - $weekNumber;//Getting the current week for now might need to add 7 or remove
 
       $sundayDate =  strtotime('-'.$targetDate.' days'); //This just gets the date
  
