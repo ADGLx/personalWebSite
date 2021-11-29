@@ -31,7 +31,7 @@
 
     <title>ADGL- MySchedule</title>
 </head>
-<body onload="change()">
+<body>
     <!--Login Verification-->
     <?php include("includes/accountVal.php"); ?>
    
@@ -82,10 +82,13 @@
                 <thead>
                   <tr>
                     <th colspan="8">
-                      <form actions="includes/getWeeksReminders.php" method="POST">
-                      <button type="submit" class="btn btn-success" style="float: inline-start;" id="minusWeek" name ="weeknmb" value=0 ><</button>
+                      <form onsubmit="remove()" actions="includes/getWeeksReminders.php" method="GET">
+                      <button type="submit" class="btn btn-success" style="float: inline-start;" name="weeknmb" id="minusWeek"  value=0 ><</button>
+                      </form>
+                     
+                      <form onsubmit="add()" actions="includes/getWeeksReminders.php" method="GET">
                       Weekly Schedule 
-                       <button type="submit" class="btn btn-success" style="float: inline-end;" id="plusWeek" name ="weeknmb" value=0> ></button>
+                       <button type="submit" class="btn btn-success" style="float: inline-end;" name="weeknmb" id="plusWeek" value=0> ></button>
                        </form>
                       </th>
                   </tr>

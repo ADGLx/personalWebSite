@@ -3,14 +3,14 @@
     $tempUser = $_SESSION["userid"];
 
     $weekNumber =0;
-    if(isset($_POST["weeknmb"]) !=null)
+    if(isset($_GET["weeknmb"]) !=null)
     {
-      $weekNumber = $_POST["weeknmb"];
+      $weekNumber = $_GET["weeknmb"];
     }
     
 
-    if($weekNumber != 0)
-    echo $weekNumber;
+    //if($weekNumber != 0)
+    //echo $weekNumber;
 
 
     //This for now only does this week
@@ -23,15 +23,15 @@
         //Grabs the result in an array and print them all 
     if ($row = mysqli_fetch_assoc($result)) 
     {
+      if(empty($row))
+      echo "erroaar";
        // addRowToReminderTable($row["title"],$row["date"],$row["time"], $row["description"], $row["id"]);
         PrintTableWithData($result, $weekNumber);
     }
-
-    
     } else{
+       echo "error";
        PrintFullEmptyTable();
     }
-    
     mysqli_free_result($result);
 
 
