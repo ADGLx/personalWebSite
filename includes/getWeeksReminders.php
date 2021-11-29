@@ -8,13 +8,14 @@
       $weekNumber = $_GET["weeknmb"];
     }
     
-
+    $weekNumber = $weekNumber*7;
     //if($weekNumber != 0)
     //echo $weekNumber;
 
 
     //This for now only does this week
     $sql = "SELECT * FROM `reminders` WHERE 
+            userid =$tempUser AND
             date >= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (1 + $weekNumber) DAY
             AND date <= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (7 + $weekNumber) DAY";
 
@@ -28,23 +29,25 @@
        // addRowToReminderTable($row["title"],$row["date"],$row["time"], $row["description"], $row["id"]);
         PrintTableWithData($result, $weekNumber);
     }
+    else{
+      PrintTableWithData(null, $weekNumber);
+    }
     } else{
        echo "error";
-       PrintFullEmptyTable();
     }
     mysqli_free_result($result);
 
 
     function PrintFullEmptyTable()
     {
+      //<button class='btn btn-success' type='button' style='width:100%; background-color:;'>Place Holder (9:00am)</button>
         
         echo "
         <tr class='tableRowFormat'>
         <td>
-        <button class='btn btn-success' type='button' style='width:100%; background-color:;'>Place Holder (9:00am)</button>
         </td>
         <td></td>
-        <td> <button class='btn btn-success' type='button' style='width:100%; background-color:;'>Create dynamic calendar (10:10am)</button> </td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -86,7 +89,7 @@
 
     function PrintTableWithData($data , $weekNumber)
     {
-      $targetDate = date('w') - $weekNumber;//Getting the current week for now might need to add 7 or remove
+      $targetDate = date('w') - ($weekNumber);//Getting the current week for now might need to add 7 or remove
 
       $sundayDate =  strtotime('-'.$targetDate.' days'); //This just gets the date
  
@@ -112,7 +115,7 @@
                   </tr>
       ";
 
-      if(empty($data)) //it is empty just show the other thing
+      if(empty($data) || $data==null) //it is empty just show the other thing
       {
         PrintFullEmptyTable(); //Idk if this is the right way tho, test later
       } else //If it isnt update
@@ -189,14 +192,11 @@
           echo"<td>";
           foreach($allReminders[$y][$x] as $val)
            {
-               echo $val["title"];
-              if($val["date"] == $entireWeekData[$y])
-              {
+             //This appearts to work just fine, which is kinda weird but whatever
+               $timeTemp = date("h:ia",strtotime($val["time"]));
                
-                echo"".$val."";
-              }
-
-              
+               $temp = "<button class='btn btn-success' type='button' style='width:100%; background-color:".$val["color"] .";'>".$val["title"] ."<br>(".$timeTemp.")</button>";
+               echo $temp;
            }
           
           echo "</td>";

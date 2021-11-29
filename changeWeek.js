@@ -22,14 +22,14 @@ function change()
 
 function add()
 {
-    weekNumber = Number(sessionStorage.getItem("num")) + Number(7);
+    weekNumber = Number(sessionStorage.getItem("num")) + Number(1);
     sessionStorage.setItem("num",weekNumber);
     document.getElementById("plusWeek").value = weekNumber;
 }
 
 function remove()
 {
-    weekNumber = Number(sessionStorage.getItem("num")) - Number(7);
+    weekNumber = Number(sessionStorage.getItem("num")) - Number(1);
     sessionStorage.setItem("num",weekNumber);
     document.getElementById("minusWeek").value = weekNumber;
 }
