@@ -19,7 +19,7 @@
                $sql = "DELETE FROM reminders WHERE id=$idToBeDeleted";
                
                if($result = mysqli_query($conn, $sql))
-               header("location: ../Index.php?message=reminderDeleted");
+               header("location: ../index.php?message=reminderDeleted");
             }
             
             //if(mysqli_fetch_assoc($result)[0]=== )
@@ -27,8 +27,8 @@
          
     //   $sql = "DELETE FROM reminders WHERE id=$idToBeDeleted";
 
-      // header("location: ../Index.php?".$_SESSION["userid"]); //Refreshes the page
+      // header("location: ../index.php?".$_SESSION["userid"]); //Refreshes the page
        
     } else {
-      header("location: ../Index.php?errors");
+      header("location: ../index.php?errors");
     }

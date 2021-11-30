@@ -24,17 +24,17 @@
         }
         else if(empty($rmdTitle))
         {
-            header("location: ../Index.php?error=emptyTitle");
+            header("location: ../index.php?error=emptyTitle");
             exit();
         } 
         else if(empty($rmdTime))
         {
-            header("location: ../Index.php?error=emptyTime");
+            header("location: ../index.php?error=emptyTime");
             exit();
         } 
         else if(empty($rmdDate))
         {
-            header("location: ../Index.php?error=emptyDate");
+            header("location: ../index.php?error=emptyDate");
             exit();
         } 
 
@@ -44,7 +44,7 @@
 
     } else 
     {
-        header("location: ../Index.php?error=idkData");
+        header("location: ../index.php?error=idkData");
         exit();
     }
 
@@ -59,7 +59,7 @@
         // save to db and check
 			if(mysqli_query($conn, $sql)){
 				// success
-                header("location: ../Index.php"); //Refreshes the page
+                header("location: ../index.php"); //Refreshes the page
 			} else {
 				echo 'query error: '. mysqli_error($conn);
 			}
