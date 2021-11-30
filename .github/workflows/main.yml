@@ -16,6 +16,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }} # User of the server you want to ssh into
      
           script: | 
-            cd /var/www/adgl.tech
-            git pull git@github.com:ADGLx/personalWebSite.git
+            cd /var/www/sch.adgl.tech
+            git clone git@github.com:ADGLx/personalWebSite.git .
             echo 'Deployment successful' 
