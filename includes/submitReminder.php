@@ -24,17 +24,17 @@
         }
         else if(empty($rmdTitle))
         {
-            header("location: ../MySchedule.php?error=emptyTitle");
+            header("location: ../Index.php?error=emptyTitle");
             exit();
         } 
         else if(empty($rmdTime))
         {
-            header("location: ../MySchedule.php?error=emptyTime");
+            header("location: ../Index.php?error=emptyTime");
             exit();
         } 
         else if(empty($rmdDate))
         {
-            header("location: ../MySchedule.php?error=emptyDate");
+            header("location: ../Index.php?error=emptyDate");
             exit();
         } 
 
@@ -44,7 +44,7 @@
 
     } else 
     {
-        header("location: ../MySchedule.php?error=idkData");
+        header("location: ../Index.php?error=idkData");
         exit();
     }
 
@@ -59,7 +59,7 @@
         // save to db and check
 			if(mysqli_query($conn, $sql)){
 				// success
-                header("location: ../MySchedule.php"); //Refreshes the page
+                header("location: ../Index.php"); //Refreshes the page
 			} else {
 				echo 'query error: '. mysqli_error($conn);
 			}

@@ -29,5 +29,5 @@
       $sql = "insert into logins (user, password, email) VALUES ($user, $pass, $email);";//This is just the SQL code
       mysqli_query($conn, $sql);
 
-      header("Location: ../MySchedule.php?signup=sucess");//This goes back and sends the user to another page
+      header("Location: ../Index.php?signup=sucess");//This goes back and sends the user to another page
   ?>

@@ -58,7 +58,7 @@
             session_start();
             $_SESSION["userid"] = $userExist["id"];
             $_SESSION["userUsername"] = $userExist["user"];
-            header("location: ../MySchedule.php");
+            header("location: ../Index.php");
         }
     }
 
