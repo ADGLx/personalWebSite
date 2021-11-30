@@ -48,7 +48,7 @@
       <div class ="top-buffer d-grid gap-3">
         <div class="mx-auto">
             <div class="card"> 
-                <img src="Img/viperWaifu.png" class="card-img-top">
+                <img src="img/viperWaifu.png" class="card-img-top">
                 <div class="card-body">
                  
                   <div class="form-floating mb-3">
