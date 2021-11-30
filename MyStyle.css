@@ -67,7 +67,9 @@ body {
   th.time{
       width: 2%;
   }
-  .tableRowFormat {
+
+  
+    .tableRowFormat {
     height: 150px ;
   }
   .h td:hover,.h th:hover{

@@ -95,22 +95,30 @@
  
       $entireWeekData = array();
       $entireWeekDataForComp = array();
+      $ifCurrentDay = array ();
       for($i = 0; $i < 7; $i++)
       {
         array_push($entireWeekData, date("d-m-y",mktime(0, 0, 0, date("m",  $sundayDate)  , date("d", $sundayDate)+$i, date("Y", $sundayDate))));
         array_push($entireWeekDataForComp, date("Y-m-d",mktime(0, 0, 0, date("m",  $sundayDate)  , date("d", $sundayDate)+$i, date("Y", $sundayDate))));
+        if($entireWeekData[$i] == date("d-m-y"))
+        {
+          array_push($ifCurrentDay, "style=background-color:black;");
+        } else 
+        {
+          array_push($ifCurrentDay, "");
+        }
       }
       
       //Print table header too:
       echo "
       <tr>
-                    <th class='day' id='d0'>Sunday <br> $entireWeekData[0] </th>
-                    <th class='day' id='d1'>Monday <br> $entireWeekData[1]</th>
-                    <th class='day' id='d2'>Tuesday <br> $entireWeekData[2]</th>
-                    <th class='day' id='d3'>Wednesday <br> $entireWeekData[3]</th>
-                    <th class='day' id='d4'>Thursday <br> $entireWeekData[4]</th>
-                    <th class='day' id='d5'>Friday <br> $entireWeekData[5]</th>
-                    <th class='day' id='d6'>Saturday <br> $entireWeekData[6]</th>
+                    <th class='day' $ifCurrentDay[0] id='d0'>Sunday <br> $entireWeekData[0] </th>
+                    <th class='day' $ifCurrentDay[1] id='d1'>Monday <br> $entireWeekData[1]</th>
+                    <th class='day' $ifCurrentDay[2] id='d2'>Tuesday <br> $entireWeekData[2]</th>
+                    <th class='day' $ifCurrentDay[3] id='d3'>Wednesday <br> $entireWeekData[3]</th>
+                    <th class='day' $ifCurrentDay[4] id='d4'>Thursday <br> $entireWeekData[4]</th>
+                    <th class='day' $ifCurrentDay[5] id='d5'>Friday <br> $entireWeekData[5]</th>
+                    <th class='day' $ifCurrentDay[6] id='d6'>Saturday <br> $entireWeekData[6]</th>
                     <td class='time'>...</td>
                   </tr>
       ";
@@ -189,7 +197,9 @@
         echo "<tr class='tableRowFormat'>";
         for($y=0;$y<7;$y++)
         {
-          echo"<td>";
+
+          echo"<td $ifCurrentDay[$y]>";
+
           foreach($allReminders[$y][$x] as $val)
            {
              //This appearts to work just fine, which is kinda weird but whatever
