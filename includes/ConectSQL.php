@@ -2,7 +2,7 @@
 //This things gotta be changed once I set the server up
 $dbServername = "localhost";
 $dbUserName = "root";
-$dbPassword = ""; 
+$dbPassword = "S3rverPassword"; 
 
 $dbName= "loginsystem";
 
