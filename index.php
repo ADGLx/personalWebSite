@@ -41,8 +41,11 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
       <img src="/img/creature.gif" width="35" height="35" >
-      
-        <a class="navbar-brand" href="#">My Schedule</a>
+      <?php 
+        $temp = $_SESSION["userUsername"];
+          $temp = strtoupper($temp);
+      echo "<a class='navbar-brand' href='#'>$temp&#39;s Schedule</a> "?>
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
