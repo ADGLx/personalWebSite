@@ -38,50 +38,49 @@
     mysqli_free_result($result);
 
 
-    function PrintFullEmptyTable()
+    function PrintFullEmptyTable($todayData)
     {
       //<button class='btn btn-success' type='button' style='width:100%; background-color:;'>Place Holder (9:00am)</button>
         
         echo "
         <tr class='tableRowFormat'>
-        <td>
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td $todayData[0]></td>
+        <td $todayData[1]></td>
+        <td $todayData[2]></td>
+        <td $todayData[3]></td>
+        <td $todayData[4]></td>
+        <td $todayData[5]></td>
+        <td $todayData[6]></td>
         <th >Morning <br>(7am-12pm)</th>
       </tr>
       <tr class='tableRowFormat'>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <td $todayData[0]></td>
+        <td $todayData[1]></td>
+        <td $todayData[2]></td>
+        <td $todayData[3]></td>
+        <td $todayData[4]></td>
+        <td $todayData[5]></td>
+        <td $todayData[6]></td>
         <th>Afternoon <br>(12pm-4pm)</th>
       </tr>
       <tr class='tableRowFormat'>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <td $todayData[0]></td>
+      <td $todayData[1]></td>
+      <td $todayData[2]></td>
+      <td $todayData[3]></td>
+      <td $todayData[4]></td>
+      <td $todayData[5]></td>
+      <td $todayData[6]></td>
         <th>Evening<br>(4pm-8pm)</th>
       </tr>
       <tr class='tableRowFormat'>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <td $todayData[0]></td>
+      <td $todayData[1]></td>
+      <td $todayData[2]></td>
+      <td $todayData[3]></td>
+      <td $todayData[4]></td>
+      <td $todayData[5]></td>
+      <td $todayData[6]></td>
         <th>Night<br>(8pm-12am)</th>
       </tr>
         ";
@@ -125,7 +124,7 @@
 
       if(empty($data) || $data==null) //it is empty just show the other thing
       {
-        PrintFullEmptyTable(); //Idk if this is the right way tho, test later
+        PrintFullEmptyTable( $ifCurrentDay); //Idk if this is the right way tho, test later
       } else //If it isnt update
       {
 
