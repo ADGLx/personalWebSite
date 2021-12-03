@@ -54,7 +54,7 @@
     function storeReminderInDatabase($conn,$userid ,$title, $time, $date, $priority, $notify, $description, $color)
     {
         $newNotify =0;
-        if($notify != 1)
+        if($notify == "")
         {
             $newNotify =0;
         } else 
