@@ -53,8 +53,17 @@
 
     function storeReminderInDatabase($conn,$userid ,$title, $time, $date, $priority, $notify, $description, $color)
     {
+        $newNotify =0;
+        if($notify != 1)
+        {
+            $newNotify =0;
+        } else 
+        {
+            $newNotify = 1;
+        }
 
-        $sql = "INSERT INTO reminders(userid,title,time,date,priority,notify,description,color) VALUES('$userid','$title','$time','$date','$priority','$notify','$description','$color')";
+
+        $sql = "INSERT INTO reminders(userid,title,time,date,priority,notify,description,color) VALUES('$userid','$title','$time','$date','$priority','$newNotify','$description','$color')";
 
         // save to db and check
 			if(mysqli_query($conn, $sql)){
