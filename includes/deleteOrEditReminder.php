@@ -29,6 +29,16 @@
 
       // header("location: ../index.php?".$_SESSION["userid"]); //Refreshes the page
        
-    } else {
+    } 
+    else if(isset($_POST["edit"]))
+    {
+      session_start();//Not sure why but this works
+      include_once "ConectSQL.php"; //This fixes the connection issue
+         $idToBeEdited = $_POST["edit"];
+
+         //EDIT THE THING IN THE DATA BASE HERE
+
+    }
+    else {
       header("location: ../index.php?errors");
     }
