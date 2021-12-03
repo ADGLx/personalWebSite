@@ -260,7 +260,7 @@
             <!--Location-->
             <div>
               <label>Notify by email: </label>
-              <input type="checkbox" id="classname" name="rmdNotify" style="float: inline-end;">
+              <input type="checkbox" id="classname" name="rmdNotify" checked="on" style="float: inline-end;">
             </div>
             <br>
            <!--Description-->
