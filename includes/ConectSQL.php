@@ -6,9 +6,16 @@ $dbPassword = "S3rverPassword";
 
 $dbName= "loginsystem";
 
-$conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
+if($_SERVER['HTTP_HOST'] == "localhost")
+{
+    $conn = mysqli_connect($dbServername, $dbUserName,"" , $dbName);
+}
+ else 
+ {
+    $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
+ }
 
-if(!$conn)
-$conn = mysqli_connect($dbServername, $dbUserName,"" , $dbName);
+
+
 
 //Dont need to close it since its only an php
