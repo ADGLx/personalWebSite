@@ -1,6 +1,14 @@
 <?php
   include_once 'includes/ConectSQL.php';
   session_start();
+  //Set the session variable for the week
+  if(isset($_GET["weeknmb"]) && !empty($_GET['weeknmb']))
+  {
+    $_SESSION["curWeek"] = $_GET["weeknmb"];
+  } else {
+    $_SESSION["curWeek"] = 0;
+  }
+  
 ?>
 
 <!DOCTYPE html>
