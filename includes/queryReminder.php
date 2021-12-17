@@ -26,8 +26,8 @@ if(isset($_GET["editID"]) !=null)
              $row["priority"] . "\n" .
              $row["notify"] . "\n" .
              $row["description"] . "\n" .
-             $row["color"] . "\n";
-
+             $row["color"] . "\n".
+             $row["id"];
               echo $allOutput;
            }
           

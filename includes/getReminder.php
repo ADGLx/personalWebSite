@@ -2,7 +2,20 @@
     
     $tempUser = $_SESSION["userid"];
 
-    $sql = "SELECT * FROM reminders WHERE userid =$tempUser";
+    $weekNumber =0;
+    if(isset($_GET["weeknmb"]) !=null)
+    {
+      $weekNumber = $_GET["weeknmb"];
+    }
+    
+    $weekNumber = $weekNumber*7;
+
+
+
+    $sql = "SELECT * FROM `reminders` WHERE 
+            userid =$tempUser AND
+            date >= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (1 + $weekNumber) DAY
+            AND date <= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (7 + $weekNumber) DAY";
 
     if($result = mysqli_query($conn, $sql))
     {
@@ -10,7 +23,16 @@
     while ($row = mysqli_fetch_assoc($result)) 
     {
         addRowToReminderTable($row["title"],$row["date"],$row["time"], $row["description"], $row["id"]);
-        }
+    }
+
+    if(mysqli_num_rows($result) == 0)
+    {
+        echo "<tr> 
+        <td colspan=5 style='text-align:center'>You are free!</td>
+         </tr>";
+    }
+
+
     } else{
         echo "Error at getting database";
     }

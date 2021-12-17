@@ -18,11 +18,11 @@ function showReminderInfoModal(id)
       let title = queryString[0];
       let time = queryString[1];
       let date = queryString[2];
-      let priority = queryString[3];
+      let priority = queryString[3]; //This isnt being used yet
       let notify = queryString[4];
       let description = queryString[5];
       let color = queryString[6];
-
+      let id = queryString[7];
       
      // alert(queryString);
       //In here I can change the information of the modal
@@ -38,6 +38,8 @@ function showReminderInfoModal(id)
       document.getElementById("descriptionE").value="";
       
       document.getElementById("colorE").value = color;
+
+      document.getElementById("editR").value = id;
       
     } else {
           alert('Error Code: ' +  objXMLHttpRequest.status);

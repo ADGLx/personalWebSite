@@ -102,11 +102,11 @@
           <table class="table table-dark">
             <thead>
               <tr>
-                <th>Reminder List</th>
+                <th>This Week's Reminders</th>
                 <th>Date</th>
                 <th>Time</th>
                 <th>Description</th>
-                <th>Options</th>
+                <th>Options </th>
               </tr>
             </thead>
             <tbody>
@@ -272,7 +272,7 @@
 </form>
 
 <!-- Modal for Editing Reminder -->
-<form action="includes/submitReminder.php" method="POST">
+<form action="includes/editReminder.php" method="POST">
 <div class="container" id="editReminder">
 <div class='modal fade' id='ReminderEditModel' tabindex='-1' aria-labelledby='ReminderEditModel' aria-hidden='true'>
              <div class='modal-dialog'>
@@ -336,7 +336,7 @@
                  </div>
                  <div class='modal-footer'>
                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-                   <button type='button submit' class='btn btn-primary' data-bs-dismiss='modal' name='submit'>Save changes</button>
+                   <button type='button submit' class='btn btn-primary' data-bs-dismiss='modal' name='submit' id='editR'>Save changes</button>
                  </div>
                </div>
              </div>

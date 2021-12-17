@@ -204,7 +204,7 @@
              //This appearts to work just fine, which is kinda weird but whatever
                $timeTemp = date("h:ia",strtotime($val["time"]));
                
-               $temp = "<button class='btn btn-success' type='button' style='width:100%; background-color:".$val["color"] .";'>".$val["title"] ."<br>(".$timeTemp.")</button>";
+               $temp = "<button class='btn btn-success' type='button' onclick='showReminderInfoModal(".$val['id'].")' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' id ='".$val['id']."'style='width:100%; background-color:".$val["color"] .";'>".$val["title"] ."<br>(".$timeTemp.")</button>";
                echo $temp;
            }
           
