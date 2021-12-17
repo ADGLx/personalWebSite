@@ -17,5 +17,5 @@ jobs:
      
           script: | 
             cd /var/www/sch.adgl.tech
-            git pull git@github.com:ADGLx/personalWebSite.git 
+            git reset --hard
             echo 'Deployment successful' 
