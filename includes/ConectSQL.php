@@ -1,5 +1,6 @@
 <?php
 //This things gotta be changed once I set the server up
+//TODO: Secure this later, the password is just exposed
 $dbServername = "localhost";
 $dbUserName = "root";
 $dbPassword = "S3rverPassword"; 
