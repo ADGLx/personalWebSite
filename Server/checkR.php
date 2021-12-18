@@ -25,6 +25,7 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
 
  if($result = mysqli_query($conn, $sql))
     {
+        echo "SQL Returned a result! \n";
         //Grabs the result in an array and print them all 
         while ($row = mysqli_fetch_assoc($result)) 
         {
