@@ -12,11 +12,10 @@ $dbName= "loginsystem";
 
 $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
 
-date_default_timezone_set();
 
  //This works now I can run the php file from the server now I just have to connect to the SQL and get all the info
  $todaysDate = date("Y-m-d");
- $rn = date("h:m").":00"; //Ignore the seconds
+ $rn = date("h:i").":00"; //Ignore the seconds
  //15 minutes in advance
  $sql = "SELECT * FROM `reminders` WHERE  time = ADDTIME('$todaysDate $rn','00:15:00') AND date = $todaysDate AND notify = true"; //This for now just gets today's date
 
