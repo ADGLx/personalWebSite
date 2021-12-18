@@ -26,7 +26,7 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
         while ($row = mysqli_fetch_assoc($result)) 
         {
             //Now for each of the grabbed results of the sql gotta check the other table
-            $sql2 = "SELECT * FROM `logins` WHERE id ='" . $row["id"]. "'";
+            $sql2 = "SELECT * FROM `logins` WHERE id ='" . $row["userid"]. "'";
 
                 if($result2 = mysqli_query($conn, $sql2))
                 {
