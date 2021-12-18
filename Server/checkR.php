@@ -34,12 +34,16 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
                     {
                         //This should execute only once so I will exit manually
                         mail($user["email"],$row["title"], $row["description"]);
+                        echo "sent email to ". $user["email"]. " title: ". $row["title"] . " description: " . $row["description"];
                         break;
                     }
+                }
+                else 
+                {
+                    echo "no user found with that id?";
                 }
         }
     } 
 
-    echo "this executed!";
 
 ?>
