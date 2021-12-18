@@ -12,7 +12,7 @@ $dbName= "loginsystem";
 
 $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
 
-date_default_timezone_set("America/Montreal");
+date_default_timezone_set();
 
  //This works now I can run the php file from the server now I just have to connect to the SQL and get all the info
  $todaysDate = date("Y-m-d");
