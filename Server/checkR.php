@@ -30,6 +30,7 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
 
                 if($result2 = mysqli_query($conn, $sql2))
                 {
+                    echo "found reminder but no user?";
                     while($user = mysqli_fetch_assoc($result))
                     {
                         //This should execute only once so I will exit manually
