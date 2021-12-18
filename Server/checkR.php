@@ -20,6 +20,8 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
 
  //Now just send the email with the sql info
 
+ echo "Attempting to get reminders at $rn on $todaysDate \n\n";
+
  if($result = mysqli_query($conn, $sql))
     {
         //Grabs the result in an array and print them all 
@@ -30,7 +32,7 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
 
                 if($result2 = mysqli_query($conn, $sql2))
                 {
-                    echo "found reminder but no user?";
+                    echo "found reminder but no user? \n";
                     while($user = mysqli_fetch_assoc($result))
                     {
                         //This should execute only once so I will exit manually
@@ -41,7 +43,7 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
                 }
                 else 
                 {
-                    echo "no user found with that id?";
+                    echo "no user found with that id?\n";
                 }
         }
     } else 
