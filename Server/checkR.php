@@ -40,4 +40,6 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
         }
     } 
 
+    echo "this executed!";
+
 ?>
