@@ -29,12 +29,13 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
         //Grabs the result in an array and print them all 
         while ($row = mysqli_fetch_assoc($result)) 
         {
+            echo "SQL Returned a row! Now attempting to find user ". $row["userid"] ."\n";
             //Now for each of the grabbed results of the sql gotta check the other table
             $sql2 = "SELECT * FROM `logins` WHERE id ='" . $row["userid"]. "'";
 
                 if($result2 = mysqli_query($conn, $sql2))
                 {
-                    echo "found reminder but no user? \n";
+                    echo "found reminder?\n";
                     while($user = mysqli_fetch_assoc($result))
                     {
                         //This should execute only once so I will exit manually
