@@ -51,7 +51,7 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
         }
     } else 
     {
-        echo "no reminders found at $rn on $todaysDate";
+        echo "no reminders found at $futureTime on $todaysDate \n";
     }
 
 
