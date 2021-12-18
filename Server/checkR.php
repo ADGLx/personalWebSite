@@ -1,11 +1,16 @@
 <?php
 //This will be executed by the server every minute or so
 //This checks for the current reminders set 
- include "/includes/ConectSQL.php";
- 
- //$myfile = fopen("newfile.txt", "a") or die("Unable to open file!");
- //fwrite($myfile, "this is a test \n");
- //fclose($myfile);
+
+//TODO: Make safe
+//Connect to the DB, kinda ghetto way but whatever
+$dbServername = "localhost";
+$dbUserName = "root";
+$dbPassword = "S3rverPassword"; 
+
+$dbName= "loginsystem";
+
+$conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
 
  //This works now I can run the php file from the server now I just have to connect to the SQL and get all the info
  $todaysDate = date("Y-m-d");
