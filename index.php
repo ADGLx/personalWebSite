@@ -257,7 +257,7 @@
             <br>
             <!--Location-->
             <div>
-              <label>Notify by email: </label>
+              <label>Notify by email: (15 minutes before)</label>
               <input type="checkbox" id="classname" name="rmdNotify" checked="on" style="float: inline-end;">
             </div>
             <br>
@@ -330,7 +330,7 @@
                      <br>
                      <!--Location-->
                      <div>
-                       <label>Notify by email: </label>
+                       <label>Notify by email: (15 minutes before)</label>
                        <input type='checkbox' id='notifyE' name='rmdNotify' checked='on' style='float: inline-end;'>
                      </div>
                      <br>
