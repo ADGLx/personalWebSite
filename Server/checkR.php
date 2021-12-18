@@ -23,6 +23,6 @@
     } 
 
     //Just send a test email here
-    mail("alvarodavidglx@hotmail.com", "Test 1", "This is my first test");
+    mail("luismvl114@gmail.com", "Lo logre luis ", "el server te manda este mensaje");
 
 ?>
