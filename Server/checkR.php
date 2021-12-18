@@ -18,7 +18,7 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
  $rn = date("H:i").":00"; //Ignore the seconds
  $futureTime = date("H:i", strtotime("+15 minutes", strtotime($rn))).":00";
  //15 minutes in advance
- $sql = "SELECT * FROM reminders WHERE time = $futureTime AND date = $todaysDate AND notify = true"; //This for now just gets today's date
+ $sql = "SELECT * FROM reminders WHERE time = '$futureTime' AND date = '$todaysDate' AND notify = true"; //This for now just gets today's date
 
  //Now just send the email with the sql info
 
