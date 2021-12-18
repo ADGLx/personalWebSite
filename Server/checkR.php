@@ -43,7 +43,10 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
                     echo "no user found with that id?";
                 }
         }
-    } 
+    } else 
+    {
+        echo "no reminders found at $rn on $todaysDate";
+    }
 
 
 ?>
