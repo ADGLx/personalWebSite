@@ -30,28 +30,27 @@ $conn = mysqli_connect($dbServername, $dbUserName, $dbPassword, $dbName);
         //Grabs the result in an array and print them all 
         while ($row = mysqli_fetch_assoc($result)) 
         {
-            echo "SQL Returned a row! Now attempting to find user ". $row["userid"] ."\n";
+            //echo "SQL Returned a row! Now attempting to find user ". $row["userid"] ."\n";
             //Now for each of the grabbed results of the sql gotta check the other table
             $sql2 = "SELECT * FROM logins WHERE id ='" . $row["userid"]. "'";
 
                 if($result2 = mysqli_query($conn, $sql2))
                 {
-                    echo "found reminder?\n";
                     if($user = mysqli_fetch_assoc($result2))
                     {
                         //This should execute only once so I will exit manually
-                        echo "sending email to ". $user["email"]. " title: ". $row["title"] . " description: " . $row["description"];
+                        echo "sending email to ". $user["email"]. " title: ". $row["title"] . " description: " . $row["description"] . "\n";
                         mail($user["email"],$row["title"], $row["description"]);
                     }
                 }
                 else 
                 {
-                    echo "no user found with that id?\n";
+                    echo "Error with the user query\n";
                 }
         }
     } else 
     {
-        echo "no reminders found at $futureTime on $todaysDate \n";
+        echo "Error with the reminder query\n";
     }
 
 
