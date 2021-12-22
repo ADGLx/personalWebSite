@@ -12,7 +12,7 @@
        $rmdPriority = $_POST['rmdPriority'];
        $rmdNotify = $_POST['rmdNotify'];
        $rmdDescription = $_POST['rmdDescription'];
-       $rmdColor = $_POST['rmdColor'];
+      // $rmdColor = $_POST['rmdColor'];
 
        $rmdID = $_POST['submit'];
 
@@ -43,7 +43,8 @@
         } 
 
        // loginUser ($conn, $usn, $pwd);
-       editReminderInDatabase($conn, $rmduserID,$rmdTitle, $rmdTime, $rmdDate, $rmdPriority, $rmdNotify, $rmdDescription, $rmdColor, $rmdID);
+       //editReminderInDatabase($conn, $rmduserID,$rmdTitle, $rmdTime, $rmdDate, $rmdPriority, $rmdNotify, $rmdDescription, $rmdColor, $rmdID);
+       editReminderInDatabase($conn, $rmduserID,$rmdTitle, $rmdTime, $rmdDate, $rmdPriority, $rmdNotify, $rmdDescription, $rmdID);
        //header("location: ../index.php?error=$rmdID");
 
     } else 
@@ -55,7 +56,7 @@
     
 
 
-    function editReminderInDatabase($conn,$userid ,$title, $time, $date, $priority, $notify, $description, $color, $idToEdit)
+    function editReminderInDatabase($conn,$userid ,$title, $time, $date, $priority, $notify, $description, $idToEdit)
     {
         $newNotify =0;
         if($notify == "")
@@ -67,7 +68,7 @@
         }
 
 
-        $sql = "UPDATE reminders SET userid='$userid',title='$title',time='$time',date='$date',priority='$priority',notify='$newNotify',description='$description',color='$color' WHERE id=$idToEdit AND userid=$userid";
+        $sql = "UPDATE reminders SET userid='$userid',title='$title',time='$time',date='$date',priority='$priority',notify='$newNotify',description='$description' WHERE id=$idToEdit AND userid=$userid";
 
         // save to db and check
 			if(mysqli_query($conn, $sql)){

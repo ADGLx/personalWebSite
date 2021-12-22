@@ -13,7 +13,7 @@
        $rmdPriority = $_POST['rmdPriority'];
        $rmdNotify = $_POST['rmdNotify'];
        $rmdDescription = $_POST['rmdDescription'];
-       $rmdColor = $_POST['rmdColor'];
+     //  $rmdColor = $_POST['rmdColor'];
 
         require_once 'ConectSQL.php'; //Connects to the SQL
 
@@ -39,8 +39,8 @@
         } 
 
        // loginUser ($conn, $usn, $pwd);
-       storeReminderInDatabase($conn, $rmduserID,$rmdTitle, $rmdTime, $rmdDate, $rmdPriority, $rmdNotify, $rmdDescription, $rmdColor);
-
+      // storeReminderInDatabase($conn, $rmduserID,$rmdTitle, $rmdTime, $rmdDate, $rmdPriority, $rmdNotify, $rmdDescription, $rmdColor);
+      storeReminderInDatabase($conn, $rmduserID,$rmdTitle, $rmdTime, $rmdDate, $rmdPriority, $rmdNotify, $rmdDescription);
 
     } else 
     {
@@ -51,7 +51,7 @@
     
 
 
-    function storeReminderInDatabase($conn,$userid ,$title, $time, $date, $priority, $notify, $description, $color)
+    function storeReminderInDatabase($conn,$userid ,$title, $time, $date, $priority, $notify, $description)
     {
         $newNotify =0;
         if($notify == "")
@@ -63,7 +63,7 @@
         }
 
 
-        $sql = "INSERT INTO reminders(userid,title,time,date,priority,notify,description,color) VALUES('$userid','$title','$time','$date','$priority','$newNotify','$description','$color')";
+        $sql = "INSERT INTO reminders(userid,title,time,date,priority,notify,description) VALUES('$userid','$title','$time','$date','$priority','$newNotify','$description')";
 
         // save to db and check
 			if(mysqli_query($conn, $sql)){

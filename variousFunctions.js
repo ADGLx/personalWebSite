@@ -21,8 +21,8 @@ function showReminderInfoModal(id)
       let priority = queryString[3]; //This isnt being used yet
       let notify = queryString[4];
       let description = queryString[5];
-      let color = queryString[6];
-      let id = queryString[7];
+      //let color = queryString[6];
+      let id = queryString[6];
       
      // alert(queryString);
 
