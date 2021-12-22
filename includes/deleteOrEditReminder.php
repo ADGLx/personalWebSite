@@ -19,7 +19,7 @@
                $sql = "DELETE FROM reminders WHERE id=$idToBeDeleted";
                
                if($result = mysqli_query($conn, $sql))
-               header("location: ../index.php?message=reminderDeleted");
+               header("location: ../index.php?weeknmb=".$_SESSION["curWeek"]);
             }
             
             //if(mysqli_fetch_assoc($result)[0]=== )
