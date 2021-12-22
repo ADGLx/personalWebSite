@@ -204,7 +204,29 @@
              //This appearts to work just fine, which is kinda weird but whatever
                $timeTemp = date("h:ia",strtotime($val["time"]));
                
-               $temp = "<button class='btn btn-success' type='button' onclick='showReminderInfoModal(".$val['id'].")' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' id ='".$val['id']."'style='width:100%; background-color:".$val["color"] .";'>".$val["title"] ."<br>(".$timeTemp.")</button>";
+               //Checkin for the priority
+               $colorTemp;
+               switch ($val['priority']) 
+               {
+                 case 'High':
+                  $colorTemp = "btn-warning";
+                   break;
+
+                   case 'Medium':
+                    $colorTemp = "btn-success";
+                    break;
+
+                    case 'Low':
+                      $colorTemp = "btn-info";
+                      break;
+                 
+                 default:
+                 $colorTemp = "btn-light";
+                   break;
+               }
+
+
+               $temp = "<button class='btn ".$colorTemp."' type='button' onclick='showReminderInfoModal(".$val['id'].")' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' id ='".$val['id']."'style='width:100%;'> <i class='fas fa-check fa-sm'></i> &nbsp;".$val["title"] ."<br>(".$timeTemp.")</button>";
                echo $temp;
            }
           
