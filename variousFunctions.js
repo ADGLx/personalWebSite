@@ -25,6 +25,7 @@ function showReminderInfoModal(id)
       let id = queryString[7];
       
      // alert(queryString);
+
       //In here I can change the information of the modal
       document.getElementById("titleE").value = title;
       document.getElementById("timeE").value = time;
@@ -37,7 +38,10 @@ function showReminderInfoModal(id)
       else
       document.getElementById("descriptionE").value="";
       
-      document.getElementById("colorE").value = color;
+      //document.getElementById("colorE").value = color; removed the color
+      document.getElementById("reminderPreviewE").className = getPriorityClass(priority);
+
+      document.getElementById("priorityE").value = priority;
 
       document.getElementById("editR").value = id;
       
@@ -49,4 +53,43 @@ function showReminderInfoModal(id)
 }
 objXMLHttpRequest.open('GET', "/includes/queryReminder.php?"+"editID="+id, true);
 objXMLHttpRequest.send();
+}
+
+//This updates the reminder preview
+function updateReminderPreviewColor()
+{
+   var val = document.getElementById("reminderP").value;
+    let elementClass = getPriorityClass(val);
+
+   
+
+   document.getElementById("reminderPreview").className = elementClass;
+}
+
+//This updates the reminder edit preview
+function updateReminderPreviewColorE()
+{
+  var val = document.getElementById("priorityE").value;
+    let elementClass = getPriorityClass(val);
+
+   document.getElementById("reminderPreviewE").className = elementClass;
+}
+
+//this gets the priority class
+function getPriorityClass(val)
+{
+  switch (val) {
+    case "High":
+      return "btn btn-warning";
+      
+   case "Medium":
+     return "btn btn-success";
+  
+   case "Low":
+     return "btn btn-info";
+  
+    default:
+     return "btn btn-light";
+
+  }
 }

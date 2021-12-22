@@ -27,6 +27,8 @@
     <!--Jquery import-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
+    <!--Font Awesome-->
+    <script src="https://kit.fontawesome.com/0eb434093d.js" crossorigin="anonymous"></script>
 
 
     <title>ADGL- MySchedule</title>
@@ -42,7 +44,7 @@
       <?php 
         $temp = $_SESSION["userUsername"];
           $temp = strtoupper($temp);
-      echo "<a class='navbar-brand' href='#'>$temp&#39;s Schedule</a> "?>
+      echo "<a class='navbar-brand' href='#'>$temp&#39;s Schedule </a> "?>
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -78,8 +80,8 @@
         <div class="m-2"> <!--For the Margin-->
           
           <!--Add Class and Reminder buttons-->
-          <button type="button" class="btn btn-dark buttonOverride disabled" style="width: 49.9%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Class</button>
-          <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%; float: right;" data-bs-toggle="modal" data-bs-target="#ReminderModel">Add Reminder</button>
+          <button type="button" class="btn btn-dark buttonOverride disabled" style="width: 49.9%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Class &nbsp; <i class="fas fa-graduation-cap"></i></button>
+          <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%; float: right;" data-bs-toggle="modal" data-bs-target="#ReminderModel">Add Reminder &nbsp;<i class='fas fa-check fa-sm'></i></button>
 
           <div class="table-responsive"> 
             <table class="table table-dark table-bordered" style="text-align: center;">
@@ -216,7 +218,7 @@
           <h5 class="modal-title" id="ReminderModel">Add a Reminder &nbsp;</h5> 
           
           <!--Color-->
-          <input type="color" id="head" name="rmdColor" value="#e66465" >
+          <button type="button" id="reminderPreview" class="btn btn-warning">&nbsp; &nbsp; <i class="fas fa-check"></i> &nbsp; &nbsp; </button>
          
         </div>
         <div class="modal-body">
@@ -247,8 +249,8 @@
             <br>
             <!--Type-->
             <div>
-              <label  for="inlineFormCustomSelectPref">Priority</label>
-              <select id="inlineFormCustomSelectPref" name="rmdPriority" style="width: 75%; text-align: center; float: inline-end;">
+              <label >Priority</label>
+              <select  id="reminderP" onchange="updateReminderPreviewColor()" name="rmdPriority" style="width: 75%; text-align: center; float: inline-end;">
                 <option value="High">High</option>
                 <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
@@ -289,7 +291,7 @@
                    <h5 class='modal-title' id='ReminderEditModel'>Edit a Reminder &nbsp;</h5> 
                    
                    <!--Color-->
-                   <input type='color' id='colorE' name='rmdColor' value='#e66465' >
+                   <button type="button" id="reminderPreviewE" class="btn btn-warning">&nbsp; &nbsp; <i class="fas fa-check"></i> &nbsp; &nbsp; </button>
                   
                  </div>
                  <div class='modal-body'>
@@ -321,7 +323,7 @@
                      <!--Type-->
                      <div>
                        <label  for='inlineFormCustomSelectPref'>Priority</label>
-                       <select id='priorityE' name='rmdPriority' style='width: 75%; text-align: center; float: inline-end;'>
+                       <select id='priorityE' onchange="updateReminderPreviewColorE()" name='rmdPriority' style='width: 75%; text-align: center; float: inline-end;'>
                          <option value='High'>High</option>
                          <option value='Medium'>Medium</option>
                          <option value='Low'>Low</option>
@@ -359,7 +361,9 @@
    <script src="changeWeek.js"></script> 
    <script src="variousFunctions.js"></script> 
 
-</body>
+
+
+  </body>
 </html>
 <!--Closes the connection to SQL at the end-->
 <?php include("includes/disconnectSQL.php"); ?>
