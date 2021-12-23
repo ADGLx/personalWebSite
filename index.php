@@ -89,12 +89,12 @@
                   <tr>
                     <th colspan="8">
                       <form onsubmit="remove()" actions="includes/getWeeksReminders.php" method="GET">
-                      <button type="submit" class="btn btn-success" style="float: inline-start;" name="weeknmb" id="minusWeek"  value=0 ><</button>
+                      <button type="submit" class="btn btn-success" style="float: inline-start;" name="weeknmb" id="minusWeek"  value=0 > <i class="fas fa-arrow-left"></i> </button>
                       </form>
                      
                       <form onsubmit="add()" actions="includes/getWeeksReminders.php" method="GET">
                       Weekly Schedule 
-                       <button type="submit" class="btn btn-success" style="float: inline-end;" name="weeknmb" id="plusWeek" value=0> ></button>
+                       <button type="submit" class="btn btn-success" style="float: inline-end;" name="weeknmb" id="plusWeek" value=0> <i class="fas fa-arrow-right"></i></button>
                        </form>
                       </th>
                   </tr>
