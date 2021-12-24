@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="MyStyle.css">
    
     <!--Favicon-->
-    <link rel="icon" href ="img/creature.gif">
+    <link rel="icon" href ="img/creature.png">
     <!--Boostrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -40,7 +40,7 @@
     <!--Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-      <img src="/img/creature.gif" width="35" height="35" >
+      <img src="/img/creature.png" width="35" height="35" >
       <?php 
         $temp = $_SESSION["userUsername"];
           $temp = strtoupper($temp);
