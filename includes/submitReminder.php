@@ -53,6 +53,7 @@
 
     function storeReminderInDatabase($conn,$userid ,$title, $time, $date, $priority, $notify, $description)
     {
+        //This is to make sure it is being sent as a boolean
         $newNotify =0;
         if($notify == "")
         {
