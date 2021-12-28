@@ -256,14 +256,14 @@
                 //Add here the last row
                 if($x==0)
                 {
-                  $end="<th> 
-                          <table class ='table table-dark'> 
-                  <tr> <td> 00:00&nbsp;AM </td></tr>
-                  <tr> <td > 01:00&nbsp;AM</td></tr>
-                  <tr> <td > 02:00&nbsp;AM</td></tr>
-                  <tr> <td > 03:00&nbsp;AM</td></tr>
-                  <tr> <td > 04:00&nbsp;AM</td></tr>
-                  <tr> <td > 05:00&nbsp;AM</td></tr>
+                  $end="<th style='padding: 0px;'> 
+                          <table style='width:100%;height: 100%;'> 
+                  <tr style='border: 1px solid grey'> <td> 00:00&nbsp;AM </td></tr>
+                  <tr style='border: 1px solid grey'> <td > 01:00&nbsp;AM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 02:00&nbsp;AM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 03:00&nbsp;AM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 04:00&nbsp;AM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 05:00&nbsp;AM</td></tr>
                   </table>
                    
                   </th> ";
