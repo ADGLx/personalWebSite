@@ -271,37 +271,39 @@
                 } 
                 else if($x==1)
                 {
-                  $end= "<th>  <table class ='table table-dark'> 
-                  <tr> <td > 06:00&nbsp;AM </td></tr>
-                  <tr> <td > 07:00&nbsp;AM</td></tr>
-                  <tr> <td > 08:00&nbsp;AM</td></tr>
-                  <tr> <td > 09:00&nbsp;AM</td></tr>
-                  <tr> <td > 10:00&nbsp;AM</td></tr>
-                  <tr> <td > 11:00&nbsp;AM</td></tr>
-                  </table></th> ";
+                  $end= " 
+                  <th style='padding: 0px;'>  <table style='width:100%;height: 100%;'> 
+                  <tr style='border: 1px solid grey'> <td > 06:00&nbsp;AM </td></tr>
+                  <tr style='border: 1px solid grey'> <td > 07:00&nbsp;AM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 08:00&nbsp;AM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 09:00&nbsp;AM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 10:00&nbsp;AM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 11:00&nbsp;AM</td></tr>
+                  </table></th> 
+                  ";
                   $hideFirst ="";
                 }  
                 else if($x==2)
                 {
-                  $end= "<th>  <table class ='table table-dark'> 
-                  <tr> <td > 12:00&nbsp;PM </td></tr>
-                  <tr> <td > 01:00&nbsp;PM</td></tr>
-                  <tr> <td > 02:00&nbsp;PM</td></tr>
-                  <tr> <td > 03:00&nbsp;PM</td></tr>
-                  <tr> <td > 04:00&nbsp;PM</td></tr>
-                  <tr> <td > 05:00&nbsp;PM</td></tr>
+                  $end= "<th style='padding: 0px;'>  <table style='width:100%;height: 100%;'> 
+                  <tr style='border: 1px solid grey'> <td > 12:00&nbsp;PM </td></tr>
+                  <tr style='border: 1px solid grey'> <td > 01:00&nbsp;PM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 02:00&nbsp;PM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 03:00&nbsp;PM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 04:00&nbsp;PM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 05:00&nbsp;PM</td></tr>
                   </table></th>";
                   $hideFirst ="";
                 }
                 else 
                 {
-                  $end= "<th>  <table class ='table table-dark'> 
-                  <tr> <td > 06:00&nbsp;PM </td></tr>
-                  <tr> <td > 07:00&nbsp;PM</td></tr>
-                  <tr> <td > 08:00&nbsp;PM</td></tr>
-                  <tr> <td > 09:00&nbsp;PM</td></tr>
-                  <tr> <td > 10:00&nbsp;PM</td></tr>
-                  <tr> <td > 11:00&nbsp;PM</td></tr>
+                  $end= "<th style='padding: 0px;'>  <table style='width:100%;height: 100%;'> 
+                  <tr style='border: 1px solid grey'> <td > 06:00&nbsp;PM </td></tr>
+                  <tr style='border: 1px solid grey'> <td > 07:00&nbsp;PM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 08:00&nbsp;PM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 09:00&nbsp;PM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 10:00&nbsp;PM</td></tr>
+                  <tr style='border: 1px solid grey'> <td > 11:00&nbsp;PM</td></tr>
                   </table></th>";
                   $hideFirst ="";
                 }
@@ -313,7 +315,7 @@
         for($y=0;$y<7;$y++)
         {
 
-          echo"<td $ifCurrentDay[$y]>";
+          echo"<td style='padding: 0px;' $ifCurrentDay[$y]>";
          
           $temp ="";
           $timeSlots = array();
@@ -358,12 +360,15 @@
 
 
           //This is my inner table and will check the hour
-          echo"<table class ='table table-dark h'>";
+          echo"<table style='width:100%;height: 100%; padding:-10px; border-collapse: collapse;
+          border-style: hidden;'>";
           
           for ($i=0; $i < 6; $i++) 
           { 
+            echo "<tr>";
             if(isset($timeSlots[$i]))
-            echo "<tr> <td>".$timeSlots[$i] ."</td></tr>";
+            echo "<td style='height:50px; 
+            border: 1px solid #363b3e; '>".$timeSlots[$i];
             else //If there is a reminder already there I guess dont add it?
             {
               $tempT = "&nbsp;";
@@ -372,14 +377,15 @@
              if (isset($allClassesT[$y][$x][$i]))
              {
               $tempT =$allClassesT[$y][$x][$i]['name']; 
-              $tempC = "style='background-color: ".$allClassesT[$y][$x][$i]['color']."'";
+              $tempC = "background-color: ".$allClassesT[$y][$x][$i]['color'].";";
              }
              
 
-              echo " <tr> <td ".$tempC."> ".$tempT."</td></tr> ";
+              echo "<td style='height:50px;
+              border: 1px solid #363b3e; ".$tempC."' > ".$tempT;
             }
             
-            
+            echo "</tr> </td>";
           }
           
           

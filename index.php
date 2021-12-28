@@ -84,7 +84,7 @@
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%; float: right;" data-bs-toggle="modal" data-bs-target="#ReminderModel">Add Reminder &nbsp;<i class='fas fa-check fa-sm'></i></button>
 
           <div class="table-responsive"> 
-            <table class="table table-dark table-bordered" style="text-align: center;">
+            <table class="table table-dark table-bordered" style="text-align: center; height:100%; width: 100%;">
                 <thead>
                   <tr>
                     <th colspan="8">
