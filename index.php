@@ -62,6 +62,7 @@
                 Settings
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#classesList">Classes List</a></li>
                 <li><a class="dropdown-item" href="#">Account Settings</a></li>
                 <li><a class="dropdown-item" href="#">General Settings</a></li>
                 <li><hr class="dropdown-divider"></li>
@@ -435,6 +436,31 @@
 </div>
 </form>
 
+<!-- Modal for Classes List -->
+<div class="modal fade" id="classesList" tabindex="-1" aria-labelledby="classesListLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="classesListLabel">Classes List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <table class="table">
+       <tr> <th> Class Name </th>  <th> Options </th></tr>
+      <?php include ("includes/classesList.php") ; ?>
+      </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
     <!--Boostrap JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
@@ -445,6 +471,8 @@
 
 
   </body>
-</html>
+
+
+  </html>
 <!--Closes the connection to SQL at the end-->
 <?php include("includes/disconnectSQL.php"); ?>

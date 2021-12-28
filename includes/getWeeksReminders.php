@@ -430,13 +430,13 @@
 
                 if($tempSNum == "M1")
                 {
-                  $tempT =$allClassesT[$y][$x][$i]['name']; 
+                  $tempT ="<i class='fas fa-graduation-cap'></i> &nbsp;".$allClassesT[$y][$x][$i]['name']; 
                 } else if($tempSNum == "M2")
                 {
                   $tempT ="(".$allClassesT[$y][$x][$i]['type'].")";
                 } else if ($tempSNum == "M0")
                 {
-                  $tempT =$allClassesT[$y][$x][$i]['name'] ." <br>". "(".$allClassesT[$y][$x][$i]['type'].")"; 
+                  $tempT ="<i class='fas fa-graduation-cap'></i> &nbsp;".$allClassesT[$y][$x][$i]['name'] ." <br>". "(".$allClassesT[$y][$x][$i]['type'].")"; 
                 }
 
 
