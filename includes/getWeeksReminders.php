@@ -201,6 +201,7 @@
         array(array(),array(),array(),array()) 
       );
 
+      $classSlotNumber = array();
       if($classData != null)
       foreach($classData as $eachClass)
       {
@@ -224,10 +225,45 @@
             $timePointer = date_parse($eachClass[$startT])['hour'];
             $endPoint = date_parse($eachClass[$endT])['hour'];
 
+            //Calculating in here the middle point so I know when to print the title
+            $totalPoints =   $endPoint - $timePointer;
+            $totalPoints ++; //This fixes stuff
+            $p1 = 0;
+            $p2 = 0;
+
+            if($totalPoints%2 ==0) //If its a pair number
+            {
+              $p1 = ($totalPoints / 2);
+              $p2 = $p1 + 1;
+            } 
+            else //Odd number
+            {
+              $p1 = (round($totalPoints / 2));
+              $p2 = -1;
+            }
+
+         
             //Now get all the slots from that to the end added to the array
-            for ($u=$timePointer;$u <= $endPoint ; $u++) 
+            for ($u=$timePointer, $x =1; $u <= $endPoint ; $u++ , $x++) 
             { 
-              $allClassesT[$tempNumb][getTimeSlotWithHour($u)][getInnerTimeSlotWithHour($u)] = $eachClass;
+              $dayS = $tempNumb;
+              $Oslot = getTimeSlotWithHour($u);
+              $Islot = getInnerTimeSlotWithHour($u);
+
+              $allClassesT[$dayS][$Oslot][$Islot] = $eachClass;
+
+             // $classSlotNumber[$dayS."-".$Oslot."-".$Islot] = $x;
+
+              if($x == round($p1) && $p2 != -1)
+              $classSlotNumber[$dayS."-".$Oslot."-".$Islot] = "M1";
+
+              else if($x == round($p1) && $p2 == -1)
+              $classSlotNumber[$dayS."-".$Oslot."-".$Islot] = "M0";
+
+              if($x == round($p2))
+              $classSlotNumber[$dayS."-".$Oslot."-".$Islot] = "M2";
+              //The key is going to be DAY-SLOT-ISLOT and the value is the slot number
+              
               //echo " Day: ".$tempNumb ." Slot: ".getTimeSlotWithHour($u) . " innerSlot: ".getInnerTimeSlotWithHour($u) ." Content: ".$allClassesT[$tempNumb][getTimeSlotWithHour($u)][getInnerTimeSlotWithHour($u)] . " | ";
             }
             //$allClassesT[$tempNumb][getInnerTimeSlot()] = $tempString; 
@@ -311,6 +347,8 @@
 
                 //The wrapper for the formating
      
+                
+
         echo "<tr  $hideFirst>";
         for($y=0;$y<7;$y++)
         {
@@ -360,9 +398,10 @@
 
 
           //This is my inner table and will check the hour
-          echo"<table style='width:100%;height: 100%; padding:-10px; border-collapse: collapse;
+          echo"<table style='width:100%;height: 100%; border-collapse: collapse;
           border-style: hidden;'>";
           
+         
           for ($i=0; $i < 6; $i++) 
           { 
             echo "<tr>";
@@ -373,16 +412,48 @@
             {
               $tempT = "&nbsp;";
               $tempC = "";
+              $tempClass ="";
+              $tempID = "";
               //In here I do all the formating for the classes
              if (isset($allClassesT[$y][$x][$i]))
              {
-              $tempT =$allClassesT[$y][$x][$i]['name']; 
+
+
+              
               $tempC = "background-color: ".$allClassesT[$y][$x][$i]['color'].";";
+              $tempClass = "class='formatMe'";
+
+              //Accesing the slot number
+              if(isset($classSlotNumber[$y."-".$x."-".$i]))
+              {
+                $tempSNum = $classSlotNumber[$y."-".$x."-".$i];
+
+                if($tempSNum == "M1")
+                {
+                  $tempT =$allClassesT[$y][$x][$i]['name']; 
+                } else if($tempSNum == "M2")
+                {
+                  $tempT ="(".$allClassesT[$y][$x][$i]['type'].")";
+                } else if ($tempSNum == "M0")
+                {
+                  $tempT =$allClassesT[$y][$x][$i]['name'] ." <br>". "(".$allClassesT[$y][$x][$i]['type'].")"; 
+                }
+
+
+                
+                
+              } else 
+              {
+                $tempSNum ="";
+              }
+             
+              //This is the ID, it might not be necessary
+              $tempID = "id='c".$allClassesT[$y][$x][$i]['id']."-".$tempSNum."'";
              }
              
 
               echo "<td style='height:50px;
-              border: 1px solid #363b3e; ".$tempC."' > ".$tempT;
+              border: 1px solid #363b3e; ".$tempC."'".$tempClass." ".$tempID." > ".$tempT;
             }
             
             echo "</tr> </td>";
@@ -441,7 +512,6 @@
         return 0; //Night
        }
     }
-
     function getInnerTimeSlot($value)
     {
       $a = $value["time"];
@@ -479,9 +549,6 @@
       }
     }
 
-    function checkAndPutClass($allTheClasses,$slot, $day, $innerS)
-    {
-     // if($allTheClasses[])
-    }
+
 
    

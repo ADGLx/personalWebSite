@@ -33,7 +33,7 @@
 
     <title>ADGL- MySchedule</title>
 </head>
-<body>
+<body onload="showClassesProperly()">
     <!--Login Verification-->
     <?php include("includes/accountVal.php"); ?>
    
