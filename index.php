@@ -33,7 +33,7 @@
 
     <title>ADGL- MySchedule</title>
 </head>
-<body>
+<body onload="showClassesProperly()">
     <!--Login Verification-->
     <?php include("includes/accountVal.php"); ?>
    
@@ -62,6 +62,7 @@
                 Settings
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#classesList">Classes List</a></li>
                 <li><a class="dropdown-item" href="#">Account Settings</a></li>
                 <li><a class="dropdown-item" href="#">General Settings</a></li>
                 <li><hr class="dropdown-divider"></li>
@@ -80,11 +81,11 @@
         <div class="m-2"> <!--For the Margin-->
           
           <!--Add Class and Reminder buttons-->
-          <button type="button" class="btn btn-dark buttonOverride disabled" style="width: 49.9%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Class &nbsp; <i class="fas fa-graduation-cap"></i></button>
+          <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Class &nbsp; <i class="fas fa-graduation-cap"></i></button>
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%; float: right;" data-bs-toggle="modal" data-bs-target="#ReminderModel">Add Reminder &nbsp;<i class='fas fa-check fa-sm'></i></button>
 
           <div class="table-responsive"> 
-            <table class="table table-dark table-bordered" style="text-align: center;">
+            <table class="table table-dark table-bordered" style="text-align: center; height:100%; width: 100%;">
                 <thead>
                   <tr>
                     <th colspan="8">
@@ -99,7 +100,7 @@
                       </th>
                   </tr>
                 </thead>
-                <tbody class ="align-middle h">
+                <tbody class ="align-middle ">
 
                   <?php include("includes/getWeeksReminders.php"); ?>
 
@@ -135,6 +136,7 @@
 </div>
 
  <!-- Modal For Opening Class -->
+ <form action="includes/submitClass.php" method="POST">
 <div class="container">
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -142,16 +144,15 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Add a Class &nbsp;</h5> 
           <!--Color-->
-          <input type="color" id="head" name="head" value="#e66465" style="width: 60%; flex-grow:1;">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <input type="color" id="color" name="color" value="#e66465" style="width: 15%; display: flex; margin-left: auto; ">
         </div>
         <div class="modal-body">
           
-          <form>
+         
             <!--Name-->
             <div>
-              <label for="classname">Class name: </label>
-              <input type="text" id="classname" name="fname" style="width: 75%; float: inline-end;">
+              <label for="name">Class name: </label>
+              <input type="text" id="name" name="name" style="width: 75%; float: inline-end;">
             </div>
             <br>
             <!--Class Times-->
@@ -159,16 +160,96 @@
               <table style="width: 100%;">
                 <tr>
                   <!--Gotta add one to the row span to make it work-->
-                    <td rowspan="3">  <label for="classtimes"> Class times: </label> <br><button type="button" class="btn btn-dark btn-sm"> Add</button></td>
-                    <td><input type="time" id="timestart1" name="timestart1" style="width: 35%;"> to <input type="time" id="timestart1" name="timestart1" style="width: 35%;"> </td>
+                    <td rowspan="6">  <label for="classtimes"> Class times: </label> </td>
+                    <td><input type="time" id="timeS1" name="timeS1" style="width: 35%;"> to <input type="time" id="timeE1" name="timeE1" style="width: 35%;"> 
+                      <select id="inlineFormCustomSelectPref" name="timeD1">
+                      <option value=""></option>
+                        <option value=1>1-S</option>
+                        <option value=2>2-M</option>
+                        <option value=3>3-T</option>
+                        <option value=4>4-W</option>
+                        <option value=5>5-T</option>
+                        <option value=6>6-F</option>
+                        <option value=7>7-S</option>
+                      </select>
+                    </td>
                 </tr>
                 <!--Add this as a new thing for the time-->
                 <tr>
-                  <td><input type="time" id="timestart1" name="timestart1" style="width: 35%;"> to <input type="time" id="timestart1" name="timestart1" style="width: 35%;"> <button type="button" class="btn btn-dark btn-sm"> x</button> </td>
+                  <td><input type="time" id="timeS2" name="timeS2" style="width: 35%;"> to <input type="time" id="timeE2" name="timeE2" style="width: 35%;">  
+                
+                  <select id="inlineFormCustomSelectPref" name="timeD2">
+                  <option value=""></option>
+                        <option value=1>1-S</option>
+                        <option value=2>2-M</option>
+                        <option value=3>3-T</option>
+                        <option value=4>4-W</option>
+                        <option value=5>5-T</option>
+                        <option value=6>6-F</option>
+                        <option value=7>7-S</option>
+                      </select>
+                  </td>
                 </tr>
                  <!--Add this as a new thing for the time-->
                  <tr>
-                  <td><input type="time" id="timestart1" name="timestart1" style="width: 35%;"> to <input type="time" id="timestart1" name="timestart1" style="width: 35%;"> <button type="button" class="btn btn-dark btn-sm"> x</button> </td>
+                  <td><input type="time" id="timeS3" name="timeS3" style="width: 35%;"> to <input type="time" id="timeE3" name="timeE3" style="width: 35%;">  
+                  <select id="inlineFormCustomSelectPref" name="timeD3">
+                  <option value=""></option>
+                        <option value=1>1-S</option>
+                        <option value=2>2-M</option>
+                        <option value=3>3-T</option>
+                        <option value=4>4-W</option>
+                        <option value=5>5-T</option>
+                        <option value=6>6-F</option>
+                        <option value=7>7-S</option>
+                      </select>
+                
+                </td>
+                </tr>
+                 <!--Add this as a new thing for the time-->
+                 <tr>
+                  <td><input type="time" id="timeS4" name="timeS4" style="width: 35%;"> to <input type="time" id="timeE14" name="timeE4" style="width: 35%;">  
+                  <select id="inlineFormCustomSelectPref" name="timeD4">
+                  <option value=""></option>
+                        <option value=1>1-S</option>
+                        <option value=2>2-M</option>
+                        <option value=3>3-T</option>
+                        <option value=4>4-W</option>
+                        <option value=5>5-T</option>
+                        <option value=6>6-F</option>
+                        <option value=7>7-S</option>
+                      </select>
+                </td>
+                </tr>
+                 <!--Add this as a new thing for the time-->
+                 <tr>
+                  <td><input type="time" id="timeS5" name="timeS5" style="width: 35%;"> to <input type="time" id="timeE5" name="timeE5" style="width: 35%;">  
+                  <select id="inlineFormCustomSelectPref" name="timeD5">
+                  <option value=""></option>
+                        <option value=1>1-S</option>
+                        <option value=2>2-M</option>
+                        <option value=3>3-T</option>
+                        <option value=4>4-W</option>
+                        <option value=5>5-T</option>
+                        <option value=6>6-F</option>
+                        <option value=7>7-S</option>
+                      </select>
+                </td>
+                </tr>
+                 <!--Add this as a new thing for the time-->
+                 <tr>
+                  <td><input type="time" id="timeS6" name="timeS6" style="width: 35%;"> to <input type="time" id="timeE6" name="timeE6" style="width: 35%;">  
+                  <select id="inlineFormCustomSelectPref" name="timeD6">
+                  <option value=""></option>
+                        <option value=1>1-S</option>
+                        <option value=2>2-M</option>
+                        <option value=3>3-T</option>
+                        <option value=4>4-W</option>
+                        <option value=5>5-T</option>
+                        <option value=6>6-F</option>
+                        <option value=7>7-S</option>
+                      </select>
+                </td>
                 </tr>
               </table>
             </div>
@@ -176,36 +257,37 @@
             <!--Type-->
             <div>
               <label  for="inlineFormCustomSelectPref">Type:</label>
-              <select id="inlineFormCustomSelectPref" style="width: 75%; text-align: center; float: inline-end;">
-                <option value="1">Tutorial</option>
-                <option value="2">Lecture</option>
-                <option value="3">Lab</option>
+              <select id="inlineFormCustomSelectPref" name="type" style="width: 75%; text-align: center; float: inline-end;">
+                <option value="Tutorial">Tutorial</option>
+                <option value="Leture">Lecture</option>
+                <option value="Lab">Lab</option>
               </select>
             </div>
             <br>
             <!--Location-->
             <div>
-              <label for="classname">Location: </label>
-              <input type="text" id="classname" name="fname" style="width: 75%; float: inline-end;">
+              <label for="location">Location: </label>
+              <input type="text" id="location" name="location" style="width: 75%; float: inline-end;">
             </div>
             <br>
            <!--Description-->
            <div>
-            <label for="classname">Description: </label>
-            <input type="textbox" id="classname" name="fname" style="width: 75%; height: 50px; float: inline-end;">
+            <label for="description">Description: </label>
+            <input type="textbox" id="description" name="description" style="width: 75%; height: 50px; float: inline-end;">
           </div>
 
-          </form>
+   
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button submit" class="btn btn-primary" name='submit'>Save changes</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+</form>
 
 
 <!-- Modal For Opening reminder -->
@@ -354,6 +436,31 @@
 </div>
 </form>
 
+<!-- Modal for Classes List -->
+<div class="modal fade" id="classesList" tabindex="-1" aria-labelledby="classesListLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="classesListLabel">Classes List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <table class="table">
+       <tr> <th> Class Name </th>  <th> Options </th></tr>
+      <?php include ("includes/classesList.php") ; ?>
+      </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
     <!--Boostrap JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
@@ -364,6 +471,8 @@
 
 
   </body>
-</html>
+
+
+  </html>
 <!--Closes the connection to SQL at the end-->
 <?php include("includes/disconnectSQL.php"); ?>
