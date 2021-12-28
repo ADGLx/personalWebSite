@@ -99,7 +99,7 @@
                       </th>
                   </tr>
                 </thead>
-                <tbody class ="align-middle h">
+                <tbody class ="align-middle ">
 
                   <?php include("includes/getWeeksReminders.php"); ?>
 
@@ -143,7 +143,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Add a Class &nbsp;</h5> 
           <!--Color-->
-          <input type="color" id="color" name="color" value="#e66465" style="width: 20%; display: flex; margin-left: auto; ">
+          <input type="color" id="color" name="color" value="#e66465" style="width: 15%; display: flex; margin-left: auto; ">
         </div>
         <div class="modal-body">
           
