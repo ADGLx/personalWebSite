@@ -33,7 +33,7 @@
 
     <title>ADGL- MySchedule</title>
 </head>
-<body onload="showClassesProperly()">
+<body>
     <!--Login Verification-->
     <?php include("includes/accountVal.php"); ?>
    
@@ -102,65 +102,33 @@
                 </thead>
                 <tbody class ="align-middle ">
 
-                  <?php include("includes/getWeeksReminders.php"); ?>
+                  <?php include_once("includes/getWeeksReminders.php"); ?>
 
 
                 </tbody>
               </table>
             </div>
             
-            <!--Reminders Table-->
-       <!--   <table class="table table-dark">
-            <thead>
-              <tr>
-                <th>This Week's Reminders</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Description</th>
-                <th>Options </th>
-              </tr>
-            </thead>
-            <tbody>
-            <?php //include ("includes/getReminder.php"); ?>
-            </tbody>
-          </table> -->
-          <table class ="table table-dark">
-          <thead>
-              <tr>
-                <th style="text-align:center;" colspan=10> 
-                <button type="button" data-bs-toggle="modal" data-bs-target="#todosTypesList" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
-                &nbsp; To-Do Lists &nbsp;
-                <button type="button" data-bs-toggle="modal" data-bs-target="#addTodo" class="btn btn-success btn-sm"><i class="far fa-plus-square"></i></button>
-                </th>
-              </tr>
-              </thead>
 
-              <!--Get the button amount from here -->
-              <?php include_once("includes/getToDoLists.php");?>
-              
-              <!--Need to do some AJAX here -->
-              
-              <tr>
-                <td> <ul> <li> Item 1 </li> </ul> </td>
-                <td> <ul> <li> Item 1 </li> </ul> </td>
-                <td> <ul> <li> Item 1 </li> </ul> </td>
-                <td> <ul> <li> Item 1 </li> </ul> </td>
-              </tr>
-              <tr>
-                <td> <ul> <li> Item 1 </li> </ul> </td>
-                <td> <ul> <li> Item 1 </li> </ul> </td>
-                <td> &nbsp; </td>
-                <td> &nbsp; </td>
-              </tr>
-              <tr>
-                <td> &nbsp;</td>
-                <td> &nbsp; </td>
-                <td> &nbsp;</td>
-                <td> &nbsp;</td>
-              </tr>
-            
-          </table>
-         
+ 
+            <table class ="table table-dark mb-0">
+            <thead>
+                <tr>
+                  <th style="text-align:center;" colspan=10> 
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#todosTypesList" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
+                  &nbsp; To-Do Lists &nbsp;
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#addTodo" class="btn btn-success btn-sm"><i class="far fa-plus-square"></i></button>
+                  </th>
+                </tr>
+                </thead>
+                <!--Get the button amount from here -->
+                <?php include_once("includes/getToDoLists.php");?>
+            </table>
+            <!-- the format of the table is changed via js-->
+            <table id='addTodosTable'>
+            </table>
+
+           
         </div>
     
     </div>

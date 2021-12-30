@@ -17,8 +17,8 @@ if($result = mysqli_query($conn, $sql))
       {
         $amt++;
         echo "
-        <th class =' text-center' id='".$row['id']."' style='background-color:".$row['color'].";'> 
-        ". $row['name']."
+        <th class ='text-center w-25' id='color".$row['id']."' value='".$row['color']." ' style='background-color:".$row['color'].";'> 
+        <button type='button' class='btn btn-link w-100' onclick='showToDoList(".$row['id'].")'>". $row['name']." </button>
         </th> 
         ";
       }
@@ -28,7 +28,7 @@ if($result = mysqli_query($conn, $sql))
     for($x = $amt ; $x <4 ; $x++)
     {
       echo "
-      <th> 
+      <th class ='text-center w-25'> 
        
       </th> 
       ";
@@ -37,3 +37,4 @@ if($result = mysqli_query($conn, $sql))
     echo"</tr>";
 } 
 #endregion
+//There is something wrong in the way this is printed

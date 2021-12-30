@@ -95,3 +95,66 @@ function getPriorityClass(val)
 
   }
 }
+
+function showToDoList(typeOfListID)
+{
+
+  var http = new XMLHttpRequest();
+  http.onreadystatechange = function() 
+    {
+     
+    if(http.readyState === 4) 
+    {
+      if(http.status === 200) 
+      {
+        var queryString = http.responseText;
+        let output = queryString.split("|");
+        //Add the table elements here 
+        let htmlOuput ="";
+        for (let i = 0; i < output.length; i++) 
+        {
+          if(i%4==0 && i>1)
+          htmlOuput +="<tr>";
+
+          if(output[i]!=null && output[i]!=" " &&  output[i]!="")
+          htmlOuput += "<td> <ul> <li>"+output[i] +" </li> </ul> </td>"
+
+          if(i%4==0 && i>1)
+          htmlOuput +="</tr>";
+        }
+        
+        document.getElementById("addTodosTable").innerHTML = htmlOuput;
+            
+        changeTableFormat(typeOfListID);
+        
+      } else {
+            alert('Error Code: ' +  http.status);
+            alert('Error Message: ' + http.statusText);
+      }
+    }
+    } 
+    http.open('GET', "/includes/queryToDos.php?"+"typeOfToDo="+typeOfListID, true);
+    http.send();
+   // alert(typeOfListID);
+
+}
+
+function changeTableFormat(id)
+{
+  
+  var color = document.getElementById("color"+id).style.backgroundColor;
+  var el = document.getElementById("addTodosTable");
+
+  var allTD = el.getElementsByTagName("td");
+
+  for (let index = 0; index < allTD.length; index++) {
+    const element = allTD[index];
+    element.style.backgroundColor = color;
+  }
+    
+ 
+
+  //el.style.cssText = "background-color:"+color + "!important";
+  el.classList = " table table-dark";
+  
+}
