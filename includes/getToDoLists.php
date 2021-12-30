@@ -15,9 +15,9 @@ if($result = mysqli_query($conn, $sql))
     {
       if($amt < 4)
       {
-        $amt++;
+        $amt++; //Name is the ID Type?
         echo "
-        <th class ='text-center w-25' id='color".$row['id']."' value='".$row['color']." ' style='background-color:".$row['color'].";' onclick='showToDoList(".$row['id'].")'> 
+        <th class ='text-center w-25' name='".$row['id']."' id='color".$row['id']."' value='".$row['color']." ' style='background-color:".$row['color'].";' onclick='showToDoList(".$row['id'].")'> 
         ". $row['name']."
         </th> 
         ";

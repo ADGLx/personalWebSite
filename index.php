@@ -35,7 +35,7 @@
 
     <title>Scheduler</title>
 </head>
-<body>
+<body onload="showToDoOnLoad()">
     <!--Login Verification-->
     <?php include("includes/accountVal.php"); ?>
    
@@ -81,7 +81,26 @@
     <br class="container">
         <!--Leave a bit of empty space-->
         <div class="m-2"> <!--For the Margin-->
-          
+
+
+            <table class ="table table-dark mb-0">
+            <thead>
+                <tr>
+                  <th style="text-align:center;" colspan=10> 
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#todosTypesList" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
+                  &nbsp; To-Do Lists &nbsp;
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#addTodo" class="btn btn-success btn-sm"><i class="far fa-plus-square"></i></button>
+                  </th>
+                </tr>
+                </thead>
+                <!--Get the button amount from here -->
+                <?php include_once("includes/getToDoLists.php");?>
+            </table>
+            <!-- the format of the table is changed via js-->
+            <table id='addTodosTable' class="table table-sm table-dark table-bordered ">
+            </table>
+ 
+          <br>
           <!--Add Class and Reminder buttons-->
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Class &nbsp; <i class="fas fa-graduation-cap"></i></button>
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%; float: right;" data-bs-toggle="modal" data-bs-target="#ReminderModel">Add Reminder &nbsp;<i class='fas fa-check fa-sm'></i></button>
@@ -112,33 +131,22 @@
             </div>
             
 
- 
-            <table class ="table table-dark mb-0">
-            <thead>
-                <tr>
-                  <th style="text-align:center;" colspan=10> 
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#todosTypesList" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
-                  &nbsp; To-Do Lists &nbsp;
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#addTodo" class="btn btn-success btn-sm"><i class="far fa-plus-square"></i></button>
-                  </th>
-                </tr>
-                </thead>
-                <!--Get the button amount from here -->
-                <?php include_once("includes/getToDoLists.php");?>
-            </table>
-            <!-- the format of the table is changed via js-->
-            <table id='addTodosTable' class="table table-dark selectable">
-            </table>
+
 
            
         </div>
     
     </div>
 
-     <!--Footer-->
-  <div class ="footer">
-   <!--<p> By Alvaro Gonzalez</p> --> 
-</div>
+
+      <footer class="footer bg-dark">
+
+      <!-- Copyright -->
+      <div class="footer text-center py-2 text-white">By Alvaro Gonzalez:
+        <a href="https://abt.adgl.tech/" class="text-muted"> abt.adgl.tech</a>
+      </div>
+
+      </footer>
 
  <!-- Modal For Opening Class -->
  <form action="includes/submitClass.php" method="POST">

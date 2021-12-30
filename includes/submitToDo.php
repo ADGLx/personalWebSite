@@ -1,11 +1,11 @@
 <?php
-    if(isset($_POST["submit"]))
+    if(isset($_GET["name"]))
     {
         session_start(); //This allows me to check for ID for some reason
 
         $usrID = $_SESSION["userid"];
-        $todoName = $_POST["name"];
-        $todoType = $_POST["type"];
+        $todoName = $_GET["name"];
+        $todoType = $_GET["type"];
 
         if(empty($usrID))
         {
@@ -26,7 +26,7 @@
     {
         require_once 'ConectSQL.php'; //Connects to the SQL
 
-        $sql = "INSERT INTO todos(userid, name, type) VALUES ('$uID', '$tName', '$tType')";
+        $sql = "INSERT INTO todos(userid, name, typeid) VALUES ('$uID', '$tName', '$tType')";
 
         if(mysqli_query($conn, $sql)){
             //Change this so it doesnt refresh
@@ -34,4 +34,8 @@
         } else {
             echo 'query error: '. mysqli_error($conn);
         }
+
+        mysqli_close($conn); //Cloe it here because it will be grabbed by an HTTP request
     }
+    
+    ?>

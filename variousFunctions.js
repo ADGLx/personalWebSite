@@ -96,6 +96,17 @@ function getPriorityClass(val)
   }
 }
 
+
+//-------------------------This is for the TODOs List--------------------------------
+function showToDoOnLoad()
+{
+  
+  if(sessionStorage.getItem("currentToDoList") !=null)
+  {
+    showToDoList(sessionStorage.getItem("currentToDoList"));
+  }
+}
+
 function showToDoList(typeOfListID)
 {
 
@@ -110,22 +121,44 @@ function showToDoList(typeOfListID)
         var queryString = http.responseText;
         let output = queryString.split("|");
         //Add the table elements here 
-        let htmlOuput ="";
+        let htmlOuput ="<tbody>";
+
+        var amtOfRows = Math.floor(output.length + 1/4);
+        amtOfRows++;
+
+        //Now find the positions of which
+
         for (let i = 0; i < output.length; i++) 
         {
-          if(i%4==0 && i>1)
+          if((i +1)%4==1)
           htmlOuput +="<tr>";
 
+          //Print the actual thing
           if(output[i]!=null && output[i]!=" " &&  output[i]!="")
-          htmlOuput += "<td> <ul> <li>"+output[i] +" </li> </ul> </td>"
+          htmlOuput += "<td align='middle' valign='middle'> <i class='far fa-circle fa-xs'></i> &nbsp;"+output[i] +"  </td>"
 
-          if(i%4==0 && i>1)
+          if(i +1%4==0)
           htmlOuput +="</tr>";
-        }
+
+          //Prints the extra stuff
+          if(i==(output.length-1))
+          {
+            htmlOuput += "<td colspan=4 align='middle' valign='middle'> <i class='far fa-circle fa-xs'></i> &nbsp;" + 
+            "<input type='text' id='todoSender' name='name' style='width:80%'><button type='button' class='btn btn-outline-light btn-sm' onclick='sendToDoToDataBase("+typeOfListID+")'> <i  class='fas fa-check-square fa-lg'></i></button>  </td>"; //This is the button
+            //put in the ID the best
+          }
         
+        }
+
+        //Adding the input field to the next one
+
+        htmlOuput += "</tbody>";
         document.getElementById("addTodosTable").innerHTML = htmlOuput;
             
         changeCellColor(typeOfListID);
+        //Setting a session variable for the last active ToDoList
+        sessionStorage.setItem("currentToDoList", typeOfListID);
+
         
       } else {
             alert('Error Code: ' +  http.status);
@@ -150,7 +183,27 @@ function changeCellColor(id)
   for (let index = 0; index < allTD.length; index++) {
     const element = allTD[index];
     element.style.backgroundColor = color;
+
+    //changing the width too
+    element.style.width = 100/allTD.length +"%"; //This evens the width
+
   }
     
   
 }
+
+function sendToDoToDataBase(typeID)
+{
+  //alert("sending! " + document.getElementById("todoSender").value);
+
+  let textToSend = document.getElementById("todoSender").value;
+  
+  var http = new XMLHttpRequest();
+    http.open('GET', "/includes/submitToDo.php?"+"name="+textToSend +"&"+"type="+typeID, true);
+    http.send();
+
+
+    //Now just refresh the results realquick
+    showToDoList(typeID);
+}
+
