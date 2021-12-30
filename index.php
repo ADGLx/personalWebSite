@@ -110,7 +110,7 @@
             </div>
             
             <!--Reminders Table-->
-          <table class="table table-dark">
+       <!--   <table class="table table-dark">
             <thead>
               <tr>
                 <th>This Week's Reminders</th>
@@ -121,10 +121,45 @@
               </tr>
             </thead>
             <tbody>
-            <?php include ("includes/getReminder.php"); ?>
+            <?php //include ("includes/getReminder.php"); ?>
             </tbody>
-          </table>
+          </table> -->
+          <table class ="table table-dark">
+          <thead>
+              <tr>
+                <th style="text-align:center;" colspan=10> 
+                <button type="button" data-bs-toggle="modal" data-bs-target="#todosTypesList" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
+                &nbsp; To-Do Lists &nbsp;
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addTodo" class="btn btn-success btn-sm"><i class="far fa-plus-square"></i></button>
+                </th>
+              </tr>
+              </thead>
 
+              <!--Get the button amount from here -->
+              <?php include_once("includes/getToDoLists.php");?>
+              
+              <!--Need to do some AJAX here -->
+              
+              <tr>
+                <td> <ul> <li> Item 1 </li> </ul> </td>
+                <td> <ul> <li> Item 1 </li> </ul> </td>
+                <td> <ul> <li> Item 1 </li> </ul> </td>
+                <td> <ul> <li> Item 1 </li> </ul> </td>
+              </tr>
+              <tr>
+                <td> <ul> <li> Item 1 </li> </ul> </td>
+                <td> <ul> <li> Item 1 </li> </ul> </td>
+                <td> &nbsp; </td>
+                <td> &nbsp; </td>
+              </tr>
+              <tr>
+                <td> &nbsp;</td>
+                <td> &nbsp; </td>
+                <td> &nbsp;</td>
+                <td> &nbsp;</td>
+              </tr>
+            
+          </table>
          
         </div>
     
@@ -374,7 +409,11 @@
                    
                    <!--Color-->
                    <button type="button" id="reminderPreviewE" class="btn btn-warning">&nbsp; &nbsp; <i class="fas fa-check"></i> &nbsp; &nbsp; </button>
-                  
+
+                   <!--Delete-->
+              
+                    <button type="button delete" name="delete" class="btn btn-danger" id="deleteE" value=""><i class="far fa-trash-alt"></i> </button> 
+                   
                  </div>
                  <div class='modal-body'>
                      <!--Name-->
@@ -436,6 +475,7 @@
 </div>
 </form>
 
+
 <!-- Modal for Classes List -->
 <div class="modal fade" id="classesList" tabindex="-1" aria-labelledby="classesListLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -458,7 +498,54 @@
 </div>
 
 
+<!-- Modal for Todo Types List -->
+<div class="modal fade" id="todosTypesList" tabindex="-1" aria-labelledby="todosTypesListLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="todosTypesListLabel">To-Dos List (4 max) </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <table class="table">
+       <tr> <th> To-Do Type </th>  <th> Options </th></tr>
+       <?php include ("includes/todosTypesList.php") ; ?>
+      </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Modal for adding To-Dos Types -->
+<form action="includes/submitToDoType.php" method="POST">
+<div class="modal fade" id="addTodo" tabindex="-1" aria-labelledby="addTodoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addTodoLabel">Add To-Do Type (4 max) </h5>
+         <!--Color-->
+         <input type="color" id="color" name="color" value="#e66465" style="width: 15%; display: flex; margin-left: auto; ">
+      </div>
+      <div class="modal-body">
+            <!--Text-->
+            <div>
+              <label>Text: </label>
+              <input type="text" id="name" name="name" style="width: 75%; float: inline-end;">
+            </div>
+            <br>
+      </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button submit" class="btn btn-primary" data-bs-dismiss="modal" name="submit">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
 
 
     <!--Boostrap JS-->

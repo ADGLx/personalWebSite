@@ -44,6 +44,8 @@ function showReminderInfoModal(id)
       document.getElementById("priorityE").value = priority;
 
       document.getElementById("editR").value = id;
+
+      document.getElementById("deleteE").value = id;
       
     } else {
           alert('Error Code: ' +  objXMLHttpRequest.status);
