@@ -125,7 +125,7 @@ function showToDoList(typeOfListID)
         
         document.getElementById("addTodosTable").innerHTML = htmlOuput;
             
-        changeTableFormat(typeOfListID);
+        changeCellColor(typeOfListID);
         
       } else {
             alert('Error Code: ' +  http.status);
@@ -139,7 +139,7 @@ function showToDoList(typeOfListID)
 
 }
 
-function changeTableFormat(id)
+function changeCellColor(id)
 {
   
   var color = document.getElementById("color"+id).style.backgroundColor;
@@ -152,9 +152,5 @@ function changeTableFormat(id)
     element.style.backgroundColor = color;
   }
     
- 
-
-  //el.style.cssText = "background-color:"+color + "!important";
-  el.classList = " table table-dark";
   
 }

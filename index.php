@@ -125,7 +125,7 @@
                 <?php include_once("includes/getToDoLists.php");?>
             </table>
             <!-- the format of the table is changed via js-->
-            <table id='addTodosTable'>
+            <table id='addTodosTable' class="table table-dark">
             </table>
 
            
