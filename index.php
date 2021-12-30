@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="MyStyle.css">
+    
    
     <!--Favicon-->
     <link rel="icon" href ="img/creature.png">
@@ -30,8 +30,10 @@
     <!--Font Awesome-->
     <script src="https://kit.fontawesome.com/0eb434093d.js" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="MyStyle.css">
 
-    <title>ADGL- MySchedule</title>
+
+    <title>Scheduler</title>
 </head>
 <body>
     <!--Login Verification-->
@@ -84,7 +86,7 @@
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Class &nbsp; <i class="fas fa-graduation-cap"></i></button>
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%; float: right;" data-bs-toggle="modal" data-bs-target="#ReminderModel">Add Reminder &nbsp;<i class='fas fa-check fa-sm'></i></button>
 
-          <div class="table-responsive"> 
+          <div class="table-responsive selectable"> 
             <table class="table table-dark table-bordered" style="text-align: center; height:100%; width: 100%;">
                 <thead>
                   <tr>
@@ -125,7 +127,7 @@
                 <?php include_once("includes/getToDoLists.php");?>
             </table>
             <!-- the format of the table is changed via js-->
-            <table id='addTodosTable' class="table table-dark">
+            <table id='addTodosTable' class="table table-dark selectable">
             </table>
 
            

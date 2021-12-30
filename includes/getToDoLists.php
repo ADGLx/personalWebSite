@@ -17,8 +17,8 @@ if($result = mysqli_query($conn, $sql))
       {
         $amt++;
         echo "
-        <th class ='text-center w-25' id='color".$row['id']."' value='".$row['color']." ' style='background-color:".$row['color'].";'> 
-        <button type='button' class='btn btn-link w-100' onclick='showToDoList(".$row['id'].")'>". $row['name']." </button>
+        <th class ='text-center w-25' id='color".$row['id']."' value='".$row['color']." ' style='background-color:".$row['color'].";' onclick='showToDoList(".$row['id'].")'> 
+        ". $row['name']."
         </th> 
         ";
       }
