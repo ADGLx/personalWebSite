@@ -1,0 +1,23 @@
+:root{
+    --color1: rgba(35, 37, 40, 1); /*Raisin Black*/
+    --color2: rgba(34, 111, 84, 1); /*Bottle Green*/
+    --color3: rgba(255, 255, 255); /*White*/
+    --color4: rgba(211, 214, 217, 1);
+}
+
+body {
+     background-color: var(--color4) !important;
+
+ }
+
+  .hoverTitle th:hover 
+ {
+    background-color: black !important;
+ }
+
+ table.ht td:hover 
+ {
+    background-color: black !important;
+    content: "a";
+ }
+ 

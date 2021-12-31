@@ -30,12 +30,12 @@
     <!--Font Awesome-->
     <script src="https://kit.fontawesome.com/0eb434093d.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="MyStyle.css">
+    <link rel="stylesheet" href="NewCSS.css">
 
 
     <title>Scheduler</title>
 </head>
-<body onload="showToDoOnLoad()">
+<body>
     <!--Login Verification-->
     <?php include("includes/accountVal.php"); ?>
    
@@ -83,26 +83,28 @@
         <div class="m-2"> <!--For the Margin-->
 
 
-            <table class ="table table-dark mb-0 ">
+            <table class ="table table-dark mb-0 table-bordered">
             <thead>
                 <tr>
-                  <td style="width:5%;">  <button type="button" data-bs-toggle="modal" data-bs-target="#todosTypesList" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button></td>
-                  <th style="text-align:center;" colspan=2> 
-                  To-Do Lists
-                  </th>
-                  <td style="text-align:right;"><button type="button" data-bs-toggle="modal" data-bs-target="#addTodo" class="btn btn-success btn-sm"><i class="far fa-plus-square"></i></button> </td>
+                   
+                  <th style="text-align:center;" colspan=4> 
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#todosTypesList" class="btn btn-success btn-sm" style="float:left;"><i class="far fa-edit"></i></button>
+                  To-Do Lists &nbsp; <i class="fas fa-list-ul"></i>
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#addTodo" class="btn btn-success btn-sm" style="float:right;"><i class="far fa-plus-square"></i></button> 
+                </th>
+                  
                 </tr>
                 </thead>
                 <!--Get the button amount from here -->
-                <tbody id="todoTypeParent">
+                <tbody id="todoTypeParent" class="hoverTitle ">
                 <?php include_once("includes/getToDoLists.php");?>
                 </tbody>
             </table>
             <!-- the format of the table is changed via js-->
-            <table id='addTodosTable' class="table table-sm table-dark table-bordered border-white " style="border:5px solid white;">
+            <table id='addTodosTable' class="table table-sm table-dark ht">
             </table>
  
-          <br>
+      
           <!--Add Class and Reminder buttons-->
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Class &nbsp; <i class="fas fa-graduation-cap"></i></button>
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%; float: right;" data-bs-toggle="modal" data-bs-target="#ReminderModel">Add Reminder &nbsp;<i class='fas fa-check fa-sm'></i></button>
@@ -113,12 +115,12 @@
                   <tr>
                     <th colspan="8">
                       <form onsubmit="remove()" actions="includes/getWeeksReminders.php" method="GET">
-                      <button type="submit" class="btn btn-success" style="float: inline-start;" name="weeknmb" id="minusWeek"  value=0 > <i class="fas fa-arrow-left"></i> </button>
+                      <button type="submit" class="btn btn-success" style="float: left;" name="weeknmb" id="minusWeek"  value=0 > <i class="fas fa-arrow-left"></i> </button>
                       </form>
                      
                       <form onsubmit="add()" actions="includes/getWeeksReminders.php" method="GET">
                       Weekly Schedule 
-                       <button type="submit" class="btn btn-success" style="float: inline-end;" name="weeknmb" id="plusWeek" value=0> <i class="fas fa-arrow-right"></i></button>
+                       <button type="submit" class="btn btn-success" style="float: right;" name="weeknmb" id="plusWeek" value=0> <i class="fas fa-arrow-right"></i></button>
                        </form>
                       </th>
                   </tr>
@@ -132,7 +134,21 @@
               </table>
             </div>
             
-
+  <!--Reminders Table-->
+  <table class="table table-dark">
+            <thead>
+              <tr>
+                <th>This Week's Reminders</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Description</th>
+                <th>Options </th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php include ("includes/getReminder.php"); ?>
+            </tbody>
+          </table>
 
 
            
@@ -144,7 +160,7 @@
       <footer class="footer bg-dark">
 
       <!-- Copyright -->
-      <div class="footer text-center py-2 text-white">By Alvaro Gonzalez:
+      <div class="footer text-center py-2 text-muted">By Alvaro Gonzalez:
         <a href="https://abt.adgl.tech/" class="text-muted"> abt.adgl.tech</a>
       </div>
 

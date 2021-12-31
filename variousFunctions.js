@@ -98,14 +98,6 @@ function getPriorityClass(val)
 
 
 //-------------------------This is for the TODOs List--------------------------------
-function showToDoOnLoad()
-{
-  
-  if(sessionStorage.getItem("currentToDoList") !=null)
-  {
-  //  showToDoList(sessionStorage.getItem("currentToDoList"));
-  }
-}
 
 function showToDoList(typeOfListID)
 {
@@ -140,8 +132,6 @@ function showToDoList(typeOfListID)
         //Add the table elements here 
         let htmlOuput ="<tbody>";
 
-        var amtOfRows = Math.floor(output.length + 1/4);
-        amtOfRows++;
 
         //Now find the positions of which
 
@@ -156,8 +146,8 @@ function showToDoList(typeOfListID)
 
           //Print the actual thing
           if(nameI!=null &&nameI!=" " &&  nameI!="")
-          htmlOuput += "<td align='middle' valign='middle'> <i class='far fa-circle fa-xs'></i> &nbsp;"+nameI +
-          " <button type='button'class='btn btn-outline-light btn-sm' style='float:right;' onclick='deleteToDo("+todoID+")'>  <i class='far fa-trash-alt fa-x'></i></button> </td>"
+          htmlOuput += "<td align='left' valign='middle' onmouseover=\"showDeleteTodoIcon('t"+todoID+"')\" onmouseout=\"hideDeleteTodoIcon('t"+todoID+"') \" > <i class='far fa-circle fa-xs'></i> &nbsp;"+nameI +
+          " <button type='button'class='btn btn-outline-light btn-sm' id='t"+todoID+"' style='display:none;float:right;' onclick='deleteToDo("+todoID+")'>  <i  class='far fa-trash-alt fa-x'></i></button> </td>"
 
           if(i +1%4==0)
           htmlOuput +="</tr>";
@@ -210,14 +200,14 @@ function showToDoList(typeOfListID)
 function changeCellColor(id)
 {
   
-  var color = document.getElementById("color"+id).style.backgroundColor;
+  var color = document.getElementById("color"+id).style.color;
   var el = document.getElementById("addTodosTable");
 
   var allTD = el.getElementsByTagName("td");
 
   for (let index = 0; index < allTD.length; index++) {
     const element = allTD[index];
-    element.style.backgroundColor = color;
+   // element.style.color = color;
 
     //changing the width too
     element.style.width = 100/allTD.length +"%"; //This evens the width
@@ -244,12 +234,11 @@ function sendToDoToDataBase(typeID)
     showToDoList(typeID);
 }
 
-
-
 function selectToDoType(id)
 {
  
   //First set all the other ones to the down one 
+  var color = document.getElementById("color"+id).style.color;
    var allChildren = document.getElementById("todoTypeParent").getElementsByTagName("i");
 
    for (let index = 0; index < allChildren.length; index++) {
@@ -273,12 +262,13 @@ function selectToDoType(id)
     document.getElementById("icon"+id).className = "fas fa-chevron-up"; 
 
     //Change the border of the cell
-    document.getElementById("color"+id).style.borderTop = "5px solid white";
-    document.getElementById("color"+id).style.borderLeft = "5px solid white";
-    document.getElementById("color"+id).style.borderRight = "5px solid white";
+    document.getElementById("color"+id).style.borderTop = "5px solid " + color;
+    document.getElementById("color"+id).style.borderLeft = "5px solid "+ color;
+    document.getElementById("color"+id).style.borderRight = "5px solid "+ color;
+
+    document.getElementById("addTodosTable").style.border = "5px solid " + color;
 }
 
-//Do this with AJAX 
 function deleteToDo(id)
 {
   var http = new XMLHttpRequest();
@@ -289,4 +279,14 @@ function deleteToDo(id)
 }
 
 
+//Show the trash icon on hover
+function showDeleteTodoIcon(objID)
+{
+  document.getElementById(objID).style.display = "inline";
+}
+
+function hideDeleteTodoIcon(objID)
+{
+  document.getElementById(objID).style.display = "none";
+}
 

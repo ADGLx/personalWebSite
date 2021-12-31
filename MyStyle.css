@@ -7,12 +7,10 @@
 
 
 body {
-    background-color: var(--color4) !important;
+   /* background-color: var(--color4) !important;*/
+   background-color: black !important;
 }
 
-.accordion-button:not(.collapsed)::after {
-    filter: brightness(0%) invert(100%);
-}
 
 /*
 .selectable tr:hover{
