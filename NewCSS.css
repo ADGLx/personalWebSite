@@ -21,3 +21,10 @@ body {
     content: "a";
  }
  
+ th.day{
+    width: 14%;
+}
+
+th.time{
+    width: 2%;
+}
