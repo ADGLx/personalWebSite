@@ -152,7 +152,8 @@ function showToDoList(typeOfListID)
 
           //Print the actual thing
           if(output[i]!=null && output[i]!=" " &&  output[i]!="")
-          htmlOuput += "<td align='middle' valign='middle'> <i class='far fa-circle fa-xs'></i> &nbsp;"+output[i] +"  </td>"
+          htmlOuput += "<td align='middle' valign='middle'> <i class='far fa-circle fa-xs'></i> &nbsp;"+output[i] +
+          " <button type='button'class='btn btn-outline-light btn-sm' style='float:right;'>  <i class='far fa-trash-alt fa-x'></i></button> </td>"
 
           if(i +1%4==0)
           htmlOuput +="</tr>";
@@ -161,8 +162,9 @@ function showToDoList(typeOfListID)
           if(i==(output.length-1))
           {
             htmlOuput += "<td colspan=4 align='middle' valign='middle'> <i class='far fa-circle fa-xs'></i> &nbsp;" + 
-            "<input type='text' id='todoSender' name='name' style='width:80%'><button type='button' class='btn btn-outline-light btn-sm' onclick='sendToDoToDataBase("+typeOfListID+")'> <i  class='fas fa-check-square fa-lg'></i></button>  </td>"; //This is the button
+            "<input type='text' id='todoSender' name='name' style='width:80%'><button type='button' id='senderButton' class='btn btn-outline-light btn-sm' onclick='sendToDoToDataBase("+typeOfListID+")'> <i  class='fas fa-check-square fa-lg'></i></button>  </td>"; //This is the button
             //put in the ID the best
+            
           }
         
         }
@@ -178,6 +180,15 @@ function showToDoList(typeOfListID)
             
         changeCellColor(typeOfListID);
         selectToDoType(typeOfListID);
+
+        //Trigger it by pressing enter
+        var input = document.getElementById("todoSender");
+        input.addEventListener("keyup", function(event) {
+          if (event.keyCode === 13) {
+          event.preventDefault();
+           document.getElementById("senderButton").click();
+          }
+        });
 
         
       } else {
@@ -224,8 +235,12 @@ function sendToDoToDataBase(typeID)
 
 
     //Now just refresh the results realquick
+    //But before change the local storage to keep it from hiding
+    sessionStorage.setItem("showToDos","false" );
     showToDoList(typeID);
 }
+
+
 
 function selectToDoType(id)
 {
@@ -251,11 +266,19 @@ function selectToDoType(id)
     
   }
     //Change the icon on the title
-  document.getElementById("icon"+id).className = "fas fa-chevron-up"; 
+    document.getElementById("icon"+id).className = "fas fa-chevron-up"; 
 
     //Change the border of the cell
     document.getElementById("color"+id).style.borderTop = "5px solid white";
     document.getElementById("color"+id).style.borderLeft = "5px solid white";
     document.getElementById("color"+id).style.borderRight = "5px solid white";
 }
+
+//Do this with AJAX 
+function deleteToDo(id)
+{
+
+}
+
+
 
