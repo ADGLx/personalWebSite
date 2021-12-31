@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="MyStyle.css">
+    
    
     <!--Favicon-->
     <link rel="icon" href ="img/creature.png">
@@ -30,10 +30,12 @@
     <!--Font Awesome-->
     <script src="https://kit.fontawesome.com/0eb434093d.js" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="NewCSS.css">
 
-    <title>ADGL- MySchedule</title>
+
+    <title>Scheduler</title>
 </head>
-<body onload="showClassesProperly()">
+<body>
     <!--Login Verification-->
     <?php include("includes/accountVal.php"); ?>
    
@@ -79,38 +81,61 @@
     <br class="container">
         <!--Leave a bit of empty space-->
         <div class="m-2"> <!--For the Margin-->
-          
+
+
+            <table class ="table table-dark mb-0 table-bordered">
+            <thead>
+                <tr>
+                   
+                  <th style="text-align:center;" colspan=4> 
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#todosTypesList" class="btn btn-success btn-sm" style="float:left;"><i class="far fa-edit"></i></button>
+                  To-Do Lists &nbsp; <i class="fas fa-list-ul"></i>
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#addTodo" class="btn btn-success btn-sm" style="float:right;"><i class="far fa-plus-square"></i></button> 
+                </th>
+                  
+                </tr>
+                </thead>
+                <!--Get the button amount from here -->
+                <tbody id="todoTypeParent" class="hoverTitle ">
+                <?php include_once("includes/getToDoLists.php");?>
+                </tbody>
+            </table>
+            <!-- the format of the table is changed via js-->
+            <table id='addTodosTable' class="table table-sm table-dark ht">
+            </table>
+ 
+      
           <!--Add Class and Reminder buttons-->
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Class &nbsp; <i class="fas fa-graduation-cap"></i></button>
           <button type="button" class="btn btn-dark buttonOverride" style="width: 49.9%; float: right;" data-bs-toggle="modal" data-bs-target="#ReminderModel">Add Reminder &nbsp;<i class='fas fa-check fa-sm'></i></button>
 
-          <div class="table-responsive"> 
+          <div class="table-responsive selectable"> 
             <table class="table table-dark table-bordered" style="text-align: center; height:100%; width: 100%;">
                 <thead>
                   <tr>
                     <th colspan="8">
                       <form onsubmit="remove()" actions="includes/getWeeksReminders.php" method="GET">
-                      <button type="submit" class="btn btn-success" style="float: inline-start;" name="weeknmb" id="minusWeek"  value=0 > <i class="fas fa-arrow-left"></i> </button>
+                      <button type="submit" class="btn btn-success" style="float: left;" name="weeknmb" id="minusWeek"  value=0 > <i class="fas fa-arrow-left"></i> </button>
                       </form>
                      
                       <form onsubmit="add()" actions="includes/getWeeksReminders.php" method="GET">
                       Weekly Schedule 
-                       <button type="submit" class="btn btn-success" style="float: inline-end;" name="weeknmb" id="plusWeek" value=0> <i class="fas fa-arrow-right"></i></button>
+                       <button type="submit" class="btn btn-success" style="float: right;" name="weeknmb" id="plusWeek" value=0> <i class="fas fa-arrow-right"></i></button>
                        </form>
                       </th>
                   </tr>
                 </thead>
                 <tbody class ="align-middle ">
 
-                  <?php include("includes/getWeeksReminders.php"); ?>
+                  <?php include_once("includes/getWeeksReminders.php"); ?>
 
 
                 </tbody>
               </table>
             </div>
             
-            <!--Reminders Table-->
-          <table class="table table-dark">
+  <!--Reminders Table-->
+  <table class="table table-dark">
             <thead>
               <tr>
                 <th>This Week's Reminders</th>
@@ -125,15 +150,21 @@
             </tbody>
           </table>
 
-         
+
+           
         </div>
     
     </div>
 
-     <!--Footer-->
-  <div class ="footer">
-   <!--<p> By Alvaro Gonzalez</p> --> 
-</div>
+
+      <footer class="footer bg-dark">
+
+      <!-- Copyright -->
+      <div class="footer text-center py-2 text-muted">By Alvaro Gonzalez:
+        <a href="https://abt.adgl.tech/" class="text-muted"> abt.adgl.tech</a>
+      </div>
+
+      </footer>
 
  <!-- Modal For Opening Class -->
  <form action="includes/submitClass.php" method="POST">
@@ -374,7 +405,11 @@
                    
                    <!--Color-->
                    <button type="button" id="reminderPreviewE" class="btn btn-warning">&nbsp; &nbsp; <i class="fas fa-check"></i> &nbsp; &nbsp; </button>
-                  
+
+                   <!--Delete-->
+              
+                    <button type="button delete" name="delete" class="btn btn-danger" id="deleteE" value=""><i class="far fa-trash-alt"></i> </button> 
+                   
                  </div>
                  <div class='modal-body'>
                      <!--Name-->
@@ -436,6 +471,7 @@
 </div>
 </form>
 
+
 <!-- Modal for Classes List -->
 <div class="modal fade" id="classesList" tabindex="-1" aria-labelledby="classesListLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -458,7 +494,54 @@
 </div>
 
 
+<!-- Modal for Todo Types List -->
+<div class="modal fade" id="todosTypesList" tabindex="-1" aria-labelledby="todosTypesListLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="todosTypesListLabel">To-Dos List (4 max) </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <table class="table">
+       <tr> <th> To-Do Type </th>  <th> Options </th></tr>
+       <?php include ("includes/todosTypesList.php") ; ?>
+      </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Modal for adding To-Dos Types -->
+<form action="includes/submitToDoType.php" method="POST">
+<div class="modal fade" id="addTodo" tabindex="-1" aria-labelledby="addTodoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addTodoLabel">Add To-Do Type (4 max) </h5>
+         <!--Color-->
+         <input type="color" id="color" name="color" value="#e66465" style="width: 15%; display: flex; margin-left: auto; ">
+      </div>
+      <div class="modal-body">
+            <!--Text-->
+            <div>
+              <label>Text: </label>
+              <input type="text" id="name" name="name" style="width: 75%; float: inline-end;">
+            </div>
+            <br>
+      </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button submit" class="btn btn-primary" data-bs-dismiss="modal" name="submit">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
 
 
     <!--Boostrap JS-->

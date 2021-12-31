@@ -47,7 +47,12 @@
        editReminderInDatabase($conn, $rmduserID,$rmdTitle, $rmdTime, $rmdDate, $rmdPriority, $rmdNotify, $rmdDescription, $rmdID);
        //header("location: ../index.php?error=$rmdID");
 
-    } else 
+    } else if(isset($_POST["delete"]))
+    {
+        include_once("deleteReminder.php");//Just sent to delete it 
+    }
+    
+    else 
     {
         header("location: ../index.php?error=idkData");
         exit();

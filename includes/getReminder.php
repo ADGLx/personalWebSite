@@ -46,7 +46,7 @@
             <tr>
                 <td>$title</td> <td> $date</td><td>$time</td><td>$description</td>
                 <td>
-                <form action='includes/deleteOrEditReminder.php' method='POST'>
+                <form action='includes/deleteReminder.php' method='POST'>
                 <button type='button' onclick='showReminderInfoModal($id)' class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' name='edit' id='$id' value='$id'  ' >Edit</button>
                 <button type='button delete' class='btn btn-danger btn-sm' name='delete' value='$id'>Delete</button>
                   </form>

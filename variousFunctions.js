@@ -44,6 +44,8 @@ function showReminderInfoModal(id)
       document.getElementById("priorityE").value = priority;
 
       document.getElementById("editR").value = id;
+
+      document.getElementById("deleteE").value = id;
       
     } else {
           alert('Error Code: ' +  objXMLHttpRequest.status);
@@ -93,3 +95,198 @@ function getPriorityClass(val)
 
   }
 }
+
+
+//-------------------------This is for the TODOs List--------------------------------
+
+function showToDoList(typeOfListID)
+{
+
+  if(sessionStorage.getItem("currentToDoList") == typeOfListID && sessionStorage.getItem("showToDos") == "true")
+  {
+    document.getElementById("addTodosTable").innerHTML = "";
+    sessionStorage.setItem("showToDos", false);
+
+     //Change the back icon on the title
+  document.getElementById("icon"+typeOfListID).className = "fas fa-chevron-down"; 
+
+  //Change back the border too
+  document.getElementById("color"+typeOfListID).style.border= "";
+
+
+    return;
+  }
+  
+
+
+  var http = new XMLHttpRequest();
+  http.onreadystatechange = function() 
+    {
+     
+    if(http.readyState === 4) 
+    {
+      if(http.status === 200) 
+      {
+        var queryString = http.responseText;
+        let output = queryString.split("|");
+        //Add the table elements here 
+        let htmlOuput ="<tbody>";
+
+
+        //Now find the positions of which
+
+        for (let i = 0; i < output.length; i++) 
+        {
+          let nameI = output[i].split("&?")[0];
+          let todoID = output[i].split("&?")[1];
+
+
+          if((i +1)%4==1)
+          htmlOuput +="<tr>";
+
+          //Print the actual thing
+          if(nameI!=null &&nameI!=" " &&  nameI!="")
+          htmlOuput += "<td align='left' valign='middle' onmouseover=\"showDeleteTodoIcon('t"+todoID+"')\" onmouseout=\"hideDeleteTodoIcon('t"+todoID+"') \" > <i class='far fa-circle fa-xs'></i> &nbsp;"+nameI +
+          " <button type='button'class='btn btn-outline-light btn-sm' id='t"+todoID+"' style='display:none;float:right;' onclick='deleteToDo("+todoID+")'>  <i  class='far fa-trash-alt fa-x'></i></button> </td>"
+
+          if(i +1%4==0)
+          htmlOuput +="</tr>";
+
+          //Prints the extra stuff
+          if(i==(output.length-1))
+          {
+            htmlOuput += "<td colspan=4 align='middle' valign='middle'> <i class='far fa-circle fa-xs'></i> &nbsp;" + 
+            "<input type='text' id='todoSender' name='name' style='width:80%'><button type='button' id='senderButton' class='btn btn-outline-light btn-sm' onclick='sendToDoToDataBase("+typeOfListID+")'> <i  class='fas fa-check-square fa-lg'></i></button>  </td>"; //This is the button
+            //put in the ID the best
+            
+          }
+        
+        }
+
+        //Adding the input field to the next one
+
+        htmlOuput += "</tbody>";
+        //Setting a session variable for the last active ToDoList
+        sessionStorage.setItem("currentToDoList", typeOfListID);
+        sessionStorage.setItem("showToDos", "true");
+
+        document.getElementById("addTodosTable").innerHTML = htmlOuput;
+            
+        changeCellColor(typeOfListID);
+        selectToDoType(typeOfListID);
+
+        //Trigger it by pressing enter
+        var input = document.getElementById("todoSender");
+        input.addEventListener("keyup", function(event) {
+          if (event.keyCode === 13) {
+          event.preventDefault();
+           document.getElementById("senderButton").click();
+          }
+        });
+
+        
+      } else {
+            alert('Error Code: ' +  http.status);
+            alert('Error Message: ' + http.statusText);
+      }
+    }
+    } 
+    http.open('GET', "/includes/queryToDos.php?"+"typeOfToDo="+typeOfListID, true);
+    http.send();
+   // alert(typeOfListID);
+  
+}
+
+function changeCellColor(id)
+{
+  
+  var color = document.getElementById("color"+id).style.color;
+  var el = document.getElementById("addTodosTable");
+
+  var allTD = el.getElementsByTagName("td");
+
+  for (let index = 0; index < allTD.length; index++) {
+    const element = allTD[index];
+   // element.style.color = color;
+
+    //changing the width too
+    element.style.width = 100/allTD.length +"%"; //This evens the width
+
+  }
+    
+  
+}
+
+function sendToDoToDataBase(typeID)
+{
+  //alert("sending! " + document.getElementById("todoSender").value);
+
+  let textToSend = document.getElementById("todoSender").value;
+  
+  var http = new XMLHttpRequest();
+    http.open('GET', "/includes/submitToDo.php?"+"name="+textToSend +"&"+"type="+typeID, true);
+    http.send();
+
+
+    //Now just refresh the results realquick
+    //But before change the local storage to keep it from hiding
+    sessionStorage.setItem("showToDos","false" );
+    showToDoList(typeID);
+}
+
+function selectToDoType(id)
+{
+ 
+  //First set all the other ones to the down one 
+  var color = document.getElementById("color"+id).style.color;
+   var allChildren = document.getElementById("todoTypeParent").getElementsByTagName("i");
+
+   for (let index = 0; index < allChildren.length; index++) {
+     const element = allChildren[index];
+     
+      element.className = "fas fa-chevron-down"; 
+
+     
+   }
+
+   var allCellChildren = document.getElementById("todoTypeParent").getElementsByTagName("th");
+   for (let index = 0; index < allCellChildren.length; index++) 
+   {
+    const element = allCellChildren[index];
+    
+     element.style.border = "";
+
+    
+  }
+    //Change the icon on the title
+    document.getElementById("icon"+id).className = "fas fa-chevron-up"; 
+
+    //Change the border of the cell
+    document.getElementById("color"+id).style.borderTop = "5px solid " + color;
+    document.getElementById("color"+id).style.borderLeft = "5px solid "+ color;
+    document.getElementById("color"+id).style.borderRight = "5px solid "+ color;
+
+    document.getElementById("addTodosTable").style.border = "5px solid " + color;
+}
+
+function deleteToDo(id)
+{
+  var http = new XMLHttpRequest();
+  http.open('GET', "/includes/deleteToDo.php?"+"id="+id, true);
+  http.send();
+
+  showToDoList(sessionStorage.getItem("currentToDoList"));
+}
+
+
+//Show the trash icon on hover
+function showDeleteTodoIcon(objID)
+{
+  document.getElementById(objID).style.display = "inline";
+}
+
+function hideDeleteTodoIcon(objID)
+{
+  document.getElementById(objID).style.display = "none";
+}
+

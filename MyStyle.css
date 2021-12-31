@@ -7,9 +7,15 @@
 
 
 body {
-    background-color: var(--color4) !important;
+   /* background-color: var(--color4) !important;*/
+   background-color: black !important;
 }
 
+
+/*
+.selectable tr:hover{
+    background-color: white !important;
+  }
 
 .button{
     border: none;
@@ -59,40 +65,35 @@ body {
       text-align: right;
   }
 
-  /*Keeps the days equal width */
+
   th.day{
       width: 14%;
   }
- /*Keeps the time smaller width */
+
   th.time{
       width: 2%;
   }
 
   
-  /*This doesnt work */
+
     .tableRowFormat {
     height: 250px ;
   }
+
   .h td:hover,.h th:hover{
       background-color: var(--color2) !important;
      
   }
 
-  /*Button override for boostrap*/
+
   .buttonOverride:hover 
   {
     background-color: var(--color2) !important;
   }
 
-  tr.wrap {
-      height : 20px;
-      width: 100%;
-      background-color: blue !important;
-      color : blue !important;
-  }
 
 
-
+*/
 
 
 
