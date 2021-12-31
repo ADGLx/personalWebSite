@@ -61,7 +61,13 @@
                     <input type="password" class="form-control" name="password" placeholder="Password">
                     <label>Password</label>
                   </div>
-                  <br></br>
+                  <br>
+                  <div class="mb-3 form-check">
+                     <input type="checkbox" class="form-check-input" id="autologin" name="autologin">
+                     <label class="form-check-label" for="autologin"> Remember me</label>
+                    </input>
+                  </div>
+                  <br>
                   <div class="text-center"><button class="btn btn-success" type="submit" name="submit">Submit</button></div>
                   
                   <?php
@@ -89,7 +95,8 @@
   </div>
 
   </form>
-
+  <!--Boostrap JS-->
+  <script src="loginPageFunctions.js"></script> 
     <!--Boostrap JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
