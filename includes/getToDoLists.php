@@ -18,7 +18,7 @@ if($result = mysqli_query($conn, $sql))
         $amt++; //Name is the ID Type?
         echo "
         <th class ='text-center w-25' name='".$row['id']."' id='color".$row['id']."' value='".$row['color']." ' style='background-color:".$row['color'].";' onclick='showToDoList(".$row['id'].")'> 
-        ". $row['name']."
+        ". $row['name']." &nbsp; <i id='icon".$row['id']."'class='fas fa-chevron-down'></i>
         </th> 
         ";
       }

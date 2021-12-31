@@ -103,12 +103,29 @@ function showToDoOnLoad()
   
   if(sessionStorage.getItem("currentToDoList") !=null)
   {
-    showToDoList(sessionStorage.getItem("currentToDoList"));
+  //  showToDoList(sessionStorage.getItem("currentToDoList"));
   }
 }
 
 function showToDoList(typeOfListID)
 {
+
+  if(sessionStorage.getItem("currentToDoList") == typeOfListID && sessionStorage.getItem("showToDos") == "true")
+  {
+    document.getElementById("addTodosTable").innerHTML = "";
+    sessionStorage.setItem("showToDos", false);
+
+     //Change the back icon on the title
+  document.getElementById("icon"+typeOfListID).className = "fas fa-chevron-down"; 
+
+  //Change back the border too
+  document.getElementById("color"+typeOfListID).style.border= "";
+
+
+    return;
+  }
+  
+
 
   var http = new XMLHttpRequest();
   http.onreadystatechange = function() 
@@ -153,11 +170,14 @@ function showToDoList(typeOfListID)
         //Adding the input field to the next one
 
         htmlOuput += "</tbody>";
+        //Setting a session variable for the last active ToDoList
+        sessionStorage.setItem("currentToDoList", typeOfListID);
+        sessionStorage.setItem("showToDos", "true");
+
         document.getElementById("addTodosTable").innerHTML = htmlOuput;
             
         changeCellColor(typeOfListID);
-        //Setting a session variable for the last active ToDoList
-        sessionStorage.setItem("currentToDoList", typeOfListID);
+        selectToDoType(typeOfListID);
 
         
       } else {
@@ -169,7 +189,7 @@ function showToDoList(typeOfListID)
     http.open('GET', "/includes/queryToDos.php?"+"typeOfToDo="+typeOfListID, true);
     http.send();
    // alert(typeOfListID);
-
+  
 }
 
 function changeCellColor(id)
@@ -205,5 +225,37 @@ function sendToDoToDataBase(typeID)
 
     //Now just refresh the results realquick
     showToDoList(typeID);
+}
+
+function selectToDoType(id)
+{
+ 
+  //First set all the other ones to the down one 
+   var allChildren = document.getElementById("todoTypeParent").getElementsByTagName("i");
+
+   for (let index = 0; index < allChildren.length; index++) {
+     const element = allChildren[index];
+     
+      element.className = "fas fa-chevron-down"; 
+
+     
+   }
+
+   var allCellChildren = document.getElementById("todoTypeParent").getElementsByTagName("th");
+   for (let index = 0; index < allCellChildren.length; index++) 
+   {
+    const element = allCellChildren[index];
+    
+     element.style.border = "";
+
+    
+  }
+    //Change the icon on the title
+  document.getElementById("icon"+id).className = "fas fa-chevron-up"; 
+
+    //Change the border of the cell
+    document.getElementById("color"+id).style.borderTop = "5px solid white";
+    document.getElementById("color"+id).style.borderLeft = "5px solid white";
+    document.getElementById("color"+id).style.borderRight = "5px solid white";
 }
 

@@ -83,21 +83,23 @@
         <div class="m-2"> <!--For the Margin-->
 
 
-            <table class ="table table-dark mb-0">
+            <table class ="table table-dark mb-0 ">
             <thead>
                 <tr>
-                  <th style="text-align:center;" colspan=10> 
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#todosTypesList" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
-                  &nbsp; To-Do Lists &nbsp;
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#addTodo" class="btn btn-success btn-sm"><i class="far fa-plus-square"></i></button>
+                  <td style="width:5%;">  <button type="button" data-bs-toggle="modal" data-bs-target="#todosTypesList" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button></td>
+                  <th style="text-align:center;" colspan=2> 
+                  To-Do Lists
                   </th>
+                  <td style="text-align:right;"><button type="button" data-bs-toggle="modal" data-bs-target="#addTodo" class="btn btn-success btn-sm"><i class="far fa-plus-square"></i></button> </td>
                 </tr>
                 </thead>
                 <!--Get the button amount from here -->
+                <tbody id="todoTypeParent">
                 <?php include_once("includes/getToDoLists.php");?>
+                </tbody>
             </table>
             <!-- the format of the table is changed via js-->
-            <table id='addTodosTable' class="table table-sm table-dark table-bordered ">
+            <table id='addTodosTable' class="table table-sm table-dark table-bordered border-white " style="border:5px solid white;">
             </table>
  
           <br>
