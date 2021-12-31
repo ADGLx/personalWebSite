@@ -18,9 +18,9 @@ $sql = "SELECT * FROM todos WHERE userid=$usr AND typeid=$id";
         
         while ($row = mysqli_fetch_assoc($r))
         {
-            $allOutput = $row["name"];
+            $allOutput = $row["name"]."&?".$row["id"]."|";
 
-            echo $allOutput."|";
+            echo $allOutput;
         }
 
     } else {

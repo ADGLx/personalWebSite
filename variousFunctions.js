@@ -147,13 +147,17 @@ function showToDoList(typeOfListID)
 
         for (let i = 0; i < output.length; i++) 
         {
+          let nameI = output[i].split("&?")[0];
+          let todoID = output[i].split("&?")[1];
+
+
           if((i +1)%4==1)
           htmlOuput +="<tr>";
 
           //Print the actual thing
-          if(output[i]!=null && output[i]!=" " &&  output[i]!="")
-          htmlOuput += "<td align='middle' valign='middle'> <i class='far fa-circle fa-xs'></i> &nbsp;"+output[i] +
-          " <button type='button'class='btn btn-outline-light btn-sm' style='float:right;'>  <i class='far fa-trash-alt fa-x'></i></button> </td>"
+          if(nameI!=null &&nameI!=" " &&  nameI!="")
+          htmlOuput += "<td align='middle' valign='middle'> <i class='far fa-circle fa-xs'></i> &nbsp;"+nameI +
+          " <button type='button'class='btn btn-outline-light btn-sm' style='float:right;' onclick='deleteToDo("+todoID+")'>  <i class='far fa-trash-alt fa-x'></i></button> </td>"
 
           if(i +1%4==0)
           htmlOuput +="</tr>";
@@ -277,7 +281,11 @@ function selectToDoType(id)
 //Do this with AJAX 
 function deleteToDo(id)
 {
+  var http = new XMLHttpRequest();
+  http.open('GET', "/includes/deleteToDo.php?"+"id="+id, true);
+  http.send();
 
+  showToDoList(sessionStorage.getItem("currentToDoList"));
 }
 
 
