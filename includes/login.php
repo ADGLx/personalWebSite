@@ -4,6 +4,7 @@
     {
         $usn = $_POST['username'];
         $pwd = $_POST['password'];
+        $rmb = $_POST['autologin'];
 
         require_once 'ConectSQL.php'; //Connects to the SQL
 
@@ -13,13 +14,20 @@
             exit();
         }
 
+        //Set cookie if the rmb is true
+        if($rmb !="") 
+        {
+            setcookie("user",$usn, time() +  (86400 * 30), "/"); //This is the user cookie
+            setcookie("pwd",$pwd, time() +  (86400 * 30), "/");
+        }
+
         loginUser ($conn, $usn, $pwd);
 
 
     } else 
     {
-        header("location: ../LoginPage.php");
-        exit();
+       // header("location: ../LoginPage.php");
+       // exit();
     }
 
 
