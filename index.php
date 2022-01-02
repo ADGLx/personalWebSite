@@ -35,12 +35,9 @@
 
     <title>Scheduler</title>
 </head>
-<body onload="showSchedule(0); showReminderList();">
+<body onload="showToDoTypes(); showSchedule(0); showReminderList();">
     <!--Login Verification-->
     <?php include("includes/accountVal.php"); ?>
-   
-    <!--Check for ScreenSize-->
-    <?php include("includes/checkForMobile.php"); ?>
 
     <!--Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -100,7 +97,7 @@
                 </thead>
                 <!--Get the button amount from here -->
                 <tbody id="todoTypeParent" class="hoverTitle ">
-                <?php include_once("includes/getToDoLists.php");?>
+                <?php //include_once("includes/getToDoLists.php");?>
                 </tbody>
             </table>
             <!-- the format of the table is changed via js-->

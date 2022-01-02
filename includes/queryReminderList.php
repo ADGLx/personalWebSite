@@ -10,19 +10,36 @@ if(isset($_GET["week"]) !=null)
 
 $weekNumber = $weekNumber*7;
 
+$isMobile = false;
 
+if(isset($_GET['mobile']) && $_GET['mobile']==1)
+{
+    $isMobile = true;
+}
 
+if(!$isMobile)
+{
+  echo" <thead>
+  <tr>
+    <th>This Week's Reminders</th>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Description</th>
+    <th>Options </th>
+  </tr>
+</thead>
+";
+} else 
+{
+  echo" <thead>
+  <tr>
+    <th>Reminders</th>
+    <th>Options </th>
+  </tr>
+</thead>
+";
+}
 
-echo" <thead>
-    <tr>
-      <th>This Week's Reminders</th>
-      <th>Date</th>
-      <th>Time</th>
-      <th>Description</th>
-      <th>Options </th>
-    </tr>
-  </thead>
-  ";
   require_once 'ConectSQL.php'; //Connects to the SQL
 $sql = "SELECT * FROM `reminders` WHERE 
             userid =$tempUser AND
@@ -34,7 +51,9 @@ $sql = "SELECT * FROM `reminders` WHERE
         //Grabs the result in an array and print them all 
     while ($row = mysqli_fetch_assoc($result)) 
     {
-
+        if($isMobile)
+        addRowToReminderTableSmall($row["title"],$row["date"],$row["time"], $row["description"], $row["id"]);
+        else
         addRowToReminderTable($row["title"],$row["date"],$row["time"], $row["description"], $row["id"]);
     }
 
@@ -61,7 +80,7 @@ $sql = "SELECT * FROM `reminders` WHERE
                 <td>$title</td> <td> $date</td><td>$time</td><td>$description</td>
                 <td>
                 <form action='includes/deleteReminder.php' method='POST'>
-                <button type='button' onclick='showReminderInfoModal($id)' class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' name='edit' id='$id' value='$id'  ' >Edit</button>
+                <button type='button' onclick='showReminderInfoModal($id)' class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' name='edit' id='$id' value='$id'  ' >View</button>
                 <button type='button delete' class='btn btn-danger btn-sm' name='delete' value='$id'>Delete</button>
                   </form>
                 </td>
@@ -73,10 +92,10 @@ $sql = "SELECT * FROM `reminders` WHERE
     {
         echo " 
         <tr>
-            <td>$title</td> <td> $date</td>
+            <td>$title</td>
             <td>
             <form action='includes/deleteReminder.php' method='POST'>
-            <button type='button' onclick='showReminderInfoModal($id)' class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' name='edit' id='$id' value='$id'  ' >Edit</button>
+            <button type='button' onclick='showReminderInfoModal($id)' class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' name='edit' id='$id' value='$id'  ' >View</button>
             <button type='button delete' class='btn btn-danger btn-sm' name='delete' value='$id'>Delete</button>
               </form>
             </td>

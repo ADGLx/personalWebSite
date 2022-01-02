@@ -2,50 +2,98 @@
     session_start();//Not sure why but this works
     $tempUser = $_SESSION["userid"];
 
-   
-    $weekNumber =0;
-    if(isset($_GET["week"]) !=null)
-    {
-      $weekNumber = $_GET["week"];
-    }
-    
-    $weekNumber = $weekNumber*7;
-
     require_once 'ConectSQL.php'; //Connects to the SQL
-    $sqlC = "SELECT * FROM classes WHERE userid = $tempUser"; //Gets all classes
 
-    //This for now only does this week
-    $sql = "SELECT * FROM `reminders` WHERE 
-            userid =$tempUser AND
-            date >= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (1 + $weekNumber) DAY
-            AND date <= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (7 + $weekNumber) DAY";
-
-        if($classResult = mysqli_query($conn, $sqlC))
-        $allClasses = mysqli_fetch_assoc($classResult);
-        else 
-        {
-        $allClasses = null;
-        echo "Error getting classes";
-        }
-
-    if($result = mysqli_query($conn, $sql))
+    if(isset($_GET['mobile']) && $_GET['mobile']==1)
     {
-        //Grabs the result in an array and print them all 
-    if ($row = mysqli_fetch_assoc($result)) 
+      //Get todays date and send it so I can 
+      //This is week number I know but it doesnt matter the day is the same
+      $weekNumber =0;
+      if(isset($_GET["week"]) !=null)
+      {
+        $weekNumber = $_GET["week"];
+      }
+
+      $curDate = date('Y-m-d', strtotime(' + '.$weekNumber.' days'));
+      
+      $td = date('w', strtotime(' + '.$weekNumber.' days')) +1;
+      $sqlC = "SELECT * FROM classes WHERE userid = $tempUser AND
+      (timeD1=$td OR timeD2=$td OR timeD3=$td OR timeD4=$td OR timeD5=$td OR timeD6=$td)"; //Get all classes today
+
+      $sql ="SELECT * FROM reminders WHERE userid =$tempUser AND date = $curDate";
+
+      if($classResult = mysqli_query($conn, $sqlC))
+          $allClasses = mysqli_fetch_assoc($classResult);
+          else 
+          {
+          $allClasses = null;
+          echo "Error getting classes";
+          }
+
+      if($result = mysqli_query($conn, $sql))
+      {
+          //Grabs the result in an array and print them all 
+      if ($row = mysqli_fetch_assoc($result)) 
+      {
+        if(empty($row))
+        echo "erroaar";
+
+        PrintDayTable($result, $classResult, $curDate, $td);
+      }
+      else{
+        PrintDayTable(null,$classResult, $curDate, $td);
+      }
+      } else{
+        echo "error";
+      }
+      mysqli_free_result($result);
+
+    } 
+    else 
     {
-      if(empty($row))
-      echo "erroaar";
 
-        PrintTableWithData($result, $weekNumber, $classResult);
-    }
-    else{
-      PrintTableWithData(null,$weekNumber , $classResult);
-    }
-    } else{
-       echo "error";
-    }
-    mysqli_free_result($result);
+      $weekNumber =0;
+      if(isset($_GET["week"]) !=null)
+      {
+        $weekNumber = $_GET["week"];
+      }
+      
+      $weekNumber = $weekNumber*7;
 
+      $sqlC = "SELECT * FROM classes WHERE userid = $tempUser"; //Gets all classes
+
+      //This for now only does this week
+      $sql = "SELECT * FROM `reminders` WHERE 
+              userid =$tempUser AND
+              date >= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (1 + $weekNumber) DAY
+              AND date <= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (7 + $weekNumber) DAY";
+
+          if($classResult = mysqli_query($conn, $sqlC))
+          $allClasses = mysqli_fetch_assoc($classResult);
+          else 
+          {
+          $allClasses = null;
+          echo "Error getting classes";
+          }
+
+      if($result = mysqli_query($conn, $sql))
+      {
+          //Grabs the result in an array and print them all 
+      if ($row = mysqli_fetch_assoc($result)) 
+      {
+        if(empty($row))
+        echo "erroaar";
+
+          PrintTableWithData($result, $weekNumber, $classResult);
+      }
+      else{
+        PrintTableWithData(null,$weekNumber , $classResult);
+      }
+      } else{
+        echo "error";
+      }
+      mysqli_free_result($result);
+    }
 
     function PrintTableWithData($data , $weekNumber, $classData)
     {
@@ -492,6 +540,80 @@
       for ($i=0; $i < 6; $i++) { 
         if($hour == (0 + $i) || $hour == (6 + $i) || $hour == (12 +$i) || $hour== (18 + $i))
           return $i;
+      }
+    }
+
+    function PrintDayTable($data , $classData, $day, $dayN)
+    {
+      //Print the data as reminders and the day as the current day, thats all
+      switch($dayN)
+      {
+        case 1: $dayN = "Sunday"; break;
+        case 2: $dayN = "Monday"; break;
+        case 3: $dayN = "Tuesday"; break;
+        case 4: $dayN = "Wednsday"; break;
+        case 5: $dayN = "Thurday"; break;
+        case 6: $dayN = "Friday"; break;
+        case 7: $dayN = "Saturday"; break;
+        default: $dayN ="Error"; break;
+      }
+
+      echo "<th> $dayN <br> $day </th> <th style='width: 150px;'> ... </th>";
+
+      $allReminders = array(
+        array(), //1
+        array(), //2
+        array(), //3
+        array(), //4
+        array(), //5
+        array(), //6
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+        array(), //1
+       );
+
+       //Loop throught the week and add all reminders to its specific day
+       if($data !=null)
+      foreach($data as $value)
+      {
+       // $allReminders[getDayOfTheWeek($value, $entireWeekData)][getTimeSlot($value)] = $value;
+        //I will use array push
+
+        //array_push($allReminders[6][3], $value);
+      
+      }
+
+
+      //Now just check for the right slot and it should be okay
+      for($x = 0; $x<24; $x++)
+      {
+        if($x<12)
+        {
+          $y = $x +1;
+          echo "<tr> <td> </td> <th > $y:00&nbsp;AM</th> </tr> ";
+        }
+        
+        else
+        {s
+          $y =$x -11;
+          echo "<tr> <td> </td> <th > $y:00&nbsp;PM</th> </tr> ";
+        }
+        
       }
     }
 ?>
