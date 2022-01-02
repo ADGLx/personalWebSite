@@ -18,6 +18,12 @@
     <title>Login Page</title>
 </head>
 <body>
+
+  <?php
+    //In here check if the cookie is set, if it isnt just continue fine but if it is send the user to the login automatically
+    include("includes/autoLogin.php");
+  ?>
+
    <!--Header -->
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
