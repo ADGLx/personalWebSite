@@ -1,18 +1,17 @@
 <?php
-    //This is supposed to get and print the currents week reminders in the schedule
+    session_start();//Not sure why but this works
     $tempUser = $_SESSION["userid"];
 
+   
     $weekNumber =0;
-    if(isset($_GET["weeknmb"]) !=null)
+    if(isset($_GET["week"]) !=null)
     {
-      $weekNumber = $_GET["weeknmb"];
+      $weekNumber = $_GET["week"];
     }
     
     $weekNumber = $weekNumber*7;
-    //if($weekNumber != 0)
-    //echo $weekNumber;
 
-    //Get this week's classes with a query
+    require_once 'ConectSQL.php'; //Connects to the SQL
     $sqlC = "SELECT * FROM classes WHERE userid = $tempUser"; //Gets all classes
 
     //This for now only does this week
@@ -36,11 +35,6 @@
     {
       if(empty($row))
       echo "erroaar";
-       // addRowToReminderTable($row["title"],$row["date"],$row["time"], $row["description"], $row["id"]);
-       //Just assigning the new sql 
-
-      
-    
 
         PrintTableWithData($result, $weekNumber, $classResult);
     }
@@ -52,54 +46,6 @@
     }
     mysqli_free_result($result);
 
-/*
-    function PrintFullEmptyTable($todayData)
-    {
-      //<button class='btn btn-success' type='button' style='width:100%; background-color:;'>Place Holder (9:00am)</button>
-        
-        echo "
-        <tr class='tableRowFormat'>
-        <td $todayData[0]></td>
-        <td $todayData[1]></td>
-        <td $todayData[2]></td>
-        <td $todayData[3]></td>
-        <td $todayData[4]></td>
-        <td $todayData[5]></td>
-        <td $todayData[6]></td>
-        <th >Morning <br>(7am-12pm)</th>
-      </tr>
-      <tr class='tableRowFormat'>
-      <td $todayData[0]></td>
-        <td $todayData[1]></td>
-        <td $todayData[2]></td>
-        <td $todayData[3]></td>
-        <td $todayData[4]></td>
-        <td $todayData[5]></td>
-        <td $todayData[6]></td>
-        <th>Afternoon <br>(12pm-4pm)</th>
-      </tr>
-      <tr class='tableRowFormat'>
-      <td $todayData[0]></td>
-      <td $todayData[1]></td>
-      <td $todayData[2]></td>
-      <td $todayData[3]></td>
-      <td $todayData[4]></td>
-      <td $todayData[5]></td>
-      <td $todayData[6]></td>
-        <th>Evening<br>(4pm-8pm)</th>
-      </tr>
-      <tr class='tableRowFormat'>
-      <td $todayData[0]></td>
-      <td $todayData[1]></td>
-      <td $todayData[2]></td>
-      <td $todayData[3]></td>
-      <td $todayData[4]></td>
-      <td $todayData[5]></td>
-      <td $todayData[6]></td>
-        <th>Night<br>(8pm-12am)</th>
-      </tr>
-        ";
-    }*/
 
     function PrintTableWithData($data , $weekNumber, $classData)
     {
@@ -548,8 +494,4 @@
           return $i;
       }
     }
-
-  
-
-
-   
+?>

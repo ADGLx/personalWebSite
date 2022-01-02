@@ -1,7 +1,7 @@
 //This is just a collection of miscellanious functions used across the page
 
 
-//I will show all the reminder thingies with javascropt 
+//----------------------------Reminder Edit Functions---------------------------
 function showReminderInfoModal(id)
 {
     //Getting the data from the server
@@ -278,7 +278,6 @@ function deleteToDo(id)
   showToDoList(sessionStorage.getItem("currentToDoList"));
 }
 
-
 //Show the trash icon on hover
 function showDeleteTodoIcon(objID)
 {
@@ -290,3 +289,76 @@ function hideDeleteTodoIcon(objID)
   document.getElementById(objID).style.display = "none";
 }
 
+//--------------------------------Functions to show the weekly schedule----------------
+//This also adds to the current week variable
+function showSchedule(add)
+{
+  let currentWeekNumber = 0;
+
+  if(sessionStorage.getItem("num") ==null)
+  {
+    sessionStorage.setItem("num", 0);
+  }
+
+  if(add == 1)
+  {
+    currentWeekNumber = Number(sessionStorage.getItem("num")) + Number(1);
+    
+  } else if (add == -1)
+  {
+    currentWeekNumber = Number(sessionStorage.getItem("num")) - Number(1);
+
+  } else //If passed something else, ill do a reset
+  {
+    currentWeekNumber = 0;
+
+  }
+
+  sessionStorage.setItem("num",currentWeekNumber);
+
+
+  var http = new XMLHttpRequest();
+  http.onreadystatechange = function() 
+    {
+     
+    if(http.readyState === 4) 
+    {
+      if(http.status === 200) 
+      {
+        var queryString = http.responseText;
+        document.getElementById("scheduleTable").innerHTML = queryString;
+      } else {
+            alert('Error Code: ' +  http.status);
+            alert('Error Message: ' + http.statusText);
+      }
+    }
+    } 
+    http.open('GET', "/includes/queryWeeklySchedule.php?"+"week="+currentWeekNumber, true);
+    http.send();
+}
+
+function showReminderList()
+{
+  let currentWeekNumber = 0;
+  if(sessionStorage.getItem("num") !=null)
+  currentWeekNumber = sessionStorage.getItem("num");
+
+  var http = new XMLHttpRequest();
+  http.onreadystatechange = function() 
+    {
+     
+    if(http.readyState === 4) 
+    {
+      if(http.status === 200) 
+      {
+        var queryString = http.responseText;
+        document.getElementById("reminderListTable").innerHTML = queryString;
+      } else {
+            alert('Error Code: ' +  http.status);
+            alert('Error Message: ' + http.statusText);
+      }
+    }
+    } 
+    http.open('GET', "/includes/queryReminderList.php?"+"week="+currentWeekNumber, true);
+    http.send();
+}

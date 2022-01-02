@@ -1,39 +1,19 @@
 <?php
-    
-    //Check for mobile device
-   if(isset($_COOKIE['scrnSize']) && $_COOKIE['scrnSize']=='small' )
-   {
-    $isMobile = true;
-   } else{
-    $isMobile = false; 
-   }
+session_start();
+$tempUser = $_SESSION["userid"];
+
+$weekNumber =0;
+if(isset($_GET["week"]) !=null)
+{
+  $weekNumber = $_GET["week"];
+}
+
+$weekNumber = $weekNumber*7;
 
 
-    $tempUser = $_SESSION["userid"];
-
-    $weekNumber =0;
-    if(isset($_GET["weeknmb"]) !=null)
-    {
-      $weekNumber = $_GET["weeknmb"];
-    }
-    
-    $weekNumber = $weekNumber*7;
 
 
-    if($isMobile)
-    {
-        echo" <thead>
-        <tr>
-          <th>This Week's Reminders</th>
-          <th>Date</th>
-          <th>Options </th>
-        </tr>
-      </thead>
-      ";
-
-    } else{
-    //Prin all the stuff for the table
-    echo" <thead>
+echo" <thead>
     <tr>
       <th>This Week's Reminders</th>
       <th>Date</th>
@@ -43,14 +23,8 @@
     </tr>
   </thead>
   ";
-    }
-
-
-
-
-
-
-    $sql = "SELECT * FROM `reminders` WHERE 
+  require_once 'ConectSQL.php'; //Connects to the SQL
+$sql = "SELECT * FROM `reminders` WHERE 
             userid =$tempUser AND
             date >= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (1 + $weekNumber) DAY
             AND date <= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (7 + $weekNumber) DAY";
@@ -60,9 +34,7 @@
         //Grabs the result in an array and print them all 
     while ($row = mysqli_fetch_assoc($result)) 
     {
-        if($isMobile)
-        addRowToReminderTableSmall($row["title"],$row["date"],$row["time"], $row["description"], $row["id"]);
-        else
+
         addRowToReminderTable($row["title"],$row["date"],$row["time"], $row["description"], $row["id"]);
     }
 
@@ -110,3 +82,4 @@
             </td>
         </tr>";
     }
+?>

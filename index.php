@@ -35,10 +35,13 @@
 
     <title>Scheduler</title>
 </head>
-<body>
+<body onload="showSchedule(0); showReminderList();">
     <!--Login Verification-->
     <?php include("includes/accountVal.php"); ?>
    
+    <!--Check for ScreenSize-->
+    <?php include("includes/checkForMobile.php"); ?>
+
     <!--Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
@@ -46,7 +49,7 @@
       <?php 
         $temp = $_SESSION["userUsername"];
           $temp = strtoupper($temp);
-      echo "<a class='navbar-brand' href='#'>$temp&#39;s Schedule </a> "?>
+      echo "<a class='navbar-brand' href='index.php'>$temp&#39;s Schedule </a> "?>
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -114,20 +117,16 @@
                 <thead>
                   <tr>
                     <th colspan="8">
-                      <form onsubmit="remove()" actions="includes/getWeeksReminders.php" method="GET">
-                      <button type="submit" class="btn btn-success" style="float: left;" name="weeknmb" id="minusWeek"  value=0 > <i class="fas fa-arrow-left"></i> </button>
-                      </form>
-                     
-                      <form onsubmit="add()" actions="includes/getWeeksReminders.php" method="GET">
+                      <button  class="btn btn-success" onclick="showSchedule(-1); showReminderList();" style="float: left;" name="weeknmb" id="minusWeek"  value=0 > <i class="fas fa-arrow-left"></i> </button>
                       Weekly Schedule 
-                       <button type="submit" class="btn btn-success" style="float: right;" name="weeknmb" id="plusWeek" value=0> <i class="fas fa-arrow-right"></i></button>
-                       </form>
+                       <button  class="btn btn-success" onclick="showSchedule(1); showReminderList();" style="float: right;" name="weeknmb" id="plusWeek" value=0> <i class="fas fa-arrow-right"></i></button>
+    
                       </th>
                   </tr>
                 </thead>
-                <tbody class ="align-middle ">
+                <tbody class ="align-middle" id="scheduleTable">
 
-                  <?php include_once("includes/getWeeksReminders.php"); ?>
+                  <?php // include_once("includes/getWeeksReminders.php"); ?>
 
 
                 </tbody>
@@ -135,25 +134,10 @@
             </div>
             
   <!--Reminders Table-->
-  <table class="table table-dark">
-            <thead>
-              <tr>
-                <th>This Week's Reminders</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Description</th>
-                <th>Options </th>
-              </tr>
-            </thead>
-            <tbody>
-            <?php include ("includes/getReminder.php"); ?>
-            </tbody>
-          </table>
-
-
-           
+  <table class="table table-dark" id="reminderListTable">
+            <?php //include ("includes/getReminder.php"); ?>
+          </table>  
         </div>
-    
     </div>
 
 
@@ -548,7 +532,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <!--My Own JS-->
-   <script src="changeWeek.js"></script> 
    <script src="variousFunctions.js"></script> 
 
 
