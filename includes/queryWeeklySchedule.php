@@ -636,6 +636,7 @@
           
           $actualTime = $y;
           $timeF = "AM";
+          
 
           if($y >12)
           {
@@ -643,6 +644,9 @@
             $timeF ="PM";
           }
 
+          $hideIt ="";
+          if($y < 6 || $y >22) //Make this a toggle lter
+          $hideIt= "style='display: none;'";
 
 
           if(isset($allReminders[$y]))
@@ -668,7 +672,7 @@
                       break;
                   }
             $temp = "<button class='btn ".$colorTemp."' type='button' onclick='showReminderInfoModal(".$allReminders[$y]['id'].")' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' id ='".$allReminders[$y]['id']."'style='width:100%;'> <i class='fas fa-check fa-sm'></i> &nbsp;".$allReminders[$y]["title"] ."</button>";
-            echo "<tr> <td>$temp </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
+            echo "<tr $hideIt> <td>$temp </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
           } 
           else if(isset($allClassesT[$y]))
           {
@@ -697,11 +701,11 @@
 
               $tempID = "id='c".$allClassesT[$y]['id']."-".$tempSNum."'";
 
-            echo "<tr> <td $tempC $tempClass $tempID> $tempT </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
+            echo "<tr $hideIt> <td $tempC $tempClass $tempID> $tempT </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
           }
           else 
           {
-            echo "<tr> <td> </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
+            echo "<tr $hideIt> <td> </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
           }
          
         
