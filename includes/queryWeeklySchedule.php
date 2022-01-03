@@ -2,50 +2,100 @@
     session_start();//Not sure why but this works
     $tempUser = $_SESSION["userid"];
 
-   
-    $weekNumber =0;
-    if(isset($_GET["week"]) !=null)
-    {
-      $weekNumber = $_GET["week"];
-    }
-    
-    $weekNumber = $weekNumber*7;
-
     require_once 'ConectSQL.php'; //Connects to the SQL
-    $sqlC = "SELECT * FROM classes WHERE userid = $tempUser"; //Gets all classes
 
-    //This for now only does this week
-    $sql = "SELECT * FROM `reminders` WHERE 
-            userid =$tempUser AND
-            date >= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (1 + $weekNumber) DAY
-            AND date <= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (7 + $weekNumber) DAY";
-
-        if($classResult = mysqli_query($conn, $sqlC))
-        $allClasses = mysqli_fetch_assoc($classResult);
-        else 
-        {
-        $allClasses = null;
-        echo "Error getting classes";
-        }
-
-    if($result = mysqli_query($conn, $sql))
+    if(isset($_GET['mobile']) && $_GET['mobile']==1)
     {
-        //Grabs the result in an array and print them all 
-    if ($row = mysqli_fetch_assoc($result)) 
+      //Get todays date and send it so I can 
+      //This is week number I know but it doesnt matter the day is the same
+      $weekNumber =0;
+      if(isset($_GET["week"]) !=null)
+      {
+        $weekNumber = $_GET["week"];
+      }
+
+      $curDate = date('Y-m-d', strtotime(' + '.$weekNumber.' days'));
+      
+      $td = date('w', strtotime(' + '.$weekNumber.' days')) +1;
+      $sqlC = "SELECT * FROM classes WHERE userid = $tempUser AND
+      (timeD1=$td OR timeD2=$td OR timeD3=$td OR timeD4=$td OR timeD5=$td OR timeD6=$td)"; //Get all classes today
+
+      $sql ="SELECT * FROM reminders WHERE userid =$tempUser AND date = '$curDate'";
+
+
+      if($classResult = mysqli_query($conn, $sqlC))
+          $allClasses = mysqli_fetch_assoc($classResult);
+          else 
+          {
+          $allClasses = null;
+          echo "Error getting classes";
+          }
+
+      if($result = mysqli_query($conn, $sql))
+      {
+          //Grabs the result in an array and print them all 
+      if ($row = mysqli_fetch_assoc($result)) 
+      {
+        if(empty($row))
+        echo "erroaar";
+
+        PrintDayTable($result, $classResult, $curDate, $td);
+      }
+      else{
+        
+        PrintDayTable(null,$classResult, $curDate, $td);
+      }
+      } else{
+        echo "error";
+      }
+      mysqli_free_result($result);
+
+    } 
+    else 
     {
-      if(empty($row))
-      echo "erroaar";
 
-        PrintTableWithData($result, $weekNumber, $classResult);
-    }
-    else{
-      PrintTableWithData(null,$weekNumber , $classResult);
-    }
-    } else{
-       echo "error";
-    }
-    mysqli_free_result($result);
+      $weekNumber =0;
+      if(isset($_GET["week"]) !=null)
+      {
+        $weekNumber = $_GET["week"];
+      }
+      
+      $weekNumber = $weekNumber*7;
 
+      $sqlC = "SELECT * FROM classes WHERE userid = $tempUser"; //Gets all classes
+
+      //This for now only does this week
+      $sql = "SELECT * FROM `reminders` WHERE 
+              userid =$tempUser AND
+              date >= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (1 + $weekNumber) DAY
+              AND date <= CURRENT_DATE() - INTERVAL DAYOFWEEK(CURRENT_DATE()) - (7 + $weekNumber) DAY";
+
+          if($classResult = mysqli_query($conn, $sqlC))
+          $allClasses = mysqli_fetch_assoc($classResult);
+          else 
+          {
+          $allClasses = null;
+          echo "Error getting classes";
+          }
+
+      if($result = mysqli_query($conn, $sql))
+      {
+          //Grabs the result in an array and print them all 
+      if ($row = mysqli_fetch_assoc($result)) 
+      {
+        if(empty($row))
+        echo "erroaar";
+
+          PrintTableWithData($result, $weekNumber, $classResult);
+      }
+      else{
+        PrintTableWithData(null,$weekNumber , $classResult);
+      }
+      } else{
+        echo "error";
+      }
+      mysqli_free_result($result);
+    }
 
     function PrintTableWithData($data , $weekNumber, $classData)
     {
@@ -492,6 +542,171 @@
       for ($i=0; $i < 6; $i++) { 
         if($hour == (0 + $i) || $hour == (6 + $i) || $hour == (12 +$i) || $hour== (18 + $i))
           return $i;
+      }
+    }
+
+    function PrintDayTable($data , $classData, $day, $dayN)
+    {
+      //Print the data as reminders and the day as the current day, thats all
+      switch($dayN)
+      {
+        case 1: $dayN = "Sunday"; break;
+        case 2: $dayN = "Monday"; break;
+        case 3: $dayN = "Tuesday"; break;
+        case 4: $dayN = "Wednsday"; break;
+        case 5: $dayN = "Thurday"; break;
+        case 6: $dayN = "Friday"; break;
+        case 7: $dayN = "Saturday"; break;
+        default: $dayN ="Error"; break;
+      }
+
+      echo "<th> $dayN <br> $day </th> <th style='width: 150px;'> ... </th>";
+
+      $allReminders = array();
+
+       //Loop throught the week and add all reminders to its specific day
+       if($data !=null)
+      foreach($data as $value)
+      {
+          $hour = substr($value['time'],0,2);
+          $allReminders[$hour]= $value;
+      
+      }
+
+      $allClassesT = array();
+      $classSlotNumber = array();
+
+      if($classData !=null)
+      foreach($classData as $eachClass)
+      {
+        for($i=1; $i <=6; $i++)
+        {
+          //$day = "timeD".$i; //I dont need the day tbh
+          $startT = "timeS".$i;
+          $endT = "timeE".$i;
+
+          $startHour = intval(substr($eachClass[$startT],0,2));
+          $endHour = intval(substr($eachClass[$endT],0,2));
+
+          //In here we check each of the times for the classes
+
+          if($startHour < $endHour) //The only check for input
+          {
+            $totalPoints = $endHour - $startHour;
+            $totalPoints++;
+            
+            $p1 = 0;
+            $p2 = 0;
+
+            if($totalPoints%2 ==0) //If its a pair number
+            {
+              $p1 = ($totalPoints / 2);
+              $p2 = $p1 + 1;
+            } 
+            else //Odd number
+            {
+              $p1 = (round($totalPoints / 2));
+              $p2 = -1;
+            }
+
+              for ($u=$startHour, $x =1; $u <= $endHour; $u++ , $x++) 
+              { 
+
+                $allClassesT[$u] = $eachClass;
+
+                if($x == round($p1) && $p2 != -1)
+                $classSlotNumber[$u] = "M1";
+
+                else if($x == round($p1) && $p2 == -1)
+                $classSlotNumber[$u] = "M0";
+
+                if($x == round($p2))
+                $classSlotNumber[$u] = "M2";
+              }
+          }
+    
+        }
+      }
+
+
+      //Now just check for the right slot and it should be okay
+      for($x = 0; $x<24; $x++)
+      {
+          $y = $x +1;
+          
+          $actualTime = $y;
+          $timeF = "AM";
+
+          if($y >12)
+          {
+            $actualTime =  $actualTime - 12;
+            $timeF ="PM";
+          }
+
+
+
+          if(isset($allReminders[$y]))
+          {
+            $a = $allReminders[$y]['title'];
+            $colorTemp;
+                  switch ($allReminders[$y]['priority']) 
+                  {
+                    case 'High':
+                      $colorTemp = "btn-warning";
+                      break;
+
+                      case 'Medium':
+                        $colorTemp = "btn-success";
+                        break;
+
+                        case 'Low':
+                          $colorTemp = "btn-info";
+                          break;
+                    
+                    default:
+                    $colorTemp = "btn-light";
+                      break;
+                  }
+            $temp = "<button class='btn ".$colorTemp."' type='button' onclick='showReminderInfoModal(".$allReminders[$y]['id'].")' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' id ='".$allReminders[$y]['id']."'style='width:100%;'> <i class='fas fa-check fa-sm'></i> &nbsp;".$allReminders[$y]["title"] ."</button>";
+            echo "<tr> <td>$temp </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
+          } 
+          else if(isset($allClassesT[$y]))
+          {
+            $tempC = "style='background-color: ".$allClassesT[$y]['color'].";'";
+            $tempClass = "class='formatMe'";
+            $tempT = "&nbsp;";
+              if(isset($classSlotNumber[$y]))
+              {
+                $tempSNum = $classSlotNumber[$y];
+
+                if($tempSNum == "M1")
+                {
+                  $tempT ="<i class='fas fa-graduation-cap'></i> &nbsp;".$allClassesT[$y]['name']; 
+                } else if($tempSNum == "M2")
+                {
+                  $tempT ="(".$allClassesT[$y]['type'].")";
+                } else if ($tempSNum == "M0")
+                {
+                  $tempT ="<i class='fas fa-graduation-cap'></i> &nbsp;".$allClassesT[$y]['name'] ." <br>". "(".$allClassesT[$y]['type'].")"; 
+                }
+
+              } else
+              {
+                $tempSNum = "";
+              }
+
+              $tempID = "id='c".$allClassesT[$y]['id']."-".$tempSNum."'";
+
+            echo "<tr> <td $tempC $tempClass $tempID> $tempT </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
+          }
+          else 
+          {
+            echo "<tr> <td> </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
+          }
+         
+        
+
+        
       }
     }
 ?>

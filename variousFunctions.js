@@ -1,6 +1,15 @@
 //This is just a collection of miscellanious functions used across the page
 
 
+//----------------------------Check if mobile device--------------------------
+function isMobile()
+{
+  if(window.innerWidth < 730)
+    return 1;
+  else 
+    return 0;
+}
+
 //----------------------------Reminder Edit Functions---------------------------
 function showReminderInfoModal(id)
 {
@@ -99,6 +108,32 @@ function getPriorityClass(val)
 
 //-------------------------This is for the TODOs List--------------------------------
 
+function showToDoTypes()
+{
+  //Check if it has to be on mobile
+  let mobile = isMobile();
+
+
+  var http = new XMLHttpRequest();
+  http.onreadystatechange = function() 
+    {
+     
+    if(http.readyState === 4) 
+    {
+      if(http.status === 200) 
+      {
+        var queryString = http.responseText;
+        document.getElementById("todoTypeParent").innerHTML = queryString;
+      } else {
+            alert('Error Code: ' +  http.status);
+            alert('Error Message: ' + http.statusText);
+      }
+    }
+    } 
+    http.open('GET', "/includes/queryToDoTypes.php?mobile="+mobile, true);
+    http.send();
+}
+
 function showToDoList(typeOfListID)
 {
 
@@ -129,6 +164,12 @@ function showToDoList(typeOfListID)
       {
         var queryString = http.responseText;
         let output = queryString.split("|");
+
+        let amtOfRows=4;
+
+        if(isMobile)
+        amtOfRows=2;
+
         //Add the table elements here 
         let htmlOuput ="<tbody>";
 
@@ -141,7 +182,7 @@ function showToDoList(typeOfListID)
           let todoID = output[i].split("&?")[1];
 
 
-          if((i +1)%4==1)
+          if((i +1)%amtOfRows==1)
           htmlOuput +="<tr>";
 
           //Print the actual thing
@@ -149,7 +190,7 @@ function showToDoList(typeOfListID)
           htmlOuput += "<td align='left' valign='middle' onmouseover=\"showDeleteTodoIcon('t"+todoID+"')\" onmouseout=\"hideDeleteTodoIcon('t"+todoID+"') \" > <i class='far fa-circle fa-xs'></i> &nbsp;"+nameI +
           " <button type='button'class='btn btn-outline-light btn-sm' id='t"+todoID+"' style='display:none;float:right;' onclick='deleteToDo("+todoID+")'>  <i  class='far fa-trash-alt fa-x'></i></button> </td>"
 
-          if(i +1%4==0)
+          if(i +1%amtOfRows==0)
           htmlOuput +="</tr>";
 
           //Prints the extra stuff
@@ -333,7 +374,7 @@ function showSchedule(add)
       }
     }
     } 
-    http.open('GET', "/includes/queryWeeklySchedule.php?"+"week="+currentWeekNumber, true);
+    http.open('GET', "/includes/queryWeeklySchedule.php?"+"week="+currentWeekNumber+"&mobile="+isMobile(), true);
     http.send();
 }
 
@@ -359,6 +400,6 @@ function showReminderList()
       }
     }
     } 
-    http.open('GET', "/includes/queryReminderList.php?"+"week="+currentWeekNumber, true);
+    http.open('GET', "/includes/queryReminderList.php?"+"week="+currentWeekNumber+"&mobile="+isMobile(), true);
     http.send();
 }
