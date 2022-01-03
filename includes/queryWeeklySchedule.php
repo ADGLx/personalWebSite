@@ -20,7 +20,8 @@
       $sqlC = "SELECT * FROM classes WHERE userid = $tempUser AND
       (timeD1=$td OR timeD2=$td OR timeD3=$td OR timeD4=$td OR timeD5=$td OR timeD6=$td)"; //Get all classes today
 
-      $sql ="SELECT * FROM reminders WHERE userid =$tempUser AND date = $curDate";
+      $sql ="SELECT * FROM reminders WHERE userid =$tempUser AND date = '$curDate'";
+
 
       if($classResult = mysqli_query($conn, $sqlC))
           $allClasses = mysqli_fetch_assoc($classResult);
@@ -41,6 +42,7 @@
         PrintDayTable($result, $classResult, $curDate, $td);
       }
       else{
+        
         PrintDayTable(null,$classResult, $curDate, $td);
       }
       } else{
@@ -560,41 +562,14 @@
 
       echo "<th> $dayN <br> $day </th> <th style='width: 150px;'> ... </th>";
 
-      $allReminders = array(
-        array(), //1
-        array(), //2
-        array(), //3
-        array(), //4
-        array(), //5
-        array(), //6
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-        array(), //1
-       );
+      $allReminders = array();
 
        //Loop throught the week and add all reminders to its specific day
        if($data !=null)
       foreach($data as $value)
       {
-       // $allReminders[getDayOfTheWeek($value, $entireWeekData)][getTimeSlot($value)] = $value;
-        //I will use array push
-
-        //array_push($allReminders[6][3], $value);
+          $hour = substr($value['time'],0,2);
+          $allReminders[$hour]= $value;
       
       }
 
@@ -605,11 +580,40 @@
         if($x<12)
         {
           $y = $x +1;
-          echo "<tr> <td> </td> <th > $y:00&nbsp;AM</th> </tr> ";
+
+          if(isset($allReminders[$y]))
+          {
+            $a = $allReminders[$y]['title'];
+            $colorTemp;
+                  switch ($allReminders[$y]['priority']) 
+                  {
+                    case 'High':
+                      $colorTemp = "btn-warning";
+                      break;
+
+                      case 'Medium':
+                        $colorTemp = "btn-success";
+                        break;
+
+                        case 'Low':
+                          $colorTemp = "btn-info";
+                          break;
+                    
+                    default:
+                    $colorTemp = "btn-light";
+                      break;
+                  }
+            $temp = "<button class='btn ".$colorTemp."' type='button' onclick='showReminderInfoModal(".$allReminders[$y]['id'].")' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' id ='".$allReminders[$y]['id']."'style='width:100%;'> <i class='fas fa-check fa-sm'></i> &nbsp;".$allReminders[$y]["title"] ."</button>";
+            echo "<tr> <td>$temp </td> <th > $y:00&nbsp;AM</th> </tr> ";
+          }else 
+          {
+            echo "<tr> <td> </td> <th > $y:00&nbsp;AM</th> </tr> ";
+          }
+         
         }
         
         else
-        {s
+        {
           $y =$x -11;
           echo "<tr> <td> </td> <th > $y:00&nbsp;PM</th> </tr> ";
         }
