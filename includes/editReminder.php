@@ -78,7 +78,7 @@
         // save to db and check
 			if(mysqli_query($conn, $sql)){
 				// success
-                header("location: ../index.php?weeknmb=".$_SESSION["curWeek"]); //Refreshes the page
+                header("location: ../index.php"); //Refreshes the page
 			} else {
 				echo 'query error: '. mysqli_error($conn);
 			}
