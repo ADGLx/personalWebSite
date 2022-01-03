@@ -573,13 +573,77 @@
       
       }
 
+      $allClassesT = array();
+      $classSlotNumber = array();
+
+      if($classData !=null)
+      foreach($classData as $eachClass)
+      {
+        for($i=1; $i <=6; $i++)
+        {
+          //$day = "timeD".$i; //I dont need the day tbh
+          $startT = "timeS".$i;
+          $endT = "timeE".$i;
+
+          $startHour = intval(substr($eachClass[$startT],0,2));
+          $endHour = intval(substr($eachClass[$endT],0,2));
+
+          //In here we check each of the times for the classes
+
+          if($startHour < $endHour) //The only check for input
+          {
+            $totalPoints = $endHour - $startHour;
+            $totalPoints++;
+            
+            $p1 = 0;
+            $p2 = 0;
+
+            if($totalPoints%2 ==0) //If its a pair number
+            {
+              $p1 = ($totalPoints / 2);
+              $p2 = $p1 + 1;
+            } 
+            else //Odd number
+            {
+              $p1 = (round($totalPoints / 2));
+              $p2 = -1;
+            }
+
+              for ($u=$startHour, $x =1; $u <= $endHour; $u++ , $x++) 
+              { 
+
+                $allClassesT[$u] = $eachClass;
+
+                if($x == round($p1) && $p2 != -1)
+                $classSlotNumber[$u] = "M1";
+
+                else if($x == round($p1) && $p2 == -1)
+                $classSlotNumber[$u] = "M0";
+
+                if($x == round($p2))
+                $classSlotNumber[$u] = "M2";
+              }
+          }
+    
+        }
+      }
+
 
       //Now just check for the right slot and it should be okay
       for($x = 0; $x<24; $x++)
       {
-        if($x<12)
-        {
           $y = $x +1;
+          
+          $actualTime = $y;
+          $timeF = "AM";
+
+          if($y >12)
+          {
+            $actualTime =  $actualTime - 12;
+            $timeF ="PM";
+          }
+
+
 
           if(isset($allReminders[$y]))
           {
@@ -604,19 +668,44 @@
                       break;
                   }
             $temp = "<button class='btn ".$colorTemp."' type='button' onclick='showReminderInfoModal(".$allReminders[$y]['id'].")' data-bs-toggle='modal' data-bs-target='#ReminderEditModel' id ='".$allReminders[$y]['id']."'style='width:100%;'> <i class='fas fa-check fa-sm'></i> &nbsp;".$allReminders[$y]["title"] ."</button>";
-            echo "<tr> <td>$temp </td> <th > $y:00&nbsp;AM</th> </tr> ";
-          }else 
+            echo "<tr> <td>$temp </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
+          } 
+          else if(isset($allClassesT[$y]))
           {
-            echo "<tr> <td> </td> <th > $y:00&nbsp;AM</th> </tr> ";
+            $tempC = "style='background-color: ".$allClassesT[$y]['color'].";'";
+            $tempClass = "class='formatMe'";
+            $tempT = "&nbsp;";
+              if(isset($classSlotNumber[$y]))
+              {
+                $tempSNum = $classSlotNumber[$y];
+
+                if($tempSNum == "M1")
+                {
+                  $tempT ="<i class='fas fa-graduation-cap'></i> &nbsp;".$allClassesT[$y]['name']; 
+                } else if($tempSNum == "M2")
+                {
+                  $tempT ="(".$allClassesT[$y]['type'].")";
+                } else if ($tempSNum == "M0")
+                {
+                  $tempT ="<i class='fas fa-graduation-cap'></i> &nbsp;".$allClassesT[$y]['name'] ." <br>". "(".$allClassesT[$y]['type'].")"; 
+                }
+
+              } else
+              {
+                $tempSNum = "";
+              }
+
+              $tempID = "id='c".$allClassesT[$y]['id']."-".$tempSNum."'";
+
+            echo "<tr> <td $tempC $tempClass $tempID> $tempT </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
+          }
+          else 
+          {
+            echo "<tr> <td> </td> <th > $actualTime:00&nbsp;$timeF</th> </tr> ";
           }
          
-        }
         
-        else
-        {
-          $y =$x -11;
-          echo "<tr> <td> </td> <th > $y:00&nbsp;PM</th> </tr> ";
-        }
+
         
       }
     }
