@@ -14,13 +14,28 @@
         $weekNumber = $_GET["week"];
       }
 
-      $curDate = date('Y-m-d', strtotime(' + '.$weekNumber.' days'));
+      if($weekNumber >=0)
+      {
+        $curDate = date('d-m-y', strtotime(' + '.$weekNumber.' days'));
+        $compDate =date('Y-m-d', strtotime(' + '.$weekNumber.' days'));
+        $td = date('w', strtotime(' + '.$weekNumber.' days')) +1;
+      }
       
-      $td = date('w', strtotime(' + '.$weekNumber.' days')) +1;
+      else
+      {
+        $weekNumber = abs($weekNumber);
+        $curDate = date('d-m-y', strtotime(' - '.$weekNumber.' days'));
+        $compDate =date('Y-m-d', strtotime(' - '.$weekNumber.' days'));
+        $td = date('w', strtotime(' - '.$weekNumber.' days')) +1;
+      }
+      
+
+      
+     
       $sqlC = "SELECT * FROM classes WHERE userid = $tempUser AND
       (timeD1=$td OR timeD2=$td OR timeD3=$td OR timeD4=$td OR timeD5=$td OR timeD6=$td)"; //Get all classes today
 
-      $sql ="SELECT * FROM reminders WHERE userid =$tempUser AND date = '$curDate'";
+      $sql ="SELECT * FROM reminders WHERE userid =$tempUser AND date = '$compDate'";
 
 
       if($classResult = mysqli_query($conn, $sqlC))
@@ -39,10 +54,10 @@
         if(empty($row))
         echo "erroaar";
 
+        
         PrintDayTable($result, $classResult, $curDate, $td);
       }
       else{
-        
         PrintDayTable(null,$classResult, $curDate, $td);
       }
       } else{
@@ -553,7 +568,7 @@
         case 1: $dayN = "Sunday"; break;
         case 2: $dayN = "Monday"; break;
         case 3: $dayN = "Tuesday"; break;
-        case 4: $dayN = "Wednsday"; break;
+        case 4: $dayN = "Wednesday"; break;
         case 5: $dayN = "Thurday"; break;
         case 6: $dayN = "Friday"; break;
         case 7: $dayN = "Saturday"; break;
@@ -564,7 +579,7 @@
 
       $allReminders = array();
 
-       //Loop throught the week and add all reminders to its specific day
+    
        if($data !=null)
       foreach($data as $value)
       {
