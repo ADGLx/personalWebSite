@@ -271,7 +271,7 @@
               <label  for="inlineFormCustomSelectPref">Type:</label>
               <select id="inlineFormCustomSelectPref" name="type" style="width: 75%; text-align: center; float: inline-end;">
                 <option value="Tutorial">Tutorial</option>
-                <option value="Leture">Lecture</option>
+                <option value="Lecture">Lecture</option>
                 <option value="Lab">Lab</option>
               </select>
             </div>
