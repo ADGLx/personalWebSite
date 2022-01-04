@@ -176,13 +176,13 @@
                     <td><input type="time" id="timeS1" name="timeS1" style="width: 35%;"> to <input type="time" id="timeE1" name="timeE1" style="width: 35%;"> 
                       <select id="inlineFormCustomSelectPref" name="timeD1">
                       <option value=""></option>
-                        <option value=1>1-S</option>
-                        <option value=2>2-M</option>
-                        <option value=3>3-T</option>
-                        <option value=4>4-W</option>
-                        <option value=5>5-T</option>
-                        <option value=6>6-F</option>
-                        <option value=7>7-S</option>
+                        <option value='1'>1-S</option>
+                        <option value='2'>2-M</option>
+                        <option value='3'>3-T</option>
+                        <option value='4'>4-W</option>
+                        <option value='5'>5-T</option>
+                        <option value='6'>6-F</option>
+                        <option value='7'>7-S</option>
                       </select>
                     </td>
                 </tr>
@@ -192,13 +192,13 @@
                 
                   <select id="inlineFormCustomSelectPref" name="timeD2">
                   <option value=""></option>
-                        <option value=1>1-S</option>
-                        <option value=2>2-M</option>
-                        <option value=3>3-T</option>
-                        <option value=4>4-W</option>
-                        <option value=5>5-T</option>
-                        <option value=6>6-F</option>
-                        <option value=7>7-S</option>
+                        <option value='1'>1-S</option>
+                        <option value='2'>2-M</option>
+                        <option value='3'>3-T</option>
+                        <option value='4'>4-W</option>
+                        <option value='5'>5-T</option>
+                        <option value='6'>6-F</option>
+                        <option value='7'>7-S</option>
                       </select>
                   </td>
                 </tr>
@@ -207,13 +207,13 @@
                   <td><input type="time" id="timeS3" name="timeS3" style="width: 35%;"> to <input type="time" id="timeE3" name="timeE3" style="width: 35%;">  
                   <select id="inlineFormCustomSelectPref" name="timeD3">
                   <option value=""></option>
-                        <option value=1>1-S</option>
-                        <option value=2>2-M</option>
-                        <option value=3>3-T</option>
-                        <option value=4>4-W</option>
-                        <option value=5>5-T</option>
-                        <option value=6>6-F</option>
-                        <option value=7>7-S</option>
+                        <option value='1'>1-S</option>
+                        <option value='2'>2-M</option>
+                        <option value='3'>3-T</option>
+                        <option value='4'>4-W</option>
+                        <option value='5'>5-T</option>
+                        <option value='6'>6-F</option>
+                        <option value='7'>7-S</option>
                       </select>
                 
                 </td>
@@ -223,13 +223,13 @@
                   <td><input type="time" id="timeS4" name="timeS4" style="width: 35%;"> to <input type="time" id="timeE14" name="timeE4" style="width: 35%;">  
                   <select id="inlineFormCustomSelectPref" name="timeD4">
                   <option value=""></option>
-                        <option value=1>1-S</option>
-                        <option value=2>2-M</option>
-                        <option value=3>3-T</option>
-                        <option value=4>4-W</option>
-                        <option value=5>5-T</option>
-                        <option value=6>6-F</option>
-                        <option value=7>7-S</option>
+                        <option value='1'>1-S</option>
+                        <option value='2'>2-M</option>
+                        <option value='3'>3-T</option>
+                        <option value='4'>4-W</option>
+                        <option value='5'>5-T</option>
+                        <option value='6'>6-F</option>
+                        <option value='7'>7-S</option>
                       </select>
                 </td>
                 </tr>
@@ -238,13 +238,13 @@
                   <td><input type="time" id="timeS5" name="timeS5" style="width: 35%;"> to <input type="time" id="timeE5" name="timeE5" style="width: 35%;">  
                   <select id="inlineFormCustomSelectPref" name="timeD5">
                   <option value=""></option>
-                        <option value=1>1-S</option>
-                        <option value=2>2-M</option>
-                        <option value=3>3-T</option>
-                        <option value=4>4-W</option>
-                        <option value=5>5-T</option>
-                        <option value=6>6-F</option>
-                        <option value=7>7-S</option>
+                        <option value='1'>1-S</option>
+                        <option value='2'>2-M</option>
+                        <option value='3'>3-T</option>
+                        <option value='4'>4-W</option>
+                        <option value='5'>5-T</option>
+                        <option value='6'>6-F</option>
+                        <option value='7'>7-S</option>
                       </select>
                 </td>
                 </tr>
@@ -253,13 +253,13 @@
                   <td><input type="time" id="timeS6" name="timeS6" style="width: 35%;"> to <input type="time" id="timeE6" name="timeE6" style="width: 35%;">  
                   <select id="inlineFormCustomSelectPref" name="timeD6">
                   <option value=""></option>
-                        <option value=1>1-S</option>
-                        <option value=2>2-M</option>
-                        <option value=3>3-T</option>
-                        <option value=4>4-W</option>
-                        <option value=5>5-T</option>
-                        <option value=6>6-F</option>
-                        <option value=7>7-S</option>
+                        <option value='1'>1-S</option>
+                        <option value='2'>2-M</option>
+                        <option value='3'>3-T</option>
+                        <option value='4'>4-W</option>
+                        <option value='5'>5-T</option>
+                        <option value='6'>6-F</option>
+                        <option value='7'>7-S</option>
                       </select>
                 </td>
                 </tr>
