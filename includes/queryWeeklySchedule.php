@@ -232,9 +232,15 @@
             $tempString = $eachClass['name'] . "\n";
 
             //From here just check to get all the items added to the thingy
+
+            
             
             $timePointer = date_parse($eachClass[$startT])['hour'];
             $endPoint = date_parse($eachClass[$endT])['hour'];
+
+            //check to see before it it ends at 4:00 to just substract one
+            if(date_parse($eachClass[$endT])['minute'] == "0" )
+            $endPoint--;
 
             //Calculating in here the middle point so I know when to print the title
             $totalPoints =   $endPoint - $timePointer;
@@ -257,22 +263,35 @@
             //Now get all the slots from that to the end added to the array
             for ($u=$timePointer, $x =1; $u <= $endPoint ; $u++ , $x++) 
             { 
+
+             
+
               $dayS = $tempNumb;
               $Oslot = getTimeSlotWithHour($u);
               $Islot = getInnerTimeSlotWithHour($u);
 
               $allClassesT[$dayS][$Oslot][$Islot] = $eachClass;
 
+              if($x == 1) //If it is the first one, just set up a variable to send if its first 
+              {
+                $classSlotNumber[$dayS."-".$Oslot."-".$Islot]["st"] ="s";
+                $classSlotNumber[$dayS."-".$Oslot."-".$Islot]["mn"]= date_parse($eachClass[$endT])['minute'];
+              } else if($u== $endPoint)
+              {
+                $classSlotNumber[$dayS."-".$Oslot."-".$Islot]["st"] ="e";
+                $classSlotNumber[$dayS."-".$Oslot."-".$Islot]["mn"]= date_parse($eachClass[$endT])['minute'];
+              }
+
              // $classSlotNumber[$dayS."-".$Oslot."-".$Islot] = $x;
 
               if($x == round($p1) && $p2 != -1)
-              $classSlotNumber[$dayS."-".$Oslot."-".$Islot] = "M1";
+              $classSlotNumber[$dayS."-".$Oslot."-".$Islot][1] = "M1";
 
               else if($x == round($p1) && $p2 == -1)
-              $classSlotNumber[$dayS."-".$Oslot."-".$Islot] = "M0";
+              $classSlotNumber[$dayS."-".$Oslot."-".$Islot][1] = "M0";
 
               if($x == round($p2))
-              $classSlotNumber[$dayS."-".$Oslot."-".$Islot] = "M2";
+              $classSlotNumber[$dayS."-".$Oslot."-".$Islot][1] = "M2";
               //The key is going to be DAY-SLOT-ISLOT and the value is the slot number
               
               //echo " Day: ".$tempNumb ." Slot: ".getTimeSlotWithHour($u) . " innerSlot: ".getInnerTimeSlotWithHour($u) ." Content: ".$allClassesT[$tempNumb][getTimeSlotWithHour($u)][getInnerTimeSlotWithHour($u)] . " | ";
@@ -417,7 +436,7 @@
           { 
             echo "<tr>";
             if(isset($timeSlots[$i]))
-            echo "<td style='height:50px; 
+            echo "<td style='display: grid; align-items: center; height:50px; 
             border: 1px solid #363b3e; '>".$timeSlots[$i];
             else //If there is a reminder already there I guess dont add it?
             {
@@ -425,6 +444,7 @@
               $tempC = "";
               $tempClass ="";
               $tempID = "";
+              $cellHeight = "height:100%;";
               //In here I do all the formating for the classes
              if (isset($allClassesT[$y][$x][$i]))
              {
@@ -435,9 +455,9 @@
               $tempClass = "class='formatMe'";
 
               //Accesing the slot number
-              if(isset($classSlotNumber[$y."-".$x."-".$i]))
+              if(isset($classSlotNumber[$y."-".$x."-".$i][1]))
               {
-                $tempSNum = $classSlotNumber[$y."-".$x."-".$i];
+                $tempSNum = $classSlotNumber[$y."-".$x."-".$i][1];
 
                 if($tempSNum == "M1")
                 {
@@ -447,7 +467,7 @@
                   $tempT ="(".$allClassesT[$y][$x][$i]['type'].")";
                 } else if ($tempSNum == "M0")
                 {
-                  $tempT ="<i class='fas fa-graduation-cap'></i> &nbsp;".$allClassesT[$y][$x][$i]['name'] ." <br>". "(".$allClassesT[$y][$x][$i]['type'].")"; 
+                  $tempT =" <i class='fas fa-graduation-cap'></i> &nbsp;".$allClassesT[$y][$x][$i]['name'] ." <br>". "(".$allClassesT[$y][$x][$i]['type'].")  "; 
                 }
 
 
@@ -458,13 +478,33 @@
                 $tempSNum ="";
               }
              
-              //This is the ID, it might not be necessary
-              $tempID = "id='c".$allClassesT[$y][$x][$i]['id']."-".$tempSNum."'";
-             }
              
 
-              echo "<td style='height:50px;
-              border: 1px solid #363b3e; ".$tempC."'".$tempClass." ".$tempID." > ".$tempT;
+              //Check in here if it is starting or what
+              if(isset($classSlotNumber[$y."-".$x."-".$i]["st"]) && isset($classSlotNumber[$y."-".$x."-".$i]["mn"]))
+              {
+                if ($classSlotNumber[$y."-".$x."-".$i]["st"]== 's' && $classSlotNumber[$y."-".$x."-".$i]["mn"] !=0)
+                {
+                  $tmn = convertMinutesToPercent($classSlotNumber[$y."-".$x."-".$i]["mn"]);
+
+                  $cellHeight = "align-self: end; height:$tmn%;";
+                } else if ($classSlotNumber[$y."-".$x."-".$i]["st"]== 'e' && $classSlotNumber[$y."-".$x."-".$i]["mn"] !=0)
+                {
+                  $tmn = convertMinutesToPercent($classSlotNumber[$y."-".$x."-".$i]["mn"]);
+
+                  $cellHeight = "align-self: start; height:$tmn%;";
+                }
+                
+              }
+
+               //This is the ID, it might not be necessary
+               $tempID = "id='c".$allClassesT[$y][$x][$i]['id']."-".$tempSNum."'";
+             }
+             
+             //Have here the checks to see if its the first or last thingy
+
+              echo "<td style=' display: grid; height:50px;
+              border: 1px solid #363b3e; '".$tempClass." ".$tempID." > <div style = '$cellHeight ".$tempC."'>  ".$tempT ."</div>"; //Adding here a span or something inside
             }
             
             echo "</tr> </td>";
@@ -727,5 +767,10 @@
 
         
       }
+    }
+
+    function convertMinutesToPercent ($minutes)
+    {
+      return  ( round(($minutes *100)/60));
     }
 ?>
