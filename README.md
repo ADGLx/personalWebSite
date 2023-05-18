@@ -1,5 +1,2 @@
 # personalWebSite
-My personal website,
-It will contain: 
-index.html (The page that will be sent to as my cv)
-MySchedule.html (Will act as my calendar and allow me to set up regular classes as well as reminders)
+Old Personal Website created in PHP, HTML and JavaScript. It contains my old CV page as well as a fully functional reminder/scheduler page.
